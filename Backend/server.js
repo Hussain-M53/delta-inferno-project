@@ -2,12 +2,7 @@ require('dotenv/config');
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
-const { createAccessToken, createRefreshToken, sendAccessToken, sendRefreshToken } = require('./token.js')
-const { verify } = require('jsonwebtoken');
 const { hash, compare } = require('bcryptjs');
-const { database } = require('./database.js');
-const { isAuth } = require('./isAuth.js');
-
 
 const server = express();
 
@@ -15,7 +10,7 @@ const server = express();
 server.use(cookieParser())
 server.use(express.urlencoded({ extended: true }))
 server.use(cors({
-    origin: 'http://localhost:5000',
+    origin: 'http://localhost:3000',
     credentials: true,
 }))
 server.use(express.json())//equivalent of body parser 

@@ -1,0 +1,21 @@
+[debug] [2023-09-20T13:00:08.584Z] ----------------------------------------------------------------------
+[debug] [2023-09-20T13:00:08.594Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Hussain Murtaza\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js init
+[debug] [2023-09-20T13:00:08.596Z] CLI Version:   12.5.4
+[debug] [2023-09-20T13:00:08.598Z] Platform:      win32
+[debug] [2023-09-20T13:00:08.599Z] Node Version:  v18.16.0
+[debug] [2023-09-20T13:00:08.637Z] Time:          Wed Sep 20 2023 18:00:08 GMT+0500 (Pakistan Standard Time)
+[debug] [2023-09-20T13:00:08.638Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-09-20T13:00:08.680Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-09-20T13:00:08.683Z] > authorizing via signed-in user (hussainintern@gmail.com)
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  C:\Users\Hussain Murtaza\OneDrive - Institute of Business Administration\Documents old version\Builds\delta-inferno-project\Frontend
+
