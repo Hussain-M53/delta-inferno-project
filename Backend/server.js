@@ -15,6 +15,8 @@ server.use(cors({
 }))
 server.use(express.json())//equivalent of body parser 
 
+app.use("/Customer", CustomerRouter);
+
 
 //api methods
 server.post('/register', async (req, res) => {

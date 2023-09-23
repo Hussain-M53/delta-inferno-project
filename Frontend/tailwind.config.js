@@ -6,6 +6,10 @@ module.exports = {
   ],
   theme: {
     extend: {
+      screens: {
+        'scrollbar-hide': { 'raw': '::-webkit-scrollbar' },
+      },
+      
       backgroundColor: {
         'bg-color': '#FFFFFF',
         'nav-color': '#000000',

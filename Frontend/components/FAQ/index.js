@@ -30,12 +30,12 @@ const FAQ = () => {
     };
 
     return (
-        <div className='mx-40 bg-gray-50 '>
+        <div className='mx-10 md:mx-20 lg:mx-40 '>
             {faqs.map(faq => (
-                <div key={faq.id} className="mb-4">
+                <div key={faq.id} className="mb-4 bg-black/5 p-2 rounded-md ring-1 ring-black/10">
                     <button
                         onClick={() => toggleItem(faq.id)}
-                        className={`flex justify-between items-center w-full py-3 px-4 text-left font-semibold text-gray-800 hover:text-gray-500 transition dark:text-gray-200 dark:hover:text-gray-400 ${openId === faq.id ? 'text-btn-color' : ''}`}
+                        className={`flex justify-between items-center w-full py-3 px-4 text-left font-semibold text-gray-800 hover:text-gray-500 transition dark:text-gray-200 dark:hover:text-gray-400 ${openId === faq.id ? 'text-[#31C1D4]' : ''}`}
                     >
                         {faq.question}
                         <svg

@@ -1,4 +1,3 @@
-import React from 'react'
 
 const Calculator = () => {
 
@@ -8,7 +7,7 @@ const Calculator = () => {
 
 
   return (
-    <form className='z-10 md:w-1/2 border-2 border-gray-100 rounded-3xl m-10 max-h-screen'>
+    <form className='z-10 md:w-1/2 border-2 border-gray-100 rounded-3xl m-10 max-h-calc[h-screen] hover:shadow-sm'>
       <div className="mt-10 px-20">
         <div className="border-b border-gray-900/10 pb-6">
           <h2 className="text-3xl font-bold tracking-tight text-center leading-7 text-gray-900 sm:text-5xl  ">Get a Price Quote</h2>

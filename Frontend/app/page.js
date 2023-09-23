@@ -1,10 +1,10 @@
 'use client'
 
 import Hero from '../components/HeroBanner'
-import Footer from '../components/Footer'
 import ReviewCard from '../components/ReviewCard'
 import FAQ from '../components/FAQ'
 import FeaturedCourses from '../components/featured'
+import CTA from '../components/CTA'
 
 
 export default function Home() {
@@ -21,6 +21,7 @@ export default function Home() {
         <FeaturedCourses/>
         {/* Testimonials Section */}
         {/* Order Placing CTA Section */}
+        <CTA/>
         {/* Our Services Section */}
         {/* FAQ Section */}
         <FAQ />

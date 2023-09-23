@@ -13,7 +13,7 @@ const NavBar = () => {
   }, [])
 
   return (
-    <div className='absolute top-0 w-full flex h-20 bg-bg-color justify-between items-center px-6'>
+    <div className=' w-full flex h-20 bg-bg-color justify-between items-center px-6'>
       <Link href={'/'} className="ml-10">
         <Image
           src="/assests/secondary_logo.svg"

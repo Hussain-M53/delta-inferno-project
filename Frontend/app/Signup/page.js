@@ -42,7 +42,7 @@ const Page = () => {
   }
 
   return (
-    <div className="mt-20 bg-white flex min-h-full flex-col justify-center px-6 lg:px-8 sm:mx-auto sm:max-w-lg">
+    <div className="mt-20 bg-white flex min-h-screen flex-col justify-center px-6 lg:px-8 sm:mx-auto sm:max-w-lg">
       <h2 className="mt-8 mb-6 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Sign up for your account</h2>
       <form className="space-y-6" action="#" method="POST" onSubmit={(e) => handleSubmit(e)}>
         <div>

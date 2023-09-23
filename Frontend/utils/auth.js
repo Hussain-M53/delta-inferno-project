@@ -19,7 +19,7 @@ export const createUser = async ({ userName, email, password }) => {
   } catch (error) {
     const errorCode = error.code;
     const errorMessage = error.message;
-    alert(`Error In logging in: ${errorCode} ${errorMessage}`);
+    alert(`Error In Signing Up: ${errorCode} ${errorMessage}`);
   }
 }
 

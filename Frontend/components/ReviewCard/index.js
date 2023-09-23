@@ -1,7 +1,6 @@
-import React from 'react';
 
-const Review = ({ website, rating, content }) => (
-    <div className="p-4">
+const Review = ({ website, rating }) => (
+    <div className="p-4 rounded-md bg-white/5 ring-1 ring-white/10">
         <h3 className="text-2xl font-bold text-[#ffffff]">{website}</h3>
         <div className="mt-2 flex items-center">
             <span className="text-xl text-[#ffffff]">{rating} ⭐️</span>
@@ -17,7 +16,7 @@ const ReviewCard = () => {
     ];
 
     return (
-        <div className="bg-[#282425] p-6 rounded-md shadow-lg flex justify-evenly my-10 w-3/4">
+        <div className="bg-gray-900 p-6 rounded-lg flex justify-evenly my-10 w-3/4 ">
             {reviews.map((review, idx) => (
                 <Review key={idx} {...review} />
             ))}
