@@ -3,7 +3,7 @@ import Card from "../HeroCard"
 
 const Hero = () => {
   return (
-    <div className="-z-10 block md:flex h-screen">
+    <div className="-z-10 h-fit block md:flex ">
       <div
         className="absolute inset-x-0 transform-gpu overflow-hidden blur-3xl sm:-top-64"
         aria-hidden="true"

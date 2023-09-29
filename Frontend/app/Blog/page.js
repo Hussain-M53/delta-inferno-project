@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect } from 'react';
 
 export const metadata = {
-  title: 'Blogs',
+  title: 'Blogs - EAN',
   description: 'Built on Next 13',
 }
 

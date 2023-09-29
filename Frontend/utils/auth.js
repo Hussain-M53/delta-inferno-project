@@ -1,5 +1,5 @@
 import { auth } from './firebase_options';
-import { signInWithPopup, signOut, onAuthStateChanged, GoogleAuthProvider, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
+import { signOut,signInWithPopup, onAuthStateChanged, GoogleAuthProvider, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
 
 export const signInWithEmailAndPass = async ({ userName, email, password }) => {
   try {
@@ -48,17 +48,19 @@ export const logOff = async () => {
   catch (error) {
     const errorCode = error.code;
     const errorMessage = error.message;
-    alert(errorCode, errorMessage)
+    alert(errorMessage)
   }
 }
 
-export const checkUserAuthentication = async () => {
-  const result = onAuthStateChanged(auth, (user) => {
-    if (user) {
-      return true;
-    } else {
-      return false;
-    }
+export const checkUserAuthentication = ()  => {
+  return new Promise((resolve, reject) => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      unsubscribe();
+      if (user) {
+        resolve(user);
+      } else {
+        resolve(null);
+      }
+    });
   });
-  return result;
-}
+};

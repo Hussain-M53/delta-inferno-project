@@ -4,7 +4,7 @@ import { AuthContext } from '../../context/AuthContext'
 import { createUser, signInWithGoogle } from '../../utils/auth'
 import { useContext, useState } from 'react'
 export const metadata = {
-  title: 'Sign Up',
+  title: 'Sign Up - EAN',
   description: 'Built on Next 13',
 }
 
@@ -15,22 +15,34 @@ const Page = () => {
     'password': ''
   })
   const { user, setUser } = useContext(AuthContext);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const currentUser = await createUser(user);
-    console.log(currentUser)
+    const currentUser = await createUser(formData);
     if (currentUser) {
-      alert("User Created successfully: ", currentUser)
-      setUser({ ...formData });
+      alert("User Created successfully: ")
+      setUser({
+        "userName": formData.userName,
+        "email": currentUser.email,
+        "password": currentUser.password
+
+      });
+      console.log("Current User: ", user)
     }
   }
 
   const signIn = async (e) => {
     e.preventDefault();
-    const currentUser = await signInWithGoogle(user);
+    const currentUser = await signInWithGoogle();
     if (currentUser) {
-      alert("User Created using Google successfully: ", currentUser)
-      setUser({ ...formData });
+      alert(`${currentUser.displayName} Logged in using Google sucessfully`)
+      setUser({
+        "userName": currentUser.displayName,
+        "email": currentUser.email,
+        "password": currentUser.password
+
+      });
+      console.log("Current User: ", user)
     }
   }
 
@@ -42,8 +54,8 @@ const Page = () => {
   }
 
   return (
-    <div className="mt-20 bg-white flex min-h-screen flex-col justify-center px-6 lg:px-8 sm:mx-auto sm:max-w-lg">
-      <h2 className="mt-8 mb-6 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Sign up for your account</h2>
+    <div className="-mt-10 flex min-h-screen flex-col justify-center px-6 lg:px-8 sm:mx-auto sm:max-w-lg">
+      <h2 className="mb-6 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Sign up for your account</h2>
       <form className="space-y-6" action="#" method="POST" onSubmit={(e) => handleSubmit(e)}>
         <div>
           <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">Full Name</label>

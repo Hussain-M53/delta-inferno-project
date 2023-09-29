@@ -24,43 +24,43 @@ const cardData = [
         "image": "https://thumbs.dreamstime.com/b/machine-deep-learning-algorithms-artificial-intelligence-ai-automation-modern-technology-business-as-concept-134359416.jpg",
         "title": "Photohop for Begineers",
         "author": "Hussain Murtaza",
-        "duration": "50HR"
+        "duration": "50Hr"
     }
     , {
         "image": "https://thumbs.dreamstime.com/b/machine-deep-learning-algorithms-artificial-intelligence-ai-automation-modern-technology-business-as-concept-134359416.jpg",
         "title": "Learn Content Writing",
         "author": "Hussain Murtaza",
-        "duration": "30HR"
+        "duration": "30Hr"
     }, {
         "image": "https://thumbs.dreamstime.com/b/machine-deep-learning-algorithms-artificial-intelligence-ai-automation-modern-technology-business-as-concept-134359416.jpg",
         "title": "IELTS English Bootcamp",
         "author": "Hussain Murtaza",
-        "duration": "125HR"
+        "duration": "125Hr"
     }, {
         "image": "https://thumbs.dreamstime.com/b/machine-deep-learning-algorithms-artificial-intelligence-ai-automation-modern-technology-business-as-concept-134359416.jpg",
         "title": "Intro To Machine Learning",
         "author": "Hussain Murtaza",
-        "duration": "90HR"
+        "duration": "90Hr"
     }, {
         "image": "https://thumbs.dreamstime.com/b/machine-deep-learning-algorithms-artificial-intelligence-ai-automation-modern-technology-business-as-concept-134359416.jpg",
         "title": "Intro To Machine Learning",
         "author": "Hussain Murtaza",
-        "duration": "90HR"
+        "duration": "90Hr"
     }, {
         "image": "https://thumbs.dreamstime.com/b/machine-deep-learning-algorithms-artificial-intelligence-ai-automation-modern-technology-business-as-concept-134359416.jpg",
         "title": "Intro To Machine Learning",
         "author": "Hussain Murtaza",
-        "duration": "90HR"
+        "duration": "90Hr"
     }
 ]
 
 const FeaturedCourses = () => {
     return (
-        <div className="mt-10 mx-6 ">
-            <h1 className="font-bold font mb-2">
+        <div className="mt-10 mx-6">
+            <h1 className="font-bold mb-12 text-center text-4xl">
                 Featured Courses
             </h1>
-            <div className="flex overflow-x-scroll scrollbar-hide">
+            <div className="flex mb-4 overflow-x-scroll scrollbar-hide">
                 {category.map((skill, idx) => {
                     return (
                         <div key={idx} className="p-3 mx-2 rounded-3xl bg-black/10">

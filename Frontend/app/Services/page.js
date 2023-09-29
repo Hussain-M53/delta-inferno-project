@@ -1,6 +1,6 @@
 
 export const metadata = {
-  title: 'Services',
+  title: 'Services - EAN',
   description: 'Built on Next 13',
 }
 

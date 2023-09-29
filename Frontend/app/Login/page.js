@@ -6,7 +6,7 @@ import { signInWithEmailAndPass, signInWithGoogle } from '../../utils/auth'
 import { AuthContext } from '../../context/AuthContext'
 
 export const metadata = {
-  title: 'Log In',
+  title: 'Log In - EAN',
   description: 'Built on Next 13',
 }
 
@@ -15,7 +15,7 @@ const Page = () => {
     'email': '',
     'password': ''
   })
-  
+
   const { user, setUser } = useContext(AuthContext);
 
   const handleSubmit = async (e) => {
@@ -23,16 +23,26 @@ const Page = () => {
     const currentUser = await signInWithEmailAndPass(formData);
     if (currentUser) {
       alert("Logged in sucessfully: ", currentUser)
-      setUser({ ...formData });
+      setUser({
+        "userName": formData.userName,
+        "email": currentUser.email,
+        "password": currentUser.password
+      });
+      console.log("Current User: ",user)
     }
   }
 
   const signIn = async (e) => {
     e.preventDefault();
-    const currentUser = await signInWithGoogle(formData);
+    const currentUser = await signInWithGoogle();
     if (currentUser) {
-      alert("Logged in using Google sucessfully: ", currentUser)
-      setUser({ ...formData });
+      alert(`${currentUser.displayName} Logged in using Google sucessfully`)
+      setUser({
+        "userName": currentUser.displayName,
+        "email": currentUser.email,
+        "password": currentUser.password
+      });
+      console.log("Current User: ",user)
     }
   }
 
@@ -44,8 +54,8 @@ const Page = () => {
   }
 
   return (
-    <div className=" bg-white flex min-h-screen flex-col justify-center px-6 lg:px-8 sm:mx-auto sm:max-w-lg">
-      <h2 className="mt-8 mb-6 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Sign in for your account</h2>
+    <div className="-mt-10 bg-white flex min-h-screen flex-col justify-center px-6 lg:px-8 sm:mx-auto sm:max-w-lg">
+      <h2 className="mb-6 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Sign in to your account</h2>
       <form className="space-y-6" action="#" method="POST" onSubmit={handleSubmit}>
         <div>
           <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">Email address</label>
@@ -76,8 +86,8 @@ const Page = () => {
         <button type="submit" onClick={(e) => signIn(e)} className="flex w-full justify-center rounded-md bg-red-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600">Log In With Google</button>
       </div>
       <p className="mt-10 text-center text-sm text-gray-500">
-        Not a member?
-        <Link href="/Signup" className="font-semibold leading-6 text-btn-color hover:text-cyan-400">Sign Up Now</Link>
+        Not a member? 
+        <Link href="/Signup" className="font-semibold leading-6 text-btn-color hover:text-cyan-400"> Sign Up Now</Link>
       </p>
     </div>
   )
