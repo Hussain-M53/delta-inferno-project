@@ -1,12 +1,13 @@
 'use client'
 
-import { AuthContext } from '../../context/AuthContext'
-import { createUser, signInWithGoogle } from '../../utils/auth'
+import { AuthContext } from '../context/AuthContext'
+import { createUser, signInWithGoogle } from '../utils/auth'
 import { useContext, useState } from 'react'
-export const metadata = {
-  title: 'Sign Up - EAN',
-  description: 'Built on Next 13',
-}
+
+// export const metadata = {
+//   title: 'Sign Up - EAN',
+//   description: 'Built on Next 13',
+// }
 
 const Page = () => {
   const [formData, setformData] = useState({
@@ -20,14 +21,11 @@ const Page = () => {
     e.preventDefault();
     const currentUser = await createUser(formData);
     if (currentUser) {
-      alert("User Created successfully: ")
+      alert(`User created sucessfully: ${currentUser}`)
       setUser({
-        "userName": formData.userName,
+        "userName": currentUser.displayName || 'Hussain',
         "email": currentUser.email,
-        "password": currentUser.password
-
       });
-      console.log("Current User: ", user)
     }
   }
 
@@ -39,10 +37,7 @@ const Page = () => {
       setUser({
         "userName": currentUser.displayName,
         "email": currentUser.email,
-        "password": currentUser.password
-
       });
-      console.log("Current User: ", user)
     }
   }
 

@@ -2,13 +2,13 @@
 
 import Link from 'next/link'
 import { useContext, useState } from 'react'
-import { signInWithEmailAndPass, signInWithGoogle } from '../../utils/auth'
-import { AuthContext } from '../../context/AuthContext'
+import { signInWithEmailAndPass, signInWithGoogle } from '../utils/auth'
+import { AuthContext } from '../context/AuthContext'
 
-export const metadata = {
-  title: 'Log In - EAN',
-  description: 'Built on Next 13',
-}
+// export const metadata = {
+//   title: 'Log In - EAN',
+//   description: 'Built on Next 13',
+// }
 
 const Page = () => {
   const [formData, setformData] = useState({
@@ -22,13 +22,11 @@ const Page = () => {
     e.preventDefault();
     const currentUser = await signInWithEmailAndPass(formData);
     if (currentUser) {
-      alert("Logged in sucessfully: ", currentUser)
+      alert(`User logged in sucessfully: ${currentUser.user.displayName}` )
       setUser({
-        "userName": formData.userName,
-        "email": currentUser.email,
-        "password": currentUser.password
+        "userName": currentUser.user.displayName || 'Hussain Murtaza',
+        "email": currentUser.user.email,
       });
-      console.log("Current User: ",user)
     }
   }
 
@@ -36,13 +34,11 @@ const Page = () => {
     e.preventDefault();
     const currentUser = await signInWithGoogle();
     if (currentUser) {
-      alert(`${currentUser.displayName} Logged in using Google sucessfully`)
+      alert(`${currentUser.user.displayName} Logged in using Google sucessfully`)
       setUser({
-        "userName": currentUser.displayName,
-        "email": currentUser.email,
-        "password": currentUser.password
+        "userName": currentUser.user.displayName,
+        "email": currentUser.user.email,
       });
-      console.log("Current User: ",user)
     }
   }
 
@@ -86,7 +82,7 @@ const Page = () => {
         <button type="submit" onClick={(e) => signIn(e)} className="flex w-full justify-center rounded-md bg-red-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600">Log In With Google</button>
       </div>
       <p className="mt-10 text-center text-sm text-gray-500">
-        Not a member? 
+        Not a member?
         <Link href="/Signup" className="font-semibold leading-6 text-btn-color hover:text-cyan-400"> Sign Up Now</Link>
       </p>
     </div>
