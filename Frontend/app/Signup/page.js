@@ -3,6 +3,8 @@
 import { AuthContext } from '../context/AuthContext'
 import { createUser, signInWithGoogle } from '../utils/auth'
 import { useContext, useState } from 'react'
+import { useRouter } from 'next/navigation';
+
 
 // export const metadata = {
 //   title: 'Sign Up - EAN',
@@ -10,23 +12,33 @@ import { useContext, useState } from 'react'
 // }
 
 const Page = () => {
+
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+
   const [formData, setformData] = useState({
     'userName': '',
     'email': '',
     'password': ''
   })
-  const { user, setUser } = useContext(AuthContext);
+
+  const { setUser } = useContext(AuthContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
+
     const currentUser = await createUser(formData);
     if (currentUser) {
       alert(`User created sucessfully: ${currentUser}`)
+
       setUser({
         "userName": currentUser.displayName || 'Hussain',
         "email": currentUser.email,
       });
+      router.push('/');
     }
+    setIsLoading(false);
   }
 
   const signIn = async (e) => {
@@ -34,10 +46,14 @@ const Page = () => {
     const currentUser = await signInWithGoogle();
     if (currentUser) {
       alert(`${currentUser.displayName} Logged in using Google sucessfully`)
+
       setUser({
         "userName": currentUser.displayName,
         "email": currentUser.email,
       });
+
+      router.push('/');
+
     }
   }
 
@@ -74,7 +90,18 @@ const Page = () => {
         </div>
 
         <div>
-          <button type="submit" className="flex w-full justify-center rounded-md bg-btn-color px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-cyan-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bg-cyan-400">Sign Up</button>
+          <button type="submit" className="flex w-full justify-center rounded-md bg-btn-color px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-cyan-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-bg-cyan-400">
+            {isLoading ? (
+              <span className="flex items-center">
+                <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 2.21.896 4.21 2.344 5.648l2.657-2.357z"></path>
+                </svg>
+                Signing Up...
+              </span>
+            ) :
+              'Sign Up'}
+          </button>
         </div>
       </form>
 

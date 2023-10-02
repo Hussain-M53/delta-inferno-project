@@ -12,8 +12,9 @@ import { checkUserAuthentication } from "@utils/auth";
 
 const NavBar = () => {
 
-  const [signedIn, setSignedIn] = useState(true);
-  const { setUser } = useContext(AuthContext);
+  const [signedIn, setSignedIn] = useState(false);
+  const { user, setUser } = useContext(AuthContext);
+  const [scrolled, setScrolled] = useState(false);
 
   const NavBarRoutes = [
     { href: '/', label: 'Home' },
@@ -40,13 +41,26 @@ const NavBar = () => {
       }
     });
 
-  }, [signedIn])
+  }, [signedIn, user])
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 60);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  const bgColor = scrolled ? 'lg:bg-black' : 'lg:transparent';
+  const textColor = scrolled ? 'lg:text-white' : 'lg:text-nav-color';
 
 
   return (
-    <div className='z-10 w-full flex h-20 bg-bg-color justify-between items-center  sm:px-6'>
-      <Link href={'/'} className="sm:ml-10">
+    <div className={`z-50 w-full flex h-20 justify-between items-center px-6 ${bgColor} ${textColor} lg:sticky lg:top-0`}>
+      <Link href={'/'} className="ml-10">
         <Image
           src="/assests/secondary_logo.svg"
           alt="Logo"
@@ -56,25 +70,25 @@ const NavBar = () => {
         />
       </Link>
 
-      <div className="space-x-4 z-10 hidden sm:flex">
+      <div className={`space-x-4 z-50 hidden sm:flex ${textColor}`}>
         {NavBarRoutes.map((link, idx) => (
-          <Link href={link.href} key={idx} className={`relative text-nav-color  group border-b-2 border-transparent hover:border-nav-color ${link.md ? 'hidden md:block' : ''}`}>
-            {link.label}
-            <div className="absolute inset-x-0 top-7 h-0.5 transform scale-x-0 bg-nav-color group-hover:scale-x-100 transition-transform duration-300" />
+          <Link href={link.href} key={idx} className={`relative group border-b-2 border-transparent ${scrolled ? 'hover:border-white' : 'hover:border-black'}  ${link.md ? 'hidden md:block' : ''}`}>
+            <span className={`${textColor}`}>{link.label}</span>
+            <div className={`absolute inset-x-0 top-7 h-0.5 transform scale-x-0 ${scrolled ? 'bg-white' : 'bg-black'} group-hover:scale-x-100 transition-transform duration-300`} />
           </Link>
         ))}
       </div>
 
-
-      <div className="flex space-x-4 sm:mr-10 ">
-        <div className='flex space-x-4'>
-          {
-            signedIn ? <Button setSignedIn={setSignedIn} text={'Sign Out'} /> :
-              <>
-                <Button text={'Log In'} />
-                <Button text={'Sign Up'} />
-              </>
-          }
+      <div className="flex space-x-4 sm:mr-10">
+        <div className={`flex space-x-4 ${textColor}`}>
+          {signedIn ? (
+            <Button setSignedIn={setSignedIn} text={'Sign Out'} />
+          ) : (
+            <>
+              <Button text={'Log In'} />
+              <Button text={'Sign Up'} />
+            </>
+          )}
         </div>
 
         <div className="relative sm:hidden">

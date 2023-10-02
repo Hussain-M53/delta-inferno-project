@@ -164,7 +164,7 @@ const Calculator = () => {
               onChange={(e) => handleTypeOfServiceChange(e)}
               className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
             >
-              <option disabled selected>Type Of Services</option>
+              <option selected style={{ display: 'none' }}>Type of Service</option>
               {Object.keys(serviceOptions).map((service, idx) => <option key={idx}>{service}</option>)}
             </select>
           </div>
@@ -177,7 +177,7 @@ const Calculator = () => {
               onChange={(e) => handleTypeOfPaperChange(e)}
               className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
             >
-              <option disabled selected>Type of Paper</option>
+              <option disabled selected style={{ display: 'none' }}>Type of Paper</option>
               {getTypeOfPaperOptions().map((paper, idx) => <option key={idx}>{paper}</option>)}
             </select>
           </div>
@@ -190,7 +190,7 @@ const Calculator = () => {
               onChange={(e) => setSubject(e.target.value)}
               className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
             >
-              <option disabled>Subject</option>
+              <option disabled selected style={{ display: 'none' }}>Subject</option>
               {getSubjectOptions().map((subj, idx) => <option key={idx}>{subj}</option>)}
             </select>
           </div>
@@ -228,7 +228,7 @@ const Calculator = () => {
             type="submit"
             onClick={(e) => getPrice(e)}
             disabled={!areFieldsValid() || isLoading}
-            className={`rounded-md px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-cyan-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 ${(!areFieldsValid() || isLoading) ? 'bg-gray-300' : 'bg-btn-color'}`}
+            className={`rounded-md px-3 py-2 text-sm font-semibold text-white shadow-sm ${(areFieldsValid() || !isLoading) ? 'hover:bg-cyan-400': null} focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 ${(!areFieldsValid() || isLoading) ? 'bg-gray-300' : 'bg-btn-color'}`}
           >
             {isLoading ? (
               <span className="flex items-center">

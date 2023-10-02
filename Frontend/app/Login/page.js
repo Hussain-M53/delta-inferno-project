@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useContext, useState } from 'react'
 import { signInWithEmailAndPass, signInWithGoogle } from '../utils/auth'
 import { AuthContext } from '../context/AuthContext'
+import { useRouter } from 'next/navigation';
 
 // export const metadata = {
 //   title: 'Log In - EAN',
@@ -11,6 +12,10 @@ import { AuthContext } from '../context/AuthContext'
 // }
 
 const Page = () => {
+
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+
   const [formData, setformData] = useState({
     'email': '',
     'password': ''
@@ -20,14 +25,17 @@ const Page = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     const currentUser = await signInWithEmailAndPass(formData);
     if (currentUser) {
-      alert(`User logged in sucessfully: ${currentUser.user.displayName}` )
+      alert(`User logged in sucessfully: ${currentUser.user.displayName}`)
       setUser({
         "userName": currentUser.user.displayName || 'Hussain Murtaza',
         "email": currentUser.user.email,
       });
+      router.push('/');
     }
+    setIsLoading(false);
   }
 
   const signIn = async (e) => {
@@ -35,10 +43,13 @@ const Page = () => {
     const currentUser = await signInWithGoogle();
     if (currentUser) {
       alert(`${currentUser.user.displayName} Logged in using Google sucessfully`)
+
       setUser({
         "userName": currentUser.user.displayName,
         "email": currentUser.user.email,
       });
+
+      router.push('/');
     }
   }
 
@@ -73,7 +84,18 @@ const Page = () => {
         </div>
 
         <div>
-          <button type="submit" className="flex w-full justify-center rounded-md bg-btn-color px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-cyan-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-400">Log In</button>
+          <button type="submit" className="flex w-full justify-center rounded-md bg-btn-color px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-cyan-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-400">
+            {isLoading ? (
+              <span className="flex items-center">
+                <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 2.21.896 4.21 2.344 5.648l2.657-2.357z"></path>
+                </svg>
+                Logging In...
+              </span>
+            )
+              : 'Log In'}
+          </button>
         </div>
       </form>
 

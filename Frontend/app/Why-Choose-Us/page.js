@@ -1,3 +1,4 @@
+import WhyChooseUs from "@components/Why-Choose-Us-Section"
 
 export const metadata = {
   title: 'Why Choose Us',
@@ -6,7 +7,7 @@ export const metadata = {
 
 const Page = () => {
   return (
-    <div>This is why choose us page</div>
+    <WhyChooseUs/>
   )
 }
 

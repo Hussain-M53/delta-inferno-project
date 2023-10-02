@@ -22,7 +22,7 @@ const CTA = () => {
             <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
               Boost your productivity.
               <br />
-              Start using our app today.
+              Start using our services today.
             </h2>
             <p className="mt-6 text-lg leading-8 text-gray-300">
               Ac euismod vel sit maecenas id pellentesque eu sed consectetur. Malesuada adipiscing sagittis vel nulla.
@@ -32,21 +32,21 @@ const CTA = () => {
                 href="#"
                 className="rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
               >
-                Get started
+                Place Order Now
               </Link>
               <Link href="#" className="text-sm font-semibold leading-6 text-white">
                 Learn more <span aria-hidden="true">→</span>
               </Link>
             </div>
           </div>
-          <div className="relative mt-16 h-80 lg:mt-8">
-            <img
-              className="absolute left-0 top-0 w-[57rem] max-w-none rounded-md bg-white/5 ring-1 ring-white/10"
-              src=""
-              alt=""
-              width={1824}
-              height={1080}
-            />
+          <div className="relative mt-16 w-full lg:mt-8">
+            <iframe
+              className="object-cover w-full h-full"
+              src="https://www.youtube.com/embed/KJwYBJMSbPI?autoplay=1&mute=1"
+              title="YouTube video player"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
           </div>
         </div>
       </div>

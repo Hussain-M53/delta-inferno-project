@@ -23,7 +23,7 @@ const cardDetails = [
 ]
 const PromoCard = ({ item }) => {
     return (
-        <div className="flex flex-col items-center hover:shadow-md space-y-2 border rounded-lg border-gray-100 p-6 ">
+        <div className="flex flex-col items-center hover:bg-gray-100 hover:shadow-md space-y-2 border rounded-lg border-gray-100 p-6 ">
             <div className='font-bold text-center'>{item.title}</div>
             <div className='text-center'>{item.icon}</div>
             <div className='text-center text-sm'>{item.desc}</div>

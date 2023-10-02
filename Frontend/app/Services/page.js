@@ -1,3 +1,4 @@
+import FeaturedCourses from "@components/featured"
 
 export const metadata = {
   title: 'Services - EAN',
@@ -6,7 +7,7 @@ export const metadata = {
 
 const Page = () => {
   return (
-    <div>This is services page</div>
+    <FeaturedCourses/>
   )
 }
 

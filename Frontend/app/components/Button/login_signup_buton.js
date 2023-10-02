@@ -21,10 +21,10 @@ const Button = ({ text, setSignedIn }) => {
     }
 
 
-    const href = text === 'Log In' ? 'Login' : 'Signup';
+    const href = text === 'Log In' ? 'Login' : 'Sign Up' ? 'Signup' : null;
     return (
         <Link onClick={text === 'Sign Out' ? (e) => signOut(e) : null} href={href} className="z-10 cursor-pointer">
-            <div className={`text-sm  sm:text-base h-10 px-5 py-2 flex justify-center items-center rounded-md font-semibold shadow-sm ${text === 'Log In' ? 'bg-white text-nav-color border-nav-color border hover:bg-btn-color hover:text-white' : 'bg-nav-color text-white border-nav-color border hover:bg-gray-500'}`}>
+            <div className={`text-sm  sm:text-base h-10 px-5 py-2 flex justify-center items-center rounded-md font-semibold shadow-sm ${text === 'Log In' ? 'bg-white text-nav-color border-nav-color border hover:bg-btn-color hover:text-white' : 'bg-nav-color text-white  border-2 border-white hover:bg-gray-500'}`}>
                 {text}
             </div>
         </Link>
