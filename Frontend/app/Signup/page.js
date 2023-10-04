@@ -2,7 +2,7 @@
 
 import { AuthContext } from '../context/AuthContext'
 import { createUser, signInWithGoogle } from '../utils/auth'
-import { useContext, useState } from 'react'
+import { useContext, useState,useEffect } from 'react'
 import { useRouter } from 'next/navigation';
 
 
