@@ -1,9 +1,12 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
+import { serviceOptions, paperOptions, academicLevelOptions, deadlineOptions } from '@utils/FieldDetails';
 
 const Calculator = () => {
 
   const [isLoading, setIsLoading] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const calcRef = useRef();
 
   const [calculatedPrice, setCalculatedPrice] = useState(0);
   const [typeOfService, setTypeOfService] = useState('Type of Service');
@@ -12,57 +15,6 @@ const Calculator = () => {
   const [academicLevel, setAcademicLevel] = useState('Academic Level');
   const [wordLimit, setwordLimit] = useState(null);
   const [deadline, setdeadline] = useState('Deadline');
-
-  const serviceOptions = {
-    'Writing': ['Essay', 'Research Paper', 'Case Study',],
-    'Editing': ['Article', 'Blog Post'],
-    'Proof Reading': ['Poem', 'Short Story']
-  };
-
-  const paperOptions = {
-    'Case Study': ['Management', 'Politics', 'Psychology', 'Satistics', 'Economics', 'Finance', 'Physics', 'Project', , 'Management ', 'Economics(calculative)'],
-    'Essay': ['Literature', 'History'],
-    'Research Paper': ['Accounts',
-      'Biology',
-      'Business',
-      'Business Law',
-      'Civil Eng',
-      'Classic',
-      'Computer Science',
-      'Economics',
-      'Economics (calculative)',
-      'Economics (theory)',
-      'Elect Eng',
-      'Electronics Eng',
-      'English Literature',
-      'Finance',
-      'Financial Management',
-      'Human Resource',
-      'Information Technology',
-      'International Relation',
-      'IT/Soft Eng',
-      'Law',
-      'Linux',
-      'Management',
-      'Marketing',
-      'MATLAB',
-      'Mechanical Engineering',
-      'Nursing',
-      'NVIVO',
-      'Oil & Gas Eng',
-      'Physics',
-      'Programming',
-      'Project Management',
-      'Psychology',
-      'Python',
-      'SAS',
-      'Satistics',
-      'SPSS'],
-    'Article': ['Technology', 'Health'],
-    'Blog Post': ['Lifestyle', 'Travel'],
-    'Poem': ['Romantic', 'Reflective'],
-    'Short Story': ['Fantasy', 'Drama']
-  };
 
   const areFieldsValid = () => {
     return (
@@ -131,12 +83,28 @@ const Calculator = () => {
 
   }
 
+  useEffect(() => {
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        setIsVisible(entry.isIntersecting);
+      });
+    }, { threshold: 0.5 });
+
+    if (calcRef.current) {
+      observer.observe(calcRef.current);
+    }
+    return () => observer.disconnect();
+  }, []);
+
+
   return (
-    <form className='px-6 sm:px-20 z-10 md:w-1/2 border-2 border-gray-100 rounded-3xl m-10 max-h-fit py-12 hover:shadow-sm'>
+    <form
+      ref={calcRef}
+      className={`transition-all transform duration-1000 bg-transparent px-6 sm:px-20 z-10 md:w-1/2 border-2 border-gray-100 rounded-3xl m-10 max-h-fit py-12 hover:shadow-sm ${isVisible ? 'opacity-100 translate-x-0 scale-100' : 'opacity-0 translate-x-10 scale-95'}`}>
       <div className="border-b border-gray-900/10 pb-6">
         <h2 className="text-3xl font-bold tracking-tight text-center leading-7 text-gray-900 sm:text-5xl  ">Get a Price Quote</h2>
-        <p className="mt-1 text-sm leading-6 text-gray-600">
-          This information will be displayed publicly so be careful what you share.
+        <p className="text-center mt-1 text-sm leading-6 text-gray-600">
+          We offer transparency, and authentic service
         </p>
       </div>
 
@@ -150,9 +118,9 @@ const Calculator = () => {
               className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
             >
               <option disabled selected style={{ display: 'none' }}>Academic Level</option>
-              <option>Undergrad</option>
-              <option>Masters</option>
-              <option>PHD</option>
+              {
+                academicLevelOptions.map((option) => <option>{option}</option>)
+              }
             </select>
           </div>
 
@@ -215,9 +183,9 @@ const Calculator = () => {
               className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
             >
               <option disabled selected style={{ display: 'none' }}>Deadline</option>
-              <option>1-3 days</option>
-              <option>5-7 days</option>
-              <option>15-30 days</option>
+              {
+                deadlineOptions.map((option) => <option>{option}</option>)
+              }
             </select>
           </div>
 
@@ -228,7 +196,7 @@ const Calculator = () => {
             type="submit"
             onClick={(e) => getPrice(e)}
             disabled={!areFieldsValid() || isLoading}
-            className={`rounded-md px-3 py-2 text-sm font-semibold text-white shadow-sm ${(areFieldsValid() || !isLoading) ? 'hover:bg-cyan-400': null} focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 ${(!areFieldsValid() || isLoading) ? 'bg-gray-300' : 'bg-btn-color'}`}
+            className={`rounded-md px-3 py-2 text-sm font-semibold text-white shadow-sm ${(areFieldsValid() || !isLoading) ? 'hover:bg-cyan-400' : null} focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 ${(!areFieldsValid() || isLoading) ? 'bg-gray-300' : 'bg-btn-color'}`}
           >
             {isLoading ? (
               <span className="flex items-center">

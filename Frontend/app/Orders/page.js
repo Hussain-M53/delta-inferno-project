@@ -1,8 +1,10 @@
 'use client'
+
 // export const metadata = {
 //   title: 'Orders',
 //   description: 'Built on Next 13',
 // }
+
 import { AuthContext } from '../context/AuthContext'
 import { useRouter } from 'next/navigation';
 import { useContext, useEffect } from 'react'
@@ -18,7 +20,7 @@ const Page = () => {
 
   }, [])
   return (
-    <div>{user.userName ? "user": 'no user'}</div>
+    <div>{user.userName ? "user" : 'no user'}</div>
   )
 }
 

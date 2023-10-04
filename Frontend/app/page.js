@@ -9,7 +9,7 @@ import WhyChooseUs from './components/Why-Choose-Us-Section'
 
 export default function Home() {
   return (
-    <main className="space-y-40">
+    <main className="space-y-10 overflow-x-hidden">
       {/* Hero Section */}
       <Hero />
       {/* Reviews Section*/}

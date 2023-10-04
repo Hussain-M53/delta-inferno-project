@@ -16,10 +16,10 @@ server.use(cors({
 
 server.use(express.json())
 
-server.use("/payment", PaymentRoute);
+server.use("/create-payment-intent", PaymentRoute);
 server.use("/get-quote", QuotationRoute);
 
-server.listen(process.env.PORT, () => {
+server.listen(process.env.PORT || 5000, () => {
     console.log(`Sever is listening on port ${process.env.PORT}`);
 })
 

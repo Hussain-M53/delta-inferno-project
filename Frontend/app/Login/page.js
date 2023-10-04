@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useContext, useState } from 'react'
+import { useContext, useState, useEffect } from 'react'
 import { signInWithEmailAndPass, signInWithGoogle } from '../utils/auth'
 import { AuthContext } from '../context/AuthContext'
 import { useRouter } from 'next/navigation';
@@ -52,6 +52,12 @@ const Page = () => {
       router.push('/');
     }
   }
+
+  useEffect(() => {
+    if (user.userName != '') {
+      router.push('/')
+    }
+  }, [])
 
   const handleChange = (e) => {
     setformData(prev => ({

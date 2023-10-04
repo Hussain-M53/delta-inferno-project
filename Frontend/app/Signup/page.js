@@ -57,6 +57,12 @@ const Page = () => {
     }
   }
 
+  useEffect(() => {
+    if (user.userName != '') {
+      router.push('/')
+    }
+  }, [])
+
   const handleChange = (e) => {
     setformData(prev => ({
       ...prev,

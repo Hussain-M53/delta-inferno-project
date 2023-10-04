@@ -1,7 +1,7 @@
 'use client'
 import Image from "next/image";
 import Link from "next/link";
-import Button from "../Button/login_signup_buton";
+import Button from "../Button";
 import { Popover, Transition } from '@headlessui/react';
 import { MenuIcon } from '@heroicons/react/outline';
 import { Fragment, useContext, useEffect, useState } from 'react';
@@ -41,7 +41,7 @@ const NavBar = () => {
       }
     });
 
-  }, [signedIn, user])
+  }, [signedIn])
 
   useEffect(() => {
     const handleScroll = () => {

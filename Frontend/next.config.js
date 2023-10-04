@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  
+
   async headers() {
     return [
       {
@@ -16,7 +16,7 @@ const nextConfig = {
   },
 
   images: {
-    domains: ["thumbs.dreamstime.com"], // Add your image domain here
+    domains: ["thumbs.dreamstime.com", "images.unsplash.com"], 
   },
 }
 
