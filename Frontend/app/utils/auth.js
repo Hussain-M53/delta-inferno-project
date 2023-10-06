@@ -22,7 +22,7 @@ export const createUser = async ({ userName, email, password }) => {
     await updateProfile(user, {
       displayName: userName,
     });
-
+    console.log('from auth create user: ', user)
     return user;
 
   } catch (error) {

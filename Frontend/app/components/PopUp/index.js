@@ -20,13 +20,12 @@ const PopUp = () => {
 
         const result = await response.json();
 
-        setPopUp({
-          ...prev,
+        setPopUp((prevData) => ({
+          ...prevData,
           'title': result.result.title,
           'bgColor': result.result.bgColor,
           'textColor': result.result.textColor,
-
-        });
+        }));
       } catch (error) {
         console.error('There has been a problem with your fetch operation:', error);
       }

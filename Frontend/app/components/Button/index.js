@@ -10,12 +10,12 @@ const Button = ({ text, setSignedIn }) => {
     const signOut = async (e) => {
         e.preventDefault();
         const response = await logOff();
+        console.log(response)
         if (response) {
             setSignedIn(false);
             setUser({
                 'userName': '',
                 'email': '',
-                'password': ''
             });
         }
     }

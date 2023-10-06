@@ -5,7 +5,8 @@ import { loadStripe } from '@stripe/stripe-js';
 
 const Form = () => {
   const [step, setStep] = useState(1);
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState({
+  });
 
   const [academicLevel, setAcademicLevel] = useState('Academic Level');
   const [deadline, setDeadline] = useState('Dealine');

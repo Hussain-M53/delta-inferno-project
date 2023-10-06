@@ -13,7 +13,6 @@ export default function OrderLayout({ children }) {
         if (user.userName == '') {
             router.push('/Login');
         }
-
     }, [])
 
     return (

@@ -8,8 +8,6 @@ import { Fragment, useContext, useEffect, useState } from 'react';
 import { AuthContext } from "@context/AuthContext";
 import { checkUserAuthentication } from "@utils/auth";
 
-
-
 const NavBar = () => {
 
   const [signedIn, setSignedIn] = useState(false);
@@ -26,7 +24,6 @@ const NavBar = () => {
   ].filter(Boolean);
 
   useEffect(() => {
-    console.log("nav bar useEffect called")
     checkUserAuthentication().then(currentUser => {
       if (currentUser) {
         console.log("From NavBar: User is signed in: ", currentUser);
