@@ -15,13 +15,15 @@ const ReviewCard = () => {
     ];
 
     return (
-        <div className="grid gap-2 px-20 sm:px-28 sm:flex sm:items-center sm:justify-evenly w-full bg-gray-900 relative md:h-40 py-14">
+        <div className="md:px-10 lg:px-20 py-8 sm:py-10 flex items-center justify-evenly w-full bg-gray-900 relative">
             {reviews.map((review, idx) => (
                 <Review key={idx} {...review} />
             ))}
             <Image src='assests/shape_01.svg' width={70} height={70} className='absolute left-0 top-0' />
             <Image src='assests/shape_01.svg' width={70} height={70} className='absolute right-0 bottom-0' />
-            <Image src='assests/shape_123.svg' width={70} height={70} className='absolute right-20 -top-2' />
+            <Image src='assests/shape_123.svg' width={70} height={70} className='absolute right-0 sm:right-20 -top-2' />
+            <Image src='/assests/bg-13.png' width={1000} height={1000} className='absolute inset-y-0' />
+
         </div>
     );
 }

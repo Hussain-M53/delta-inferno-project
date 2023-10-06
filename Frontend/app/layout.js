@@ -8,19 +8,23 @@ import PopUp from '@components/PopUp'
 
 // const inter = Inter({ subsets: ['latin'] })
 
-// export const metadata = {
-//   title: 'Expert Assignment Nation',
-//   description: 'Your Expert Content Writer',
-// }
+export const metadata = {
+  title: 'Expert Assignment Nation',
+  description: 'Your Expert Content Writer',
+}
 
 export default function RootLayout({ children }) {
 
   return (
     <html lang="en">
-      <head>Expert Assignment Nation</head>
+      <head>
+        <title>
+          Expert Assignment Nation
+        </title>
+      </head>
       <body >
         <AuthProvider>
-          <PopUp/>
+          <PopUp />
           <NavBar />
           {children}
           <Footer />

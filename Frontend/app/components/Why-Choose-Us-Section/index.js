@@ -48,7 +48,7 @@ const cardDetails = [
 
 const PromoCard = ({ item, index, isVisible }) => {
   return (
-    <div className={`flex flex-col items-center hover:bg-gray-100 hover:shadow-md space-y-2 border-2 rounded-lg border-gray-300 p-6 transition-all delay-${index * 100} duration-500 transform ${isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
+    <div className={`flex flex-col items-center hover:bg-cyan-100 hover:shadow-md space-y-2 border-2 rounded-lg border-gray-300 p-6 transition-all delay-${index * 100} duration-500 transform ${isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
       <div className='font-bold text-center'>{item.title}</div>
       <div className='text-center'>{item.icon}</div>
       <div className='text-center text-sm'>{item.desc}</div>
@@ -78,7 +78,7 @@ const WhyChooseUs = () => {
   return (
     <div className="min-h-fit" ref={ref}>
       <div className='relative' >
-        <Image src='assests/shape_142.svg' width={70} height={70} className='absolute right-60 top-0' />
+        <Image src='assests/shape_142.svg' width={70} height={70} className='absolute right-2 sm:right-20 md:right-40 lg:right-80 -top-8' />
         <h1 className="font-bold mb-4 text-center text-4xl">Why Choose Us</h1>
         <p className="text-center text-2xl">Smashing Stress, Unleashing Success: Welcome to the Assignment Wonderland!</p>
       </div>

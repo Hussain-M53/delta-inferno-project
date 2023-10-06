@@ -1,57 +1,34 @@
+'use client'
+import Image from 'next/image'
 import Link from 'next/link'
+import React, { useEffect, useState } from 'react'
 
 const CTA = () => {
-  return (
-    <div className="bg-white">
-      <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
-        <div className="relative isolate overflow-hidden bg-gray-900 px-6 pt-16 shadow-2xl sm:rounded-3xl sm:px-16 md:pt-24 lg:flex lg:gap-x-20 lg:px-24 lg:pt-0">
-          <svg
-            viewBox="0 0 1024 1024"
-            className="absolute left-1/2 top-1/2 -z-10 h-[64rem] w-[64rem] -translate-y-1/2 [mask-image:radial-gradient(closest-side,white,transparent)] sm:left-full sm:-ml-80 lg:left-1/4 lg:ml-0 lg:-translate-x-1/2 lg:translate-y-0"
-            aria-hidden="true"
-          >
-            <circle cx={512} cy={512} r={512} fill="url(#759c1415-0410-454c-8f7c-9a820de03641)" fillOpacity="0.7" />
-            <defs>
-              <radialGradient id="759c1415-0410-454c-8f7c-9a820de03641">
-                <stop stopColor="#3C3A3B" />
-                <stop offset={1} stopColor="#0E78B9" />
-              </radialGradient>
-            </defs>
-          </svg>
-          <div className="mx-auto max-w-md text-center lg:mx-0 lg:flex-auto lg:py-32 lg:text-left">
-            <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-              Boost your productivity.
-              <br />
-              Start using our services today.
-            </h2>
-            <p className="mt-6 text-lg leading-8 text-gray-300">
-              Ac euismod vel sit maecenas id pellentesque eu sed consectetur. Malesuada adipiscing sagittis vel nulla.
-            </p>
-            <div className="mt-10 flex items-center justify-center gap-x-6 lg:justify-start">
-              <Link
-                href="#"
-                className="rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-              >
-                Place Order Now
-              </Link>
-              <Link href="#" className="text-sm font-semibold leading-6 text-white">
-                Learn more <span aria-hidden="true">→</span>
-              </Link>
+    const [content, setContent] = useState({
+
+    })
+
+    useEffect(() => {
+
+    }, [])
+
+    return (
+        <div className='grid grid-cols-2 bg-btn-color w-9/10 h-60 md:h-72 rounded-xl mx-auto'>
+            <div className='col-span-1 p-8 mx-auto'>
+                <Image src='assests/ils_06.svg' width={400} height={400} className='' />
             </div>
-          </div>
-          <div className="relative mt-16 w-full lg:mt-8">
-            <iframe
-              className="object-cover w-full h-full"
-              src="https://www.youtube.com/embed/KJwYBJMSbPI?autoplay=1&mute=1"
-              title="YouTube video player"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            ></iframe>
-          </div>
+            <div className='col-span-1 p-8 flex flex-col justify-center space-y-4 items-start'>
+                <div className='font-bold text-xl sm:text-2xl md:text-4xl'>
+                    Ready for the help from essay writing service?
+                </div>
+                <Link href={'/Orders/new'}>
+                    <div className="flex w-30 h-10 justify-center items-center rounded-md bg-[#282425] px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm transition-transform duration-300 ease-in-out hover:bg-[#3C3A3B]">
+                        Place Your Order Now
+                    </div>
+                </Link>
+            </div>
         </div>
-      </div>
-    </div>
-  )
+    )
 }
 
 export default CTA

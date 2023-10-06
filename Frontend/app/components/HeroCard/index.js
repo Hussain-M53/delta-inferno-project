@@ -34,7 +34,7 @@ const Card = () => {
           transform: scale(1.05);
         }
       `}</style>
-      <div className="mx-auto max-w-2xl py-10 sm:py-10 lg:py-20">
+      <div className="mx-auto max-w-2xl py-10 lg:py-20">
         <div className="text-center">
           <h1 className=" text-3xl text-center lg:text-left font-bold text tracking-tight text-gray-900 sm:text-5xl">
             Elevate Your Learning Experience with
@@ -50,7 +50,7 @@ const Card = () => {
               Place your order now!
             </Link>
             <Link href="#" className="link text-sm font-semibold leading-6 text-gray-900 transition-transform duration-300 ease-in-out">
-              Learn more <span onClick = {() => console.log(user)} aria-hidden="true">→</span>
+              Sign-up Now <span onClick = {() => console.log(user)} aria-hidden="true">→</span>
             </Link>
           </div>
         </div>

@@ -1,10 +1,6 @@
 'use client'
-import Link from 'next/link';
 
-export const metadata = {
-  title: 'Orders',
-  description: 'Built on Next 13',
-}
+import Link from 'next/link';
 
 
 const Page = () => {

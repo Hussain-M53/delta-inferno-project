@@ -63,7 +63,7 @@ const FAQ = () => {
                     <div key={faq.id} className={`mb-4 bg-black/5 p-2  ${openId !== faq.id ? 'hover:bg-gray-900' : null} rounded-md ring-1 ring-black/10`}>
                         <button
                             onClick={() => toggleItem(faq.id)}
-                            className={`flex justify-between items-center w-full py-3 px-4 text-left font-semibold text-gray-800 transition dark:text-gray-200  ${openId === faq.id ? 'text-indigo-600 hover:text-indigo-500' : 'dark:hover:text-gray-400 hover:text-white'}`}
+                            className={`flex justify-between items-center w-full py-3 px-4 text-left font-semibold text-gray-800 transition dark:text-gray-200  ${openId === faq.id ? 'text-indigo-600 hover:text-indigo-500' : 'dark:hover:text-gray-400 hover:text-white '}`}
                         >
                             {faq.question}
                             <svg

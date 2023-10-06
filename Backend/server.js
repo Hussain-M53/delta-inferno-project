@@ -14,7 +14,14 @@ server.use(cors({
 
 server.use(express.json())
 
-server.get("/create-payment-session", async (req, res) => {
+server.use('/', (req, res) => {
+    res.json({
+        status_code: 200,
+        message: 'Greetings from Expert Assignment Nation Server'
+    })
+})
+
+server.use("/create-payment-session", async (req, res) => {
     const { Order_Details } = req.body;
 
     const line_items = {
@@ -34,7 +41,7 @@ server.get("/create-payment-session", async (req, res) => {
     res.redirect(303, session.url);
 });
 
-server.get("/get-quote", async (req, res, next) => {
+server.use("/get-quote", async (req, res, next) => {
     try {
         let workbook = new Excel.Workbook();
         await workbook.xlsx.readFile('./Pricing.xlsx');

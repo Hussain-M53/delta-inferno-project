@@ -100,7 +100,7 @@ const Calculator = () => {
   return (
     <form
       ref={calcRef}
-      className={`transition-all transform duration-1000 bg-transparent px-6 sm:px-20 z-10 md:w-1/2 border-2 border-gray-100 rounded-3xl m-10 max-h-fit py-12 hover:shadow-sm ${isVisible ? 'opacity-100 translate-x-0 scale-100' : 'opacity-0 translate-x-10 scale-95'}`}>
+      className={`bg-btn-color/10 transition-all transform duration-1000 px-6 sm:px-20 z-10 md:w-1/2 border-2 border-gray-100 rounded-3xl mt-4 max-h-fit py-10 hover:shadow-sm ${isVisible ? 'opacity-100 translate-x-0 scale-100' : 'opacity-0 translate-x-10 scale-95'}`}>
       <div className="border-b border-gray-900/10 pb-6">
         <h2 className="text-3xl font-bold tracking-tight text-center leading-7 text-gray-900 sm:text-5xl  ">Get a Price Quote</h2>
         <p className="text-center mt-1 text-sm leading-6 text-gray-600">
@@ -190,13 +190,13 @@ const Calculator = () => {
           </div>
 
         </div>
-        <div className="mt-6 flex items-center justify-between gap-x-6">
+        <div className="border-t border-gray-900/10 pt-6 mt-6 flex items-center justify-between gap-x-6">
           <h1 className='font-bold text-2xl'>$ {calculatedPrice.total_price}</h1>
           <button
             type="submit"
             onClick={(e) => getPrice(e)}
             disabled={!areFieldsValid() || isLoading}
-            className={`rounded-md px-3 py-2 text-sm font-semibold text-white shadow-sm ${(areFieldsValid() || !isLoading) ? 'hover:bg-cyan-400' : null} focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 ${(!areFieldsValid() || isLoading) ? 'bg-gray-300' : 'bg-btn-color'}`}
+            className={`rounded-md px-3 py-2 text-sm font-semibold text-white shadow-sm ${(areFieldsValid() && !isLoading) ? 'hover:bg-cyan-400' : null} focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-600 ${(!areFieldsValid() || isLoading) ? 'bg-gray-300' : 'bg-btn-color'}`}
           >
             {isLoading ? (
               <span className="flex items-center">
