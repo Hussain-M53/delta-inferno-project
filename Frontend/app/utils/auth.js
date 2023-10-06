@@ -4,7 +4,6 @@ import { signOut, signInWithRedirect, onAuthStateChanged, GoogleAuthProvider, si
 export const signInWithEmailAndPass = async ({ email, password }) => {
   try {
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
-    console.log('from auth : ', userCredential)
     return userCredential;
 
   } catch (error) {
@@ -22,7 +21,6 @@ export const createUser = async ({ userName, email, password }) => {
     await updateProfile(user, {
       displayName: userName,
     });
-    console.log('from auth create user: ', user)
     return user;
 
   } catch (error) {
@@ -50,14 +48,14 @@ export const signInWithGoogle = async () => {
 
 export const logOff = async () => {
   try {
-    const result = await signOut(auth);
-    alert('signed out successfully')
-    return result
+    await signOut(auth);
+    return true
   }
   catch (error) {
     const errorCode = error.code;
     const errorMessage = error.message;
     alert(errorMessage)
+    return false
   }
 }
 

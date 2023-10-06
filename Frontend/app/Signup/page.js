@@ -25,7 +25,6 @@ const Page = () => {
     const currentUser = await createUser(formData);
     if (currentUser) {
       alert(`User created sucessfully: ${currentUser}`)
-
       setUser({
         "userName": currentUser.displayName,
         "email": currentUser.email,
@@ -41,7 +40,6 @@ const Page = () => {
     const currentUser = await signInWithGoogle();
     if (currentUser) {
       alert(`${currentUser.displayName} Logged in using Google sucessfully`)
-
       setUser({
         "userName": currentUser.displayName,
         "email": currentUser.email,

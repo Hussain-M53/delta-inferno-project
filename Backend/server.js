@@ -8,13 +8,13 @@ const server = express();
 server.use(express.urlencoded({ extended: true }))
 
 server.use(cors({
-    origin: ['http://localhost:3000', 'https://www.expertassignmentnation.com'],
+    origin: ['http://localhost:3000'],
     credentials: true,
 }))
 
 server.use(express.json())
 
-server.use('/', (req, res) => {
+server.get('/', (req, res) => {
     res.json({
         status_code: 200,
         message: 'Greetings from Expert Assignment Nation Server'

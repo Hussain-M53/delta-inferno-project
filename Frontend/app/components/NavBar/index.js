@@ -10,7 +10,6 @@ import { checkUserAuthentication } from "@utils/auth";
 
 const NavBar = () => {
 
-  const [signedIn, setSignedIn] = useState(false);
   const { user, setUser } = useContext(AuthContext);
   const [scrolled, setScrolled] = useState(false);
 
@@ -19,26 +18,21 @@ const NavBar = () => {
     { href: '/About-Us', label: 'About Us' },
     { href: '/Services', label: 'Services' },
     { href: '/Why-Choose-Us', label: 'Why Choose Us', md: true },
-    signedIn ? { href: '/Orders', label: 'Orders', md: true } : null,
+    user.userName ? { href: '/Orders', label: 'Orders', md: true } : null,
     { href: '/Blog', label: 'Blog' },
   ].filter(Boolean);
 
   useEffect(() => {
     checkUserAuthentication().then(currentUser => {
       if (currentUser) {
-        console.log("From NavBar: User is signed in: ", currentUser);
-        setSignedIn(true);
         setUser({
           "userName": currentUser.displayName,
           "email": currentUser.email,
         });
-      } else {
-        setSignedIn(false);
-        console.log("From NavBar: No user is signed in.");
-      }
+      } 
     });
 
-  }, [signedIn])
+  }, [user.userName])
 
   useEffect(() => {
     const handleScroll = () => {
@@ -59,7 +53,7 @@ const NavBar = () => {
     <div className={`z-50 w-full flex h-20 justify-between items-center px-6 ${bgColor} ${textColor} lg:sticky lg:top-0`}>
       <Link href={'/'} className="ml-10">
         <Image
-          src={`/assests/${scrolled ? 'logo.png' :'secondary_logo.svg'}`}
+          src={`/assests/${scrolled ? 'logo.png' : 'secondary_logo.svg'}`}
           alt="Logo"
           width={90}
           height={90}
@@ -78,8 +72,8 @@ const NavBar = () => {
 
       <div className="flex space-x-4 sm:mr-10">
         <div className={`flex space-x-4 ${textColor}`}>
-          {signedIn ? (
-            <Button setSignedIn={setSignedIn} text={'Sign Out'} />
+          {user.userName ? (
+            <Button text={'Sign Out'} />
           ) : (
             <>
               <Button text={'Log In'} />

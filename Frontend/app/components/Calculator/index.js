@@ -60,13 +60,12 @@ const Calculator = () => {
       "Deadline": deadline,
     }
     try {
-      const url = new URL('https://delta-inferno-project-pijr.vercel.app/get-quote');
+      const url = new URL('http://localhost:5000/get-quote');
       url.search = new URLSearchParams(prompt).toString();
       const response = await fetch(url, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-
         },
       });
 
@@ -165,7 +164,7 @@ const Calculator = () => {
 
           <div className="mt-2 sm:col-span-3 sm:col-start-1">
             <input
-              type="text"
+              type="number"
               id="WordLimit"
               name="WordLimit"
               value={wordLimit}

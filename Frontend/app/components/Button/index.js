@@ -4,15 +4,14 @@ import React, { useContext } from 'react'
 import { logOff } from '../../utils/auth'
 import { AuthContext } from '../../context/AuthContext'
 
-const Button = ({ text, setSignedIn }) => {
+const Button = ({ text}) => {
     const { setUser } = useContext(AuthContext);
 
     const signOut = async (e) => {
         e.preventDefault();
         const response = await logOff();
-        console.log(response)
         if (response) {
-            setSignedIn(false);
+            alert('signed out successfully')
             setUser({
                 'userName': '',
                 'email': '',

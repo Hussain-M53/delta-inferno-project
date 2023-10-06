@@ -22,7 +22,6 @@ const Page = () => {
     e.preventDefault();
     setIsLoading(true);
     const currentUser = await signInWithEmailAndPass(formData);
-    console.log('from login : ', currentUser)
     if (currentUser) {
       alert(`User logged in sucessfully: ${currentUser.user.displayName}`)
       setUser({
@@ -39,12 +38,10 @@ const Page = () => {
     const currentUser = await signInWithGoogle();
     if (currentUser) {
       alert(`${currentUser.user.displayName} Logged in using Google sucessfully`)
-
       setUser({
         "userName": currentUser.user.displayName,
         "email": currentUser.user.email,
       });
-
       router.push('/');
     }
   }
