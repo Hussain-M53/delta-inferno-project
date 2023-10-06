@@ -2,7 +2,7 @@ require('dotenv/config');
 const express = require('express');
 const cors = require('cors');
 const Excel = require('exceljs');
-
+const path = require('path');
 const server = express();
 
 server.use(express.urlencoded({ extended: true }))
@@ -44,7 +44,8 @@ server.use("/create-payment-session", async (req, res) => {
 server.use("/get-quote", async (req, res, next) => {
     try {
         let workbook = new Excel.Workbook();
-        await workbook.xlsx.readFile('./Pricing.xlsx');
+        const filePath = path.join(__dirname, 'Pricing.xlsx');
+        await workbook.xlsx.readFile(filePath);
         let worksheet = workbook.getWorksheet(1);
         const prompt = req.query;
         console.log(prompt)
@@ -111,6 +112,6 @@ server.use("/get-quote", async (req, res, next) => {
 });
 
 server.listen(process.env.PORT || 5000, () => {
-    console.log(`Sever is listening on port ${process.env.PORT}`);
+    console.log(`Server is listening on port ${process.env.PORT}`);
 })
 

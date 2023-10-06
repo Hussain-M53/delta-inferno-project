@@ -66,6 +66,7 @@ const Calculator = () => {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
+
         },
       });
 
