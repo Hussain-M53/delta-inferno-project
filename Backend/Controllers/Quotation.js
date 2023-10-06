@@ -3,7 +3,7 @@ const Excel = require('exceljs');
 exports.calculate_price = async (req, res, next) => {
     try {
         let workbook = new Excel.Workbook();
-        await workbook.xlsx.readFile('C:/Users/Hussain Murtaza/OneDrive - Institute of Business Administration/Documents old version/Builds/delta-inferno-project/Backend/Controllers/Pricing.xlsx');
+        await workbook.xlsx.readFile('/Controllers/Pricing.xlsx');
         let worksheet = workbook.getWorksheet(1);
         const prompt = req.query;
         console.log(prompt)
