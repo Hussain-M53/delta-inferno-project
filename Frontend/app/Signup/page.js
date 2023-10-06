@@ -2,19 +2,14 @@
 
 import { AuthContext } from '../context/AuthContext'
 import { createUser, signInWithGoogle } from '../utils/auth'
-import { useContext, useState,useEffect } from 'react'
+import { useContext, useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation';
-
-
-// export const metadata = {
-//   title: 'Sign Up - EAN',
-//   description: 'Built on Next 13',
-// }
 
 const Page = () => {
 
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const { user, setUser } = useContext(AuthContext);
 
   const [formData, setformData] = useState({
     'userName': '',
@@ -22,7 +17,6 @@ const Page = () => {
     'password': ''
   })
 
-  const { setUser } = useContext(AuthContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -33,9 +27,10 @@ const Page = () => {
       alert(`User created sucessfully: ${currentUser}`)
 
       setUser({
-        "userName": currentUser.displayName || 'Hussain',
+        "userName": currentUser.displayName,
         "email": currentUser.email,
       });
+
       router.push('/');
     }
     setIsLoading(false);
@@ -58,6 +53,7 @@ const Page = () => {
   }
 
   useEffect(() => {
+    console.log(user);
     if (user.userName != '') {
       router.push('/')
     }

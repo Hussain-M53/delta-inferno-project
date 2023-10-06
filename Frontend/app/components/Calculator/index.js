@@ -60,7 +60,7 @@ const Calculator = () => {
       "Deadline": deadline,
     }
     try {
-      const url = new URL('http://localhost:5000/get-quote');
+      const url = new URL('http://https://delta-inferno-project-pijr.vercel.app:5000/get-quote');
       url.search = new URLSearchParams(prompt).toString();
       const response = await fetch(url, {
         method: 'GET',

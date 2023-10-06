@@ -6,28 +6,23 @@ import { signInWithEmailAndPass, signInWithGoogle } from '../utils/auth'
 import { AuthContext } from '../context/AuthContext'
 import { useRouter } from 'next/navigation';
 
-// export const metadata = {
-//   title: 'Log In - EAN',
-//   description: 'Built on Next 13',
-// }
-
 const Page = () => {
 
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const { user, setUser } = useContext(AuthContext);
 
   const [formData, setformData] = useState({
     'email': '',
     'password': ''
   })
 
-  const { user, setUser } = useContext(AuthContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
     const currentUser = await signInWithEmailAndPass(formData);
-    console.log('from login : ' , currentUser)
+    console.log('from login : ', currentUser)
     if (currentUser) {
       alert(`User logged in sucessfully: ${currentUser.user.displayName}`)
       setUser({
