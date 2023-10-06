@@ -58,7 +58,7 @@ const Page = () => {
     const fetchData = async () => {
       try {
         const query = '*[_type == "post"]';
-        const url = `https://qjbj0yv5.api.sanity.io/v1/data/query/production?query=${encodeURIComponent(query)}`;
+        const url = `https://${process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}.api.sanity.io/v1/data/query/${process.env.NEXT_PUBLIC_SANITY_DATASET}?query=${encodeURIComponent(query)}`;
 
         const response = await fetch(url);
         if (!response.ok) throw new Error('Network response was not ok');
@@ -73,8 +73,8 @@ const Page = () => {
             body: post.body.map(block => {
               if (block._type === 'block') {
                 return block.children.map(child => {
-                  let text = child.text; 
-                  let styleTag = 'p'; 
+                  let text = child.text;
+                  let styleTag = 'p';
 
                   if (block.style) {
                     switch (block.style) {
@@ -127,7 +127,7 @@ const Page = () => {
         </div>
         <div className="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-t border-gray-200 pt-10 sm:mt-16 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
           {posts.map((post, idx) => (
-            <article key={idx} className="shadow-lg flex max-w-xl flex-col items-start justify-between border rounded-lg border-gray-100 p-8">
+            <article key={idx} className="hover:bg-black hover:text-white shadow-lg flex max-w-xl flex-col items-start justify-between border rounded-lg border-gray-100 p-8">
               <div className="flex items-center gap-x-4 text-xs">
                 <div className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100">
                   {post.category}

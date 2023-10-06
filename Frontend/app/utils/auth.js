@@ -1,9 +1,10 @@
 import { auth } from './firebase_options';
-import { signOut, signInWithRedirect, onAuthStateChanged, GoogleAuthProvider, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
+import { signOut, signInWithRedirect, onAuthStateChanged, GoogleAuthProvider, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 
-export const signInWithEmailAndPass = async ({ userName, email, password }) => {
+export const signInWithEmailAndPass = async ({ email, password }) => {
   try {
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    console.log('from auth : ', userCredential)
     return userCredential;
 
   } catch (error) {
@@ -18,10 +19,9 @@ export const createUser = async ({ userName, email, password }) => {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
 
-    await user.updateProfile({
+    await updateProfile(user, {
       displayName: userName,
     });
-    await user.reload();
 
     return user;
 

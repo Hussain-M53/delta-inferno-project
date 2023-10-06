@@ -1,19 +1,19 @@
 'use client'
-import { useState, useEffect, useContext } from 'react';
-import { AuthContext } from '@context/AuthContext.js';
-import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import { serviceOptions, paperOptions, academicLevelOptions, deadlineOptions, citationOptions, spacingOptions } from '@utils/FieldDetails';
-
+import { loadStripe } from '@stripe/stripe-js';
 
 const Form = () => {
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({});
-  const { user } = useContext(AuthContext)
-  const router = useRouter();
 
+  const [academicLevel, setAcademicLevel] = useState('Academic Level');
+  const [deadline, setDeadline] = useState('Dealine');
   const [typeOfService, setTypeOfService] = useState('Type of Service');
   const [typeOfPaper, setTypeOfPaper] = useState('Type of Paper');
   const [subject, setSubject] = useState('Subject');
+  const [wordLimit, setWordLimit] = useState('Word Limit');
+
 
   const updateFormData = (name, value) => {
     setFormData((prevData) => ({
@@ -30,6 +30,27 @@ const Form = () => {
   const getSubjectOptions = () => {
     if (typeOfPaper === 'Type of Paper') return [];
     return paperOptions[typeOfPaper] || [];
+  }
+
+  const handleAcademicLevelChange = (e) => {
+    setAcademicLevel(e.target.value);
+    handleDropdownChange("Academic Level", e.target.value);
+  }
+
+  const handleDeadlineChange = (e) => {
+    setDeadline(e.target.value);
+    handleDropdownChange("Deadline", e.target.value);
+  }
+
+  const handleSubjectChange = (e) => {
+    setSubject(e.target.value);
+    handleDropdownChange("Subject", e.target.value);
+  }
+
+  const handleWordLimitChange = (e) => {
+    setWordLimit(e.target.value);
+    handleDropdownChange("Word Limit", e.target.value);
+
   }
 
   const handleTypeOfServiceChange = (e) => {
@@ -64,14 +85,34 @@ const Form = () => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    console.log(formData)
+    makePayment()
   };
 
-  useEffect(() => {
-    if (user.userName != '') {
-      router.push('/Login');
+  const makePayment = async () => {
+    const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
+    const body = {
+      'Order_Details': formData
     }
-  }, [])
+    const headers = {
+      'Content-Type': 'application/json'
+    }
+
+    const response = await fetch('www.localhost:5000/create-payment-session', {
+      method: 'POST',
+      headers: headers,
+      body: JSON.stringify(body)
+    })
+
+    const session = await response.json();
+
+    const result = stripe.redirectToCheckout({
+      sessionId: session.id,
+    })
+
+    if (result.error) {
+      console.log(result.error)
+    }
+  }
 
   return (
     <form onSubmit={handleFormSubmit} className='mt-10 '>
@@ -207,7 +248,8 @@ const Form = () => {
               <select
                 id="AcademicLevel"
                 name="AcademicLevel"
-                onChange={handleFormChange}
+                value={academicLevel}
+                onChange={(e) => handleAcademicLevelChange(e)}
                 className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
               >
                 <option disabled selected style={{ display: 'none' }}>Academic Level</option>
@@ -248,7 +290,7 @@ const Form = () => {
                 id="Subject"
                 name="Subject"
                 value={subject}
-                onChange={(e) => {setSubject(e.target.value); handleFormChange}}
+                onChange={(e) => { handleSubjectChange(e) }}
                 className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
               >
                 <option disabled selected style={{ display: 'none' }}>Subject</option>
@@ -261,8 +303,9 @@ const Form = () => {
                 type="text"
                 id="WordLimit"
                 name="Word Limit"
+                value={wordLimit}
                 placeholder="Word Limit"
-                onChange={handleFormChange}
+                onChange={(e) => handleWordLimitChange(e)}
                 className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
               />
             </div>
@@ -271,7 +314,8 @@ const Form = () => {
               <select
                 id="Deadline"
                 name="Deadline"
-                onChange={handleFormChange}
+                value={deadline}
+                onChange={(e) => handleDeadlineChange(e)}
                 className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
               >
                 <option disabled selected style={{ display: 'none' }}>Deadline</option>
@@ -331,7 +375,7 @@ const Form = () => {
             </div>
 
             <div className='mt-4 flex sm:col-span-2'>
-              <input type="checkbox" name="Terms And Conditions" onChange={ handleFormChange} />
+              <input type="checkbox" name="Terms And Conditions" onChange={handleFormChange} />
               <div className='ml-2 text-gray-400'>
                 By clicking the submit button, I agree to terms & conditions.
                 <span className='text-red-500'>

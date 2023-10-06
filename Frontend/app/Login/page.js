@@ -27,6 +27,7 @@ const Page = () => {
     e.preventDefault();
     setIsLoading(true);
     const currentUser = await signInWithEmailAndPass(formData);
+    console.log('from login : ' , currentUser)
     if (currentUser) {
       alert(`User logged in sucessfully: ${currentUser.user.displayName}`)
       setUser({
