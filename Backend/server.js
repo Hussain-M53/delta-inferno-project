@@ -1,8 +1,6 @@
 require('dotenv/config');
 const express = require('express');
 const cors = require('cors');
-const QuotationRoute = require('./Routes/QuotationRoute')
-const PaymentRoute = require('./Routes/PaymentRoute')
 const Excel = require('exceljs');
 
 const server = express();
