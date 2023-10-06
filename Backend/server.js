@@ -8,7 +8,7 @@ const server = express();
 server.use(express.urlencoded({ extended: true }))
 
 server.use(cors({
-    origin: ['http://localhost:3000'],
+    origin: ['https://www.expertassignmentnation.com'],
     credentials: true,
 }))
 
