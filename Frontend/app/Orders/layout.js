@@ -4,12 +4,7 @@ import { useRouter } from 'next/navigation';
 import { AuthContext } from '../context/AuthContext'
 
 
-// export const metadata = {
-//     title: 'Order . Expert Assignment Nation',
-//     description: 'Your Expert Content Writer',
-// }
-
-export default function BlogLayout({ children }) {
+export default function OrderLayout({ children }) {
 
     const router = useRouter();
     const { user } = useContext(AuthContext);
