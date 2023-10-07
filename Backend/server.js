@@ -45,8 +45,8 @@ server.use("/create-payment-session", async (req, res) => {
         payment_method_types: ['card'],
         line_items: line_items,
         mode: 'payment',
-        success_url: 'http://localhost:3000/Orders',
-        cancel_url: 'http://localhost:3000/Orders/error',
+        success_url: 'https://www.expertassignmentnation.com/Orders',
+        cancel_url: 'https://www.expertassignmentnation.com/Orders/new',
     });
 
     res.json({ sessionId: session.id });
