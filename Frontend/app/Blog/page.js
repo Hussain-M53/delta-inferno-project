@@ -117,7 +117,7 @@ const Page = () => {
 
 
   return (
-    <div className="bg-white py-24 sm:py-32 ">
+    <div className="bg-white py-12 sm:py-24">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-2xl lg:mx-0">
           <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Blogs For You</h2>
@@ -125,7 +125,7 @@ const Page = () => {
             Learn how to grow your business with our expert advice in brand awareness.
           </p>
         </div>
-        <div className="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-t border-gray-200 pt-10 sm:mt-16 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+        <div className="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-8 border-t border-gray-200 pt-10 sm:mt-12 sm:pt-12 lg:mx-0 lg:max-w-none lg:grid-cols-3">
           {posts.map((post, idx) => (
             <article key={idx} className="hover:bg-cyan-100 shadow-lg flex max-w-xl flex-col items-start justify-between border rounded-lg border-gray-100 p-8">
               <div className="flex items-center gap-x-4 text-xs">

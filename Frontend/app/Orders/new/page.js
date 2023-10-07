@@ -4,23 +4,89 @@ import { serviceOptions, paperOptions, academicLevelOptions, deadlineOptions, ci
 import { loadStripe } from '@stripe/stripe-js';
 
 const Form = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const [step, setStep] = useState(1);
-  const [formData, setFormData] = useState({
-  });
-
+  const [formData, setFormData] = useState({});
+  const [calculatedPrice, setCalculatedPrice] = useState(0);
   const [academicLevel, setAcademicLevel] = useState('Academic Level');
-  const [deadline, setDeadline] = useState('Dealine');
+  const [deadline, setDeadline] = useState('Deadline');
   const [typeOfService, setTypeOfService] = useState('Type of Service');
   const [typeOfPaper, setTypeOfPaper] = useState('Type of Paper');
   const [subject, setSubject] = useState('Subject');
-  const [wordLimit, setWordLimit] = useState('Word Limit');
-
+  const [wordLimit, setWordLimit] = useState(null);
 
   const updateFormData = (name, value) => {
     setFormData((prevData) => ({
       ...prevData,
       [name]: value
     }));
+  };
+
+  const getPrice = async () => {
+    const prompt = {
+      "Academic Level": academicLevel,
+      "Type of Service": typeOfService,
+      "Type of Paper": typeOfPaper,
+      "Subject": subject,
+      "Word Limit": wordLimit,
+      "Deadline": deadline,
+    }
+    try {
+      const url = new URL('https://delta-inferno-project-pijr.vercel.app/get-quote');
+      url.search = new URLSearchParams(prompt).toString();
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      const data = await response.json();
+      setCalculatedPrice(data.total_price);
+    } catch (error) {
+      console.error('Fetch Error:', error);
+    }
+  }
+
+  const validForPayment = () => {
+    return (
+      academicLevel !== 'Academic Level' &&
+      typeOfService !== 'Type of Service' &&
+      typeOfPaper !== 'Type of Paper' &&
+      subject !== 'Subject' &&
+      wordLimit &&
+      deadline !== 'Deadline' &&
+      formData['First Name'] != '' &&
+      formData['Last Name'] != '' &&
+      formData['Date'] != '' &&
+      formData['Contact Number'] != '' &&
+      formData['Personal Email'] != '' &&
+      formData['University Name'] != '' &&
+      formData['University ID'] != '' &&
+      formData['University Email'] != '' &&
+      formData['Assignment Topic'] != '' &&
+      formData['Additional Information'] != '' &&
+      formData['Citation'] != '' &&
+      formData['Spacing'] != '' &&
+      formData['File'] != '' &&
+      formData['Terms And Conditions'] != '' &&
+      formData['Digital Signature'] != ''
+    );
+  }
+
+  const areFieldsValid = () => {
+    return (
+      (academicLevel !== 'Academic Level') &&
+      (typeOfService !== 'Type of Service') &&
+      (typeOfPaper !== 'Type of Paper') &&
+      (subject !== 'Subject') &&
+      wordLimit &&
+      (deadline !== 'Deadline')
+    );
   };
 
   const getTypeOfPaperOptions = () => {
@@ -34,24 +100,34 @@ const Form = () => {
   }
 
   const handleAcademicLevelChange = (e) => {
+    if (areFieldsValid()) {
+      getPrice();
+    }
     setAcademicLevel(e.target.value);
     handleDropdownChange("Academic Level", e.target.value);
   }
 
   const handleDeadlineChange = (e) => {
+    if (areFieldsValid()) {
+      getPrice();
+    }
     setDeadline(e.target.value);
     handleDropdownChange("Deadline", e.target.value);
   }
 
   const handleSubjectChange = (e) => {
+    if (areFieldsValid()) {
+      getPrice();
+    }
     setSubject(e.target.value);
     handleDropdownChange("Subject", e.target.value);
   }
 
   const handleWordLimitChange = (e) => {
-    setWordLimit(e.target.value);
+    if (areFieldsValid()) {
+      getPrice();
+    }
     handleDropdownChange("Word Limit", e.target.value);
-
   }
 
   const handleTypeOfServiceChange = (e) => {
@@ -90,6 +166,10 @@ const Form = () => {
   };
 
   const makePayment = async () => {
+    formData['Fee'] = calculatedPrice;
+    console.log(formData)
+    setIsLoading(true);
+
     const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
     const body = {
       'Order_Details': formData
@@ -98,21 +178,22 @@ const Form = () => {
       'Content-Type': 'application/json'
     }
 
-    const response = await fetch('www.localhost:5000/create-payment-session', {
+    const response = await fetch('https://delta-inferno-project-pijr.vercel.app/create-payment-session', {
       method: 'POST',
       headers: headers,
       body: JSON.stringify(body)
     })
 
-    const session = await response.json();
-
+    const {sessionId} = await response.json();
+    console.log('Response from server:', { sessionId });
     const result = stripe.redirectToCheckout({
-      sessionId: session.id,
+      sessionId
     })
 
     if (result.error) {
       console.log(result.error)
     }
+    setIsLoading(false);
   }
 
   return (
@@ -263,7 +344,7 @@ const Form = () => {
             <div className="mt-2 sm:col-span-1">
               <select
                 id="TypeOfService"
-                name="TypeOfService"
+                name="Type of Service"
                 value={typeOfService}
                 onChange={(e) => handleTypeOfServiceChange(e)}
                 className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
@@ -276,7 +357,7 @@ const Form = () => {
             <div className="mt-2 sm:col-span-1 sm:col-start-1">
               <select
                 id="TypeOfPaper"
-                name="TypeOfPaper"
+                name="Type of Paper"
                 value={typeOfPaper}
                 onChange={(e) => handleTypeOfPaperChange(e)}
                 className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
@@ -301,12 +382,13 @@ const Form = () => {
 
             <div className="mt-2 sm:col-span-1 sm:col-start-1">
               <input
-                type="text"
+                type="number"
                 id="WordLimit"
                 name="Word Limit"
                 value={wordLimit}
                 placeholder="Word Limit"
-                onChange={(e) => handleWordLimitChange(e)}
+                onChange={(e) => setWordLimit(e.target.value)}
+                onBlur={(e) => handleWordLimitChange(e)}
                 className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
               />
             </div>
@@ -361,6 +443,10 @@ const Form = () => {
               </select>
             </div>
 
+            <div className="mt-2 sm:col-span-1 w-full text-white py-1.5">
+              <div>Estimated Price - $ {calculatedPrice}</div>
+            </div>
+
             <div className='mt-4 sm:col-span-2'>
               <div className='text-gray-400 text-sm mb-1'>
                 Please provide any additional details about your assignment
@@ -398,9 +484,23 @@ const Form = () => {
             <div onClick={handleBack} className="w-full flex justify-center items-center rounded-md bg-btn-color px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm transition-transform duration-300 ease-in-out hover:bg-cyan-400">
               Back
             </div>
-            <div onClick={handleFormSubmit} className="w-full flex justify-center items-center rounded-md bg-red-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm transition-transform duration-300 ease-in-out hover:bg-red-400">
-              Proceed To Payment
-            </div>
+            <button
+              type="submit"
+              disabled={!validForPayment()}
+              className={`w-full flex justify-center items-center rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm transition-transform duration-300 ease-in-out hover:bg-red-400 
+        ${validForPayment() ? 'bg-red-600 text-white' : 'bg-gray-400 text-gray-500 pointer-events-none opacity-50'}`}
+            >
+              {isLoading ? (
+                <span className="flex items-center">
+                  <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 2.21.896 4.21 2.344 5.648l2.657-2.357z"></path>
+                  </svg>
+                  Processing...
+                </span>
+              )
+                : 'Proceed to Payment'}
+            </button>
           </div>
 
         </div>

@@ -1,7 +1,6 @@
 'use client'
-import { useState, useEffect, useRef, useContext } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { AuthContext } from '@context/AuthContext';
 
 const Card = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -12,16 +11,14 @@ const Card = () => {
       entries.forEach(entry => {
         setIsVisible(entry.isIntersecting);
       });
-    }, { threshold: 0.5 }); // adjust the threshold value according to your needs
+    }, { threshold: 0.5 }); 
 
     if (cardRef.current) {
       observer.observe(cardRef.current);
     }
-    // Still disconnect the observer on component unmount to avoid memory leaks.
     return () => observer.disconnect();
   }, []);
 
-  const { user } = useContext(AuthContext);
 
   return (
     <div
@@ -46,11 +43,11 @@ const Card = () => {
             Navigating Excellence: Trusted and Affordable Assignment Help Services.
           </p>
           <div className="mt-10 flex items-center justify-center gap-x-6">
-            <Link href={user.userName == '' ? '/Login' : 'Orders/new'} className="link rounded-md bg-btn-color px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm transition-transform duration-300 ease-in-out hover:bg-cyan-400">
+            <Link href={'Orders/new'} className="link rounded-md bg-btn-color px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm transition-transform duration-300 ease-in-out hover:bg-cyan-400">
               Place your order now!
             </Link>
-            <Link href="#" className="link text-sm font-semibold leading-6 text-gray-900 transition-transform duration-300 ease-in-out">
-              Sign-up Now <span onClick = {() => console.log(user)} aria-hidden="true">→</span>
+            <Link href="/Signup" className="link text-sm font-semibold leading-6 text-gray-900 transition-transform duration-300 ease-in-out">
+              Sign-up Now →
             </Link>
           </div>
         </div>

@@ -1,9 +1,21 @@
 'use client'
 
 import Link from 'next/link';
+import { AuthContext } from '../context/AuthContext'
+import { useEffect, useContext } from 'react';
+import { useRouter } from 'next/navigation';
 
 
 const Page = () => {
+
+  const { user } = useContext(AuthContext);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (user.userName == '') {
+      router.push('/Login');
+    }
+  }, [])
 
   return (
     <div className='mt-10 w-4/5 mx-auto'>

@@ -4,6 +4,7 @@ const cors = require('cors');
 const Excel = require('exceljs');
 const path = require('path');
 const server = express();
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 server.use(express.urlencoded({ extended: true }))
 
@@ -23,22 +24,32 @@ server.get('/', (req, res) => {
 
 server.use("/create-payment-session", async (req, res) => {
     const { Order_Details } = req.body;
+    console.log(Order_Details)
 
-    const line_items = {
-        currency: 'usd',
-        product_data: 'Order_Details',
-        unit_amount: Order_Details.fee * 100,
+    const { Fee, ...productData } = Order_Details;
+
+    const line_items = [{
+        price_data: {
+            currency: 'usd',
+            product_data: {
+                name: productData['First Name'],
+                metadata: productData
+            },
+            unit_amount: Order_Details.Fee * 100,
+        },
         quantity: 1,
-    }
+    }];
+
+
     const session = await stripe.checkout.sessions.create({
-        payment_method_type: ['card'],
+        payment_method_types: ['card'],
         line_items: line_items,
         mode: 'payment',
-        success_url: 'localhost:3000/Orders',
-        cancel_url: 'localhost:3000/Orders/error',
+        success_url: 'http://localhost:3000/Orders',
+        cancel_url: 'http://localhost:3000/Orders/error',
     });
 
-    res.redirect(303, session.url);
+    res.json({ sessionId: session.id });
 });
 
 server.use("/get-quote", async (req, res, next) => {
@@ -81,13 +92,10 @@ server.use("/get-quote", async (req, res, next) => {
                     if (columnName) {
                         let cellValue = row.getCell(columnName).value;
                         if (cellValue && typeof cellValue === 'object' && 'result' in cellValue) {
-                            // Handle case where cellValue is an object with a result key
                             price = cellValue.result * Number(prompt['Word Limit']);
                         } else if (cellValue != null) {
-                            // Handle case where cellValue is a direct value
                             price = cellValue * Number(prompt['Word Limit']);
                         } else {
-                            // Handle case where cellValue is undefined or null
                             console.log('Value is undefined or null for columnName:', columnName);
                         }
                     }

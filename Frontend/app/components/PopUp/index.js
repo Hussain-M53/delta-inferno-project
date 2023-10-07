@@ -19,12 +19,11 @@ const PopUp = () => {
         if (!response.ok) throw new Error('Network response was not ok');
 
         const result = await response.json();
-
         setPopUp((prevData) => ({
           ...prevData,
-          'title': result.result.title,
-          'bgColor': result.result.bgColor,
-          'textColor': result.result.textColor,
+          'title': result.result[0].title,
+          'bgColor': result.result[0].bgColor,
+          'textColor': result.result[0].textColor,
         }));
       } catch (error) {
         console.error('There has been a problem with your fetch operation:', error);
@@ -37,7 +36,7 @@ const PopUp = () => {
   return (
     <div className={`w-full h-fit p-1 ${popUp.bgColor} flex justify-center items-center`}>
       <div className={` text-[#${popUp.textColor}] text-sm font-normal md:text-lg`}>
-        {popUp.title} <strong>now on sale.</strong>
+        {popUp.title} <strong> - now on sale.</strong>
       </div>
     </div >
   )

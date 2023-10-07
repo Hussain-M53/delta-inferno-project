@@ -60,10 +60,10 @@ const FAQ = () => {
             <h1 className='text-center font-bold mb-8 text-3xl'>Frequently Asked Questions!</h1>
             <div className='mx-10 md:mx-10 md:grid md:grid-cols-2 md:gap-x-4'>
                 {faqs.map(faq => (
-                    <div key={faq.id} className={`mb-4 bg-black/5 p-2  ${openId !== faq.id ? 'hover:bg-gray-900' : null} rounded-md ring-1 ring-black/10`}>
+                    <div key={faq.id} className={`mb-4 bg-black/5 p-2  ${openId !== faq.id ? 'md:hover:bg-gray-900' : null} rounded-md ring-1 ring-black/10`}>
                         <button
                             onClick={() => toggleItem(faq.id)}
-                            className={`flex justify-between items-center w-full py-3 px-4 text-left font-semibold text-gray-800 transition dark:text-gray-200  ${openId === faq.id ? 'text-indigo-600 hover:text-indigo-500' : 'dark:hover:text-gray-400 hover:text-white '}`}
+                            className={`flex justify-between items-center w-full py-3 px-4 text-left font-semibold text-gray-800 transition dark:text-gray-200  ${openId === faq.id ? 'text-indigo-600 md:hover:text-indigo-500' : 'md:dark:hover:text-gray-400 md:hover:text-white '}`}
                         >
                             {faq.question}
                             <svg
