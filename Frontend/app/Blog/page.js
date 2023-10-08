@@ -86,7 +86,7 @@ const Page = () => {
                     }
                   }
 
-                  text = `<${styleTag} className = 'font-bold'>${text}</${styleTag}>`;
+                  text = `<${styleTag}>${text}</${styleTag}>`;
 
                   if (child.marks && child.marks.length > 0) {
                     child.marks.forEach(mark => {

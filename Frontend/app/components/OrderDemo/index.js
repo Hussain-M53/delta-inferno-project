@@ -3,7 +3,7 @@ import Link from 'next/link'
 const OrderDemo = () => {
   return (
     <div className="mx-auto max-w-7xl sm:px-6 lg:px-8 md:h-[500px]"> {/* <-- Set specific height here */}
-      <div className="p-6 relative isolate overflow-hidden bg-gray-900 shadow-2xl sm:rounded-3xl md:flex md:gap-x-20 md::px-24 h-full">
+      <div className="p-10 relative isolate overflow-hidden bg-gray-900 shadow-2xl sm:rounded-3xl md:flex md:gap-x-20 md::px-24 h-full">
         <svg
           viewBox="0 0 1024 1024"
           className="absolute left-1/2 top-1/2 -z-10 h-[64rem] w-[64rem] -translate-y-1/2 [mask-image:radial-gradient(closest-side,white,transparent)] sm:left-full sm:-ml-80 lg:left-1/4 lg:ml-0 lg:-translate-x-1/2 lg:translate-y-0"
@@ -18,7 +18,7 @@ const OrderDemo = () => {
           </defs>
         </svg>
         <div className="m-auto max-w-md text-center md:flex-auto md:text-left">
-          <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
+          <h2 className="text-2xl font-bold tracking-tight text-white sm:text-4xl">
             Boost your productivity.
             <br />
             Start using our services today.
