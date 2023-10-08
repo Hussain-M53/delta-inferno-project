@@ -4,6 +4,7 @@ import NavBar from './components/NavBar'
 import Footer from './components/Footer'
 import { AuthProvider } from '@context/AuthContext'
 import PopUp from '@components/PopUp'
+import { OrderDetailsProvider } from '@context/OrderContext'
 
 const roboto = Roboto({
   weight: ['400', '700'],
@@ -21,10 +22,12 @@ export default function RootLayout({ children }) {
     <html lang="en" className={roboto.className}>
       <body >
         <AuthProvider>
-          <PopUp />
-          <NavBar />
-          {children}
-          <Footer />
+          <OrderDetailsProvider>
+            <PopUp />
+            <NavBar />
+            {children}
+            <Footer />
+          </OrderDetailsProvider>
         </AuthProvider>
       </body>
     </html>
