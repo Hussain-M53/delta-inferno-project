@@ -61,6 +61,7 @@ const PromoCard = ({ item, index, isVisible }) => {
 const WhyChooseUs = () => {
   const [isVisible, setIsVisible] = useState(false);
   const ref = useRef();
+  const [cardDetails, setCardDetails] = useState([]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -74,6 +75,28 @@ const WhyChooseUs = () => {
       if (ref.current) observer.unobserve(ref.current);
     };
   }, [ref]);
+
+  useEffect(() => {
+    const fetchDataAndSetState = async () => {
+      try {
+        const data = await fetchData('whyChooseUs');
+        if (data && data.result && data.result.length > 0) {
+          data.result.map((item) => {
+            setCardDetails((prevData) => ({
+              ...prevData,
+              'title': item.title,
+              'icon': item.icon,
+              'description': item.description,
+            }));
+          });
+        }
+      } catch (error) {
+        console.error('Error fetching and setting data:', error);
+      }
+    };
+
+    fetchDataAndSetState();
+  }, []);
 
   return (
     <div className="min-h-fit" ref={ref}>

@@ -10,6 +10,7 @@ const Calculator = () => {
   const calcRef = useRef();
   const [paperOptions, setPaperOptions] = useState({});
   const [serviceOptions, setServiceOptions] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
 
   const [calculatedPrice, setCalculatedPrice] = useState(0);
   const [typeOfService, setTypeOfService] = useState('Type of Service');
@@ -81,6 +82,7 @@ const Calculator = () => {
   }
 
   const getPrice = async () => {
+    setIsLoading(true);
     const prompt = {
       "Academic Level": academicLevel,
       "Type of Service": typeOfService,
@@ -108,6 +110,7 @@ const Calculator = () => {
     } catch (error) {
       console.error('Fetch Error:', error);
     }
+    setIsLoading(false);
   }
 
   useEffect(() => {
@@ -248,7 +251,15 @@ const Calculator = () => {
 
         </div>
         <div className="border-t border-gray-900/10 pt-6 mt-6 flex items-center justify-between gap-x-6">
-          <h1 className='font-bold text-2xl'>$ {calculatedPrice}</h1>
+          <h1 className='font-bold text-2xl'>$   {isLoading ? (
+            <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 2.21.896 4.21 2.344 5.648l2.657-2.357z"></path>
+            </svg>
+          )
+            : calculatedPrice
+          }
+          </h1>
           <Link
             href={'/Orders/new'}
             className='rounded-md px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 bg-gray-900'>

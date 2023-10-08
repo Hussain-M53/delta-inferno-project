@@ -4,13 +4,27 @@ import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 
 const CTA = () => {
-    const [content, setContent] = useState({
-
-    })
+    const [content, setContent] = useState({})
 
     useEffect(() => {
-
-    }, [])
+        const fetchDataAndSetState = async () => {
+          try {
+            const data = await fetchData('ctaSection');
+            if (data && data.result && data.result.length > 0) {
+              setContent((prevData) => ({
+                ...prevData,
+                'title': data.result[0].title,
+                'image': data.result[0].image,
+                'buttonText': data.result[0].buttonText,
+              }));
+            }
+          } catch (error) {
+            console.error('Error fetching and setting data:', error);
+          }
+        };
+    
+        fetchDataAndSetState();
+      }, []);
 
     return (
         <div className='grid grid-cols-2 bg-gray-900 w-9/10 h-60 md:h-72 rounded-xl mx-auto'>

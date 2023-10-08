@@ -20,13 +20,6 @@ export default defineType({
             title: 'Button Text',
             type: 'string',
         }),
-        defineField({
-            name: 'image',
-            title: 'Image',
-            type: 'image',
-            options: {
-                hotspot: true,
-            },
-        }),
+
     ],
 })

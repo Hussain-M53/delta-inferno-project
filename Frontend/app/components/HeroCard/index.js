@@ -5,18 +5,40 @@ import Link from 'next/link';
 const Card = () => {
   const [isVisible, setIsVisible] = useState(false);
   const cardRef = useRef();
+  const [content, setContent] = useState({});
 
   useEffect(() => {
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         setIsVisible(entry.isIntersecting);
       });
-    }, { threshold: 0.5 }); 
+    }, { threshold: 0.5 });
 
     if (cardRef.current) {
       observer.observe(cardRef.current);
     }
     return () => observer.disconnect();
+  }, []);
+
+
+  useEffect(() => {
+    const fetchDataAndSetState = async () => {
+      try {
+        const data = await fetchData('heroSection');
+        if (data && data.result && data.result.length > 0) {
+          setContent((prevData) => ({
+            ...prevData,
+            'title': data.result[0].title,
+            'subTitle': data.result[0].subTitle,
+            'buttonText': data.result[0].buttonText,
+          }));
+        }
+      } catch (error) {
+        console.error('Error fetching and setting data:', error);
+      }
+    };
+
+    fetchDataAndSetState();
   }, []);
 
 

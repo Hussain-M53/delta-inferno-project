@@ -1,51 +1,53 @@
 'use client'
 import React, { useState } from 'react';
 
+const faqs = [
+    {
+        id: 1,
+        question: "How do I place an order?",
+        answer: "To place an order, simply provide your assignment details using the contact form. Our team will guide you through the order process from there."
+    },
+    {
+        id: 2,
+        question: "How can I make a payment for my order?",
+        answer: "Once we receive your assignment details, we will send you a payment link to your registered communication device. Follow the link to make a secure payment."
+    },
+    {
+        id: 3,
+        question: "What types of assignments can you assist with?",
+        answer: "We specialize in university-level essays across a wide range of subjects and degrees."
+    },
+    {
+        id: 4,
+        question: " Is my assignment checked for plagiarism?",
+        answer: " Yes, each assignment undergoes a comprehensive plagiarism check to ensure its originality."
+    },
+    {
+        id: 5,
+        question: "How long will it take to receive my completed assignment?",
+        answer: "You can select a delivery timeline based on your preferences, and the price will reflect that choice. We strive to meet your chosen deadline."
+    },
+    {
+        id: 6,
+        question: "Is my personal information kept confidential?",
+        answer: " Absolutely, we take your privacy seriously and maintain strict confidentiality measures."
+    },
+    {
+        id: 7,
+        question: "How can I contact your support team for further assistance?",
+        answer: "For any further assistance, feel free to contact our support team at support@expertassignmentnation.com. We're here to assist you with any questions or concerns."
+    },
+    {
+        id: 8,
+        question: "Can I request a specific writer for my assignment?",
+        answer: "While we cannot guarantee specific writers, you can share your preferences during the order process. We'll do our best to match you with a suitable writer."
+    }
+];
+
 const FAQ = () => {
     const [openId, setOpenId] = useState(null);
+    const [faqs, setFaqs] = useState([]);
 
-    const faqs = [
-        {
-            id: 1,
-            question: "How do I place an order?",
-            answer: "To place an order, simply provide your assignment details using the contact form. Our team will guide you through the order process from there."
-        },
-        {
-            id: 2,
-            question: "How can I make a payment for my order?",
-            answer: "Once we receive your assignment details, we will send you a payment link to your registered communication device. Follow the link to make a secure payment."
-        },
-        {
-            id: 3,
-            question: "What types of assignments can you assist with?",
-            answer: "We specialize in university-level essays across a wide range of subjects and degrees."
-        },
-        {
-            id: 4,
-            question: " Is my assignment checked for plagiarism?",
-            answer: " Yes, each assignment undergoes a comprehensive plagiarism check to ensure its originality."
-        },
-        {
-            id: 5,
-            question: "How long will it take to receive my completed assignment?",
-            answer: "You can select a delivery timeline based on your preferences, and the price will reflect that choice. We strive to meet your chosen deadline."
-        },
-        {
-            id: 6,
-            question: "Is my personal information kept confidential?",
-            answer: " Absolutely, we take your privacy seriously and maintain strict confidentiality measures."
-        },
-        {
-            id: 7,
-            question: "How can I contact your support team for further assistance?",
-            answer: "For any further assistance, feel free to contact our support team at support@expertassignmentnation.com. We're here to assist you with any questions or concerns."
-        },
-        {
-            id: 8,
-            question: "Can I request a specific writer for my assignment?",
-            answer: "While we cannot guarantee specific writers, you can share your preferences during the order process. We'll do our best to match you with a suitable writer."
-        }
-    ];
 
     const toggleItem = (id) => {
         if (openId === id) {
@@ -54,6 +56,27 @@ const FAQ = () => {
             setOpenId(id);
         }
     };
+    useEffect(() => {
+        const fetchDataAndSetState = async () => {
+            try {
+                const data = await fetchData('faq');
+                if (data && data.result && data.result.length > 0) {
+                    data.result.map((item, idx) => {
+                        setFaqs((prevData) => ({
+                            ...prevData,
+                            'id': idx,
+                            'question': item.question,
+                            'answer': item.answer,
+                        }));
+                    });
+                }
+            } catch (error) {
+                console.error('Error fetching and setting data:', error);
+            }
+        };
+
+        fetchDataAndSetState();
+    }, []);
 
     return (
         <div>

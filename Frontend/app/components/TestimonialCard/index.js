@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image';
-import React from 'react';
+import React, { useState } from 'react';
 
 const testimonials = [
   {
@@ -29,14 +29,40 @@ const testimonials = [
 ];
 
 const Testimonials = () => {
+  const [testimonials, setTestimonials] = useState([]);
+
+  useEffect(() => {
+    const fetchDataAndSetState = async () => {
+      try {
+        const data = await fetchData('testimonial');
+        if (data && data.result && data.result.length > 0) {
+          data.result.map((item) => {
+            setTestimonials((prevData) => ({
+              ...prevData,
+              'title': item.title,
+              'icon': item.icon,
+              'description': item.description,
+              'name': item.name,
+              'country': item.country,
+            }));
+          });
+        }
+      } catch (error) {
+        console.error('Error fetching and setting data:', error);
+      }
+    };
+
+    fetchDataAndSetState();
+  }, []);
+
   return (
     <section className="w-full relative bg-transparent px-4 lg:px-8">
       <h1 className="font-bold text-center text-4xl md:text-5xl">
         What's our client Says About us.
       </h1>
-      <Image src= '/assests/bg-18.png'  width={1000}
-                height={100}
-                alt="" className="absolute -z-10  top-32 " />
+      <Image src='/assests/bg-18.png' width={1000}
+        height={100}
+        alt="" className="absolute -z-10  top-32 " />
       {/* <div className="absolute inset-0 -z-10 bg-[radial-gradient(45rem_50rem_at_top,theme(colors.indigo.100),white)] opacity-20" />
       <div className="absolute inset-y-0 right-1/2 -z-10 mr-16 w-[200%] origin-bottom-left skew-x-[-30deg] bg-white shadow-xl shadow-indigo-600/10 ring-1 ring-indigo-50 sm:mr-28 lg:mr-0 xl:mr-16 xl:origin-center" /> */}
 
@@ -50,7 +76,7 @@ const Testimonials = () => {
                 <div className="mt-4 text-center text-md font-medium leading-8 text-gray-500 sm:text-lg sm:leading-9">
                   {testimonial.text}
                 </div>
-              </div>  
+              </div>
             </div>
             <div className="my-6 mx-6 flex items-center justify-between gap-x-4">
               <div className="text-sm leading-6 font-semibold text-gray-900">

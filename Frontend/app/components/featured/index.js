@@ -1,7 +1,7 @@
 'use client'
 import Image from "next/image"
 import { useEffect, useRef, useState } from "react";
-import { UserCircleIcon, LightningBoltIcon, PencilIcon, BookOpenIcon,WifiIcon,PlusCircleIcon } from '@heroicons/react/outline';
+import { UserCircleIcon, LightningBoltIcon, PencilIcon, BookOpenIcon, WifiIcon, PlusCircleIcon } from '@heroicons/react/outline';
 
 
 
@@ -18,17 +18,17 @@ const CourseCard = ({ element }) => {
 const cardData = [
     {
         "title": "Course Work",
-        "image": <UserCircleIcon color='#0E78B9' height={40}  />,
+        "image": <UserCircleIcon color='#0E78B9' height={40} />,
         "subTitle": "120+ courses"
     }
     , {
         "title": "Assignment",
-        "image": <LightningBoltIcon color='#0E78B9' height={40}  />,
+        "image": <LightningBoltIcon color='#0E78B9' height={40} />,
         "subTitle": "120+ courses"
 
     }, {
         "title": "Disertation",
-        "image": <PencilIcon color='#0E78B9' height={40}  />,
+        "image": <PencilIcon color='#0E78B9' height={40} />,
         "subTitle": "120+ courses"
     }, {
         "title": "Literature Review",
@@ -36,11 +36,11 @@ const cardData = [
         "subTitle": "120+ courses"
     }, {
         "title": "Essay",
-        "image": <WifiIcon color='#0E78B9' height={40}/>,
+        "image": <WifiIcon color='#0E78B9' height={40} />,
         "subTitle": "120+ courses"
     }, {
         "title": "Admission Essay",
-        "image": <PlusCircleIcon color='#0E78B9' height={40}  />,
+        "image": <PlusCircleIcon color='#0E78B9' height={40} />,
         "subTitle": "120+ courses"
     }, {
         "title": "Case Study",
@@ -56,7 +56,7 @@ const cardData = [
         "subTitle": "120+ courses"
     }, {
         "title": "PPTs and Speech",
-        "image": <PlusCircleIcon color='#0E78B9' height={40}  />,
+        "image": <PlusCircleIcon color='#0E78B9' height={40} />,
         "subTitle": "120+ courses"
     }, {
         "title": "Research Paper & Proposal",
@@ -64,7 +64,7 @@ const cardData = [
         "subTitle": "120+ courses"
     }, {
         "title": "Business Plan",
-        "image": <WifiIcon color='#0E78B9' height={40}  />,
+        "image": <WifiIcon color='#0E78B9' height={40} />,
         "subTitle": "120+ courses"
     }
 ]
@@ -73,6 +73,7 @@ const cardData = [
 const FeaturedCourses = () => {
     const [isVisible, setIsVisible] = useState(false);
     const coursesRef = useRef();
+    const [cardData, setCardData] = useState([]);
 
     useEffect(() => {
         const observer = new IntersectionObserver(entries => {
@@ -86,6 +87,28 @@ const FeaturedCourses = () => {
         }
 
         return () => observer.disconnect();
+    }, []);
+
+    useEffect(() => {
+        const fetchDataAndSetState = async () => {
+            try {
+                const data = await fetchData('whyChooseUs');
+                if (data && data.result && data.result.length > 0) {
+                    data.result.map((item) => {
+                        setCardData((prevData) => ({
+                            ...prevData,
+                            'title': item.title,
+                            'icon': item.icon,
+                            'description': item.description,
+                        }));
+                    });
+                }
+            } catch (error) {
+                console.error('Error fetching and setting data:', error);
+            }
+        };
+
+        fetchDataAndSetState();
     }, []);
 
     return (
