@@ -45,14 +45,14 @@ server.use("/create-payment-session", async (req, res) => {
         payment_method_types: ['card'],
         line_items: line_items,
         mode: 'payment',
-        success_url: 'https://www.expertassignmentnation.com/Orders',
+        success_url: 'https://www.expertassignmentnation.com/Signup',
         cancel_url: 'https://www.expertassignmentnation.com/Orders/new',
     });
 
     res.json({ sessionId: session.id });
 });
 
-server.use("/get-quote", async (req, res, next) => {
+server.use("/get-quote", async (req, res) => {
     try {
         let workbook = new Excel.Workbook();
         const filePath = path.join(__dirname, 'Pricing.xlsx');
@@ -115,6 +115,53 @@ server.use("/get-quote", async (req, res, next) => {
 
     } catch (error) {
         console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+server.use("/get-fields", async (req, res) => {
+    try {
+        const filePath = path.join(__dirname, 'Pricing.xlsx');
+        let workbook = new Excel.Workbook();
+        await workbook.xlsx.readFile(filePath);
+        let worksheet = workbook.getWorksheet(1);
+
+        const paperOptions = {};
+        const serviceOptions = {};
+
+        worksheet.eachRow((row, rowNumber) => {
+            if (rowNumber > 1) {
+                let serviceType = row.getCell(1).value && row.getCell(1).value.toString().trim();
+                let paperType = row.getCell(2).value && row.getCell(2).value.toString().trim();
+                let subject = row.getCell(3).value && row.getCell(3).value.toString().trim();
+
+                if (paperType && subject) {
+                    if (!paperOptions[paperType]) {
+                        paperOptions[paperType] = [];
+                    }
+                    if (!paperOptions[paperType].includes(subject)) {
+                        paperOptions[paperType].push(subject);
+                    }
+                }
+
+                if (serviceType && paperType) {
+                    if (!serviceOptions[serviceType]) {
+                        serviceOptions[serviceType] = [];
+                    }
+                    if (!serviceOptions[serviceType].includes(paperType)) {
+                        serviceOptions[serviceType].push(paperType);
+                    }
+                }
+            }
+        });
+
+        res.json({
+            paperOptions: paperOptions,
+            serviceOptions: serviceOptions
+        });
+
+    } catch (error) {
+        console.error('Error in extracting options:', error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });

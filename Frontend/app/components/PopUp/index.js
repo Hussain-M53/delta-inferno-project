@@ -1,37 +1,34 @@
 'use client'
+import { fetchData } from '@utils/CMS_Retreival'
 import { useEffect, useState } from 'react'
 
 const PopUp = () => {
 
   const [popUp, setPopUp] = useState({
-    'title': 'We bring to you 10% offer',
+    'title': '',
     'textColor': '',
-    'bgColor': 'bg-btn-color'
+    'bgColor': ''
   })
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchDataAndSetState = async () => {
       try {
-        const query = '*[_type == "popUp"]';
-        const url = `https://${process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}.api.sanity.io/v1/data/query/${process.env.NEXT_PUBLIC_SANITY_DATASET}?query=${encodeURIComponent(query)}`;
-
-        const response = await fetch(url);
-        if (!response.ok) throw new Error('Network response was not ok');
-
-        const result = await response.json();
-        setPopUp((prevData) => ({
-          ...prevData,
-          'title': result.result[0].title,
-          'bgColor': result.result[0].bgColor,
-          'textColor': result.result[0].textColor,
-        }));
+        const data = await fetchData('popUp');
+        if (data && data.result && data.result.length > 0) {
+          setPopUp((prevData) => ({
+            ...prevData,
+            'title': data.result[0].title,
+            'bgColor': data.result[0].bgColor,
+            'textColor': data.result[0].textColor,
+          }));
+        }
       } catch (error) {
-        console.error('There has been a problem with your fetch operation:', error);
+        console.error('Error fetching and setting data:', error);
       }
     };
 
-    fetchData();
-  }, [])
+    fetchDataAndSetState();
+  }, []);
 
   return (
     <div className={`w-full h-fit p-1 ${popUp.bgColor} flex justify-center items-center`}>

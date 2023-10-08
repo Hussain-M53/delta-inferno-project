@@ -51,7 +51,7 @@ const NavBar = () => {
 
   return (
     <div className={`z-50 w-full flex h-20 justify-between items-center px-6 ${bgColor} ${textColor} lg:sticky lg:top-0`}>
-      <Link href={'/'} className="ml-10">
+      <Link href={'/'} className="ml-4 sm:ml-10">
         <Image
           src={`/assests/${scrolled ? 'logo.png' : 'secondary_logo.svg'}`}
           alt="Logo"

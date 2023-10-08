@@ -1,69 +1,70 @@
 'use client'
 import Image from "next/image"
 import { useEffect, useRef, useState } from "react";
+import { UserCircleIcon, LightningBoltIcon, PencilIcon, BookOpenIcon,WifiIcon,PlusCircleIcon } from '@heroicons/react/outline';
+
 
 
 const CourseCard = ({ element }) => {
     return (
         <div className="p-4 border border-gray-700 bg-transparent hover:bg-cyan-50 hover:border-none text-black ring-1 h-40 flex flex-col justify-center items-center ring-white/10 col-span-1 rounded-lg">
-            <Image src={`/assests/${element.image}`} width={30} height={30} className="mb-6" />
+            <div className="mb-4">{element.image}</div>
             <div className="font-semibold text-center text-md">{element.title}</div>
             <div className="font-normal text-sm text-center">{element.subTitle}</div>
         </div>
     )
 }
 
-const category = ["All", "Graphic Design", "IT", "Language", "Coding", "ART", "Marketing"]
 const cardData = [
     {
         "title": "Course Work",
-        "image": "icon_125.svg",
+        "image": <UserCircleIcon color='#0E78B9' height={40}  />,
         "subTitle": "120+ courses"
     }
     , {
         "title": "Assignment",
-        "image": "icon_127.svg",
+        "image": <LightningBoltIcon color='#0E78B9' height={40}  />,
         "subTitle": "120+ courses"
 
     }, {
         "title": "Disertation",
-        "image": "icon_128.svg",
+        "image": <PencilIcon color='#0E78B9' height={40}  />,
         "subTitle": "120+ courses"
     }, {
         "title": "Literature Review",
-        "image": "icon_128.svg",
+        "image": <BookOpenIcon color='#0E78B9' height={40} />,
         "subTitle": "120+ courses"
     }, {
         "title": "Essay",
-        "image": "icon_130.svg",
+        "image": <WifiIcon color='#0E78B9' height={40}/>,
         "subTitle": "120+ courses"
     }, {
         "title": "Admission Essay",
-        "image": "icon_131.svg",
+        "image": <PlusCircleIcon color='#0E78B9' height={40}  />,
         "subTitle": "120+ courses"
     }, {
         "title": "Case Study",
-        "image": "icon_125.svg",
+        "image": <PencilIcon color='#0E78B9' height={40} />,
         "subTitle": "120+ courses"
     }, {
         "title": "Critical Thinking Review",
-        "image": "icon_127.svg",
+        "image": <UserCircleIcon color='#0E78B9' height={40} />,
         "subTitle": "120+ courses"
     }, {
         "title": "Marketing Plans",
-        "image": "icon_128.svg",
+        "image": <BookOpenIcon color='#0E78B9' height={40} />,
         "subTitle": "120+ courses"
     }, {
         "title": "PPTs and Speech",
-        "image": "icon_129.svg",
+        "image": <PlusCircleIcon color='#0E78B9' height={40}  />,
         "subTitle": "120+ courses"
     }, {
         "title": "Research Paper & Proposal",
-        "image": "icon_130.svg",
+        "image": <LightningBoltIcon color='#0E78B9' height={40} />,
         "subTitle": "120+ courses"
     }, {
         "title": "Business Plan",
-        "image": "icon_131.svg",
+        "image": <WifiIcon color='#0E78B9' height={40}  />,
         "subTitle": "120+ courses"
     }
 ]
@@ -96,14 +97,6 @@ const FeaturedCourses = () => {
             </h1>
             <div ref={coursesRef}
                 className={`transition-all transform duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-                <div
-                    className='flex mb-4 overflow-x-scroll scrollbar-hide'>
-                    {category.map((skill, idx) => (
-                        <div key={idx} className="p-3 mx-2 rounded-xl bg-black/5">
-                            {skill}
-                        </div>
-                    ))}
-                </div>
                 <div className="grid grid-cols-2 gap-x-4 gap-y-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
                     {cardData.map((element) => (
                         <CourseCard key={element.title} element={element} />

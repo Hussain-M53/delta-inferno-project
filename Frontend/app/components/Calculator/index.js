@@ -1,12 +1,15 @@
 'use client'
 import { useState, useEffect, useRef } from 'react'
-import { serviceOptions, paperOptions, academicLevelOptions, deadlineOptions } from '@utils/FieldDetails';
+import { academicLevelOptions, deadlineOptions } from '@utils/FieldDetails';
 import Link from 'next/link';
+
 
 const Calculator = () => {
 
   const [isVisible, setIsVisible] = useState(false);
   const calcRef = useRef();
+  const [paperOptions, setPaperOptions] = useState({});
+  const [serviceOptions, setServiceOptions] = useState({});
 
   const [calculatedPrice, setCalculatedPrice] = useState(0);
   const [typeOfService, setTypeOfService] = useState('Type of Service');
@@ -119,6 +122,35 @@ const Calculator = () => {
     }
     return () => observer.disconnect();
   }, []);
+
+
+  useEffect(() => {
+
+    const fetchFields = async () => {
+      try {
+        const url = new URL('https://delta-inferno-project-pijr.vercel.app/get-fields');
+        url.search = new URLSearchParams(prompt).toString();
+        const response = await fetch(url, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const fields = await response.json();
+        setPaperOptions(fields['paperOptions']);
+        setServiceOptions(fields['serviceOptions']);
+      } catch (error) {
+        console.error('Fetch Error:', error);
+      }
+    }
+
+    fetchFields();
+  }, [])
 
 
   return (

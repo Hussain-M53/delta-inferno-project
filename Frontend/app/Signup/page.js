@@ -4,12 +4,16 @@ import { AuthContext } from '../context/AuthContext'
 import { createUser, signInWithGoogle } from '../utils/auth'
 import { useContext, useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation';
+import { OrderDetailsContext } from '@context/OrderContext';
+import { storeOrder } from '@utils/Orders';
 
 const Page = () => {
 
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const { user, setUser } = useContext(AuthContext);
+  const { orderDetails, setOrderDetails } = useContext(OrderDetailsContext);
+
 
   const [formData, setformData] = useState({
     'userName': '',
@@ -50,11 +54,18 @@ const Page = () => {
     }
   }
 
-  useEffect(() => {
+  useEffect(async () => {
     console.log(user);
     if (user.userName != '') {
       router.push('/')
     }
+
+    if (orderDetails) {
+      await storeOrder(orderDetails);
+      setOrderDetails({});
+    }
+
+
   }, [])
 
   const handleChange = (e) => {

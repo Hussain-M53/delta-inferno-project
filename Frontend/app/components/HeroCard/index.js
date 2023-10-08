@@ -43,10 +43,10 @@ const Card = () => {
             Navigating Excellence: Trusted and Affordable Assignment Help Services.
           </p>
           <div className="mt-10 flex items-center justify-center gap-x-6">
-            <Link href={'Orders/new'} className="link rounded-md bg-btn-color px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm transition-transform duration-300 ease-in-out hover:bg-cyan-400">
-              Place your order now!
+            <Link href={'Orders/new'} className="link rounded-md bg-btn-color px-2.5 py-1.5 sm:px-3.5 sm:py-2.5 text-sm font-semibold text-white shadow-sm transition-transform duration-300 ease-in-out hover:bg-cyan-400">
+              Place order now!
             </Link>
-            <Link href="/Signup" className="link text-sm font-semibold leading-6 text-gray-900 transition-transform duration-300 ease-in-out">
+            <Link href="/Signup" className="hover:text-red-600 link text-sm font-semibold leading-6 text-gray-900 transition-transform duration-300 ease-in-out">
               Sign-up Now →
             </Link>
           </div>

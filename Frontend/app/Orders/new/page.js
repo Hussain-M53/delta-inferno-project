@@ -1,12 +1,18 @@
 'use client'
-import { useState } from 'react';
-import { serviceOptions, paperOptions, academicLevelOptions, deadlineOptions, citationOptions, spacingOptions } from '@utils/FieldDetails';
+import { useContext, useEffect, useState } from 'react';
+import { academicLevelOptions, deadlineOptions, citationOptions, spacingOptions } from '@utils/FieldDetails';
 import { loadStripe } from '@stripe/stripe-js';
+import { OrderDetailsContext } from '@context/OrderContext';
 
 const Form = () => {
+
+  const { setOrderDetails } = useContext(OrderDetailsContext);
+
   const [isLoading, setIsLoading] = useState(false);
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({});
+  const [paperOptions, setPaperOptions] = useState({});
+  const [serviceOptions, setServiceOptions] = useState({});
   const [calculatedPrice, setCalculatedPrice] = useState(0);
   const [academicLevel, setAcademicLevel] = useState('Academic Level');
   const [deadline, setDeadline] = useState('Deadline');
@@ -14,6 +20,35 @@ const Form = () => {
   const [typeOfPaper, setTypeOfPaper] = useState('Type of Paper');
   const [subject, setSubject] = useState('Subject');
   const [wordLimit, setWordLimit] = useState(null);
+
+
+  useEffect(() => {
+
+    const fetchFields = async () => {
+      try {
+        const url = new URL('https://delta-inferno-project-pijr.vercel.app/get-fields');
+        url.search = new URLSearchParams(prompt).toString();
+        const response = await fetch(url, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const fields = await response.json();
+        setPaperOptions(fields['paperOptions']);
+        setServiceOptions(fields['serviceOptions']);
+      } catch (error) {
+        console.error('Fetch Error:', error);
+      }
+    }
+
+    fetchFields();
+  }, [])
 
   const updateFormData = (name, value) => {
     setFormData((prevData) => ({
@@ -184,11 +219,12 @@ const Form = () => {
       body: JSON.stringify(body)
     })
 
-    const {sessionId} = await response.json();
+    const { sessionId } = await response.json();
     console.log('Response from server:', { sessionId });
+    setOrderDetails(formData);
     const result = stripe.redirectToCheckout({
       sessionId
-    })
+    });
 
     if (result.error) {
       console.log(result.error)
@@ -444,7 +480,7 @@ const Form = () => {
             </div>
 
             <div className="mt-2 sm:col-span-1 w-full text-white py-1.5">
-              <div>Estimated Price - $ {calculatedPrice}</div>
+              <div>Final Price - $ {calculatedPrice}</div>
             </div>
 
             <div className='mt-4 sm:col-span-2'>
