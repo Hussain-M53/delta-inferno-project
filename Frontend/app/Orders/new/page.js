@@ -7,10 +7,32 @@ import { OrderDetailsContext } from '@context/OrderContext';
 const Form = () => {
 
   const { setOrderDetails } = useContext(OrderDetailsContext);
-
+  const initialFormData = {
+    'First Name': '',
+    'Last Name': '',
+    'Date': '',
+    'Contact Number': '',
+    'Personal Email': '',
+    'University Name': '',
+    'University ID': '',
+    'University Email': '',
+    'Assignment Topic': '',
+    'Additional Information': '',
+    'Citation': '',
+    'Spacing': '',
+    'File': '',
+    'Terms And Conditions': '',
+    'Digital Signature': '',
+    'Academic Level': 'Academic Level',
+    'Type of Service': 'Type of Service',
+    'Type of Paper': 'Type of Paper',
+    'Subject': 'Subject',
+    'Word Limit': null,  // Word Limit might need a different initial value since it's a number.
+    'Deadline': 'Deadline'
+  };
+  const [formData, setFormData] = useState(initialFormData);
   const [isLoading, setIsLoading] = useState(false);
   const [step, setStep] = useState(1);
-  const [formData, setFormData] = useState({});
   const [paperOptions, setPaperOptions] = useState({});
   const [serviceOptions, setServiceOptions] = useState({});
   const [calculatedPrice, setCalculatedPrice] = useState(0);
@@ -90,6 +112,26 @@ const Form = () => {
 
   }
 
+  const validStep1 = () => {
+    return (
+      typeof formData['First Name'] === 'string' && formData['First Name'].trim() !== '' &&
+      typeof formData['Last Name'] === 'string' && formData['Last Name'].trim() !== '' &&
+      typeof formData['Date'] === 'string' && formData['Date'].trim() !== '' &&
+      typeof formData['Contact Number'] === 'string' && formData['Contact Number'].trim() !== '' &&
+      typeof formData['Personal Email'] === 'string' && formData['Personal Email'].trim() !== ''
+    );
+  };
+
+
+  const validStep2 = () => {
+    return (
+      typeof formData['University Name'] === 'string' && formData['University Name'].trim() !== '' &&
+      typeof formData['University ID'] === 'string' && formData['University ID'].trim() !== '' &&
+      typeof formData['University Email'] === 'string' && formData['University Email'].trim() !== ''
+    );
+  };
+
+
   const validForPayment = () => {
     return (
       academicLevel !== 'Academic Level' &&
@@ -98,14 +140,8 @@ const Form = () => {
       subject !== 'Subject' &&
       wordLimit &&
       deadline !== 'Deadline' &&
-      formData['First Name'] != '' &&
-      formData['Last Name'] != '' &&
-      formData['Date'] != '' &&
-      formData['Contact Number'] != '' &&
-      formData['Personal Email'] != '' &&
-      formData['University Name'] != '' &&
-      formData['University ID'] != '' &&
-      formData['University Email'] != '' &&
+      validStep1() &&
+      validStep2() &&
       formData['Assignment Topic'] != '' &&
       formData['Additional Information'] != '' &&
       formData['Citation'] != '' &&
@@ -238,7 +274,7 @@ const Form = () => {
   return (
     <form onSubmit={handleFormSubmit} className='mt-10 '>
       {step === 1 && (
-        <div className='bg-gray-900 w-2/3 mx-auto p-10 rounded-lg flex flex-col justify-center items-center space-y-10'>
+        <div className='bg-gray-900 w-4/5 sm:w-2/3 mx-auto p-6 sm:p-10 rounded-lg flex flex-col justify-center items-center space-y-10'>
           <div className='text-center font-bold text-2xl text-white pb-4 border-b border-gray-100'>
             Order Details and Terms Agreement
           </div>
@@ -298,14 +334,14 @@ const Form = () => {
 
           <div className='border-b border-gray-100 w-4/5' />
 
-          <div onClick={handleNext} className="w-4/5 flex justify-center items-center rounded-md bg-red-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm transition-transform duration-300 ease-in-out hover:bg-red-400">
+          <div onClick={() => { if (validStep1()) { handleNext(); } }} className={`w-4/5 flex justify-center items-center rounded-md ${validStep1() ? ' bg-red-600 hover:bg-red-400' : ' bg-gray-400'} px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm transition-transform duration-300 ease-in-out `}>
             Next
           </div>
         </div>
       )}
 
       {step === 2 && (
-        <div className='bg-gray-900 w-2/3 mx-auto p-10 mt-10 rounded-lg flex flex-col justify-center items-center space-y-10'>
+        <div className='bg-gray-900 w-4/5 sm:w-2/3 mx-auto p-6 sm:p-10 mt-10 rounded-lg flex flex-col justify-center items-center space-y-10'>
           <div className='text-center font-bold text-2xl text-white pb-4 border-b border-gray-100'>
             University Information
           </div>
@@ -351,7 +387,7 @@ const Form = () => {
             <div onClick={handleBack} className="flex justify-center items-center w-80 rounded-md bg-btn-color px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm transition-transform duration-300 ease-in-out hover:bg-cyan-400">
               Back
             </div>
-            <div onClick={handleNext} className="flex justify-center items-center w-80 rounded-md bg-red-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm transition-transform duration-300 ease-in-out hover:bg-red-400">
+            <div onClick={() => { if (validStep2()) { handleNext(); } }} className={`flex justify-center items-center w-80 rounded-md ${validStep2() ? ' bg-red-600 hover:bg-red-400' : ' bg-gray-400 '} px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm transition-transform duration-300 ease-in-out `}>
               Next
             </div>
           </div>
@@ -360,7 +396,7 @@ const Form = () => {
       )}
 
       {step === 3 && (
-        <div className='bg-gray-900 w-2/3 mx-auto p-10 rounded-lg flex flex-col justify-center items-center space-y-10'>
+        <div className='bg-gray-900 w-4/5 sm:w-2/3 mx-auto p-6 sm:p-10 rounded-lg flex flex-col justify-center items-center space-y-10'>
           <div className='text-center font-bold text-2xl text-white pb-4 border-b border-gray-100'>
             Assignment Details
           </div>

@@ -2,56 +2,16 @@
 import { useEffect, useRef, useState } from 'react';
 import { ThumbUpIcon, ClockIcon, StatusOnlineIcon, FingerPrintIcon } from '@heroicons/react/outline';
 import Image from "next/image";
-
-const cardDetails = [
-  {
-    'title': 'TIMELY DELIVERY',
-    'icon': <ClockIcon height={40} color='#0E78B9' />,
-    'desc': 'Our writers are dedicated to delivering the best service possible in as little as 3 hours.',
-  },
-  {
-    'title': 'SUPPORT AVAILABLE 24/7',
-    'icon': <StatusOnlineIcon height={40} color='#0E78B9' />,
-    'desc': 'Our online assignment help team is always here for you. Get assistance when you need it.',
-  },
-  {
-    'title': 'PRIVACY & SECURITY GUARANTEED',
-    'icon': <FingerPrintIcon height={40} color='#0E78B9' />,
-    'desc': 'We value your confidentiality, so we work with 256 bit SSL encrypted service, and our privacy policy is very strict',
-  },
-  {
-    'title': 'ORIGINAL CONTENT ONLY',
-    'icon': <ThumbUpIcon height={40} color='#0E78B9' />,
-    'desc': 'We do not tolerate plagiarism that is why we check every paper for originality.',
-  }, {
-    'title': 'TIMELY DELIVERY',
-    'icon': <ClockIcon height={40} color='#0E78B9' />,
-    'desc': 'Our writers are dedicated to delivering the best service possible in as little as 3 hours.',
-  },
-  {
-    'title': 'SUPPORT AVAILABLE 24/7',
-    'icon': <StatusOnlineIcon height={40} color='#0E78B9' />,
-    'desc': 'Our online assignment help team is always here for you. Get assistance when you need it.',
-  },
-  {
-    'title': 'PRIVACY & SECURITY GUARANTEED',
-    'icon': <FingerPrintIcon height={40} color='#0E78B9' />,
-    'desc': 'We value your confidentiality, so we work with 256 bit SSL encrypted service, and our privacy policy is very strict',
-  },
-  {
-    'title': 'ORIGINAL CONTENT ONLY',
-    'icon': <ThumbUpIcon height={40} color='#0E78B9' />,
-    'desc': 'We do not tolerate plagiarism that is why we check every paper for originality.',
-  },
-];
+import { fetchData } from '@utils/CMS_Retreival';
 
 
-const PromoCard = ({ item, index, isVisible }) => {
+
+const PromoCard = ({ item, index, isVisible, icon }) => {
   return (
     <div className={`flex flex-col items-center hover:bg-cyan-100 hover:shadow-md space-y-2 border-2 rounded-lg border-gray-300 p-6 transition-all delay-${index * 100} duration-500 transform ${isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
       <div className='font-bold text-center'>{item.title}</div>
-      <div className='text-center'>{item.icon}</div>
-      <div className='text-center text-sm'>{item.desc}</div>
+      {item.icon ? <Image src={`${element.icon}`} height={40} width={40} /> : <div className="mb-4">{icon}</div>}
+      <div className='text-center text-sm'>{item.description}</div>
     </div>
   );
 };
@@ -59,9 +19,17 @@ const PromoCard = ({ item, index, isVisible }) => {
 
 
 const WhyChooseUs = () => {
+
+  const icons = [
+    <ClockIcon height={40} color='#0E78B9' />,
+    <StatusOnlineIcon height={40} color='#0E78B9' />,
+    <FingerPrintIcon height={40} color='#0E78B9' />,
+    <ThumbUpIcon height={40} color='#0E78B9' />,
+  ];
+
   const [isVisible, setIsVisible] = useState(false);
   const ref = useRef();
-  const [cardDetails, setCardDetails] = useState([]);
+  const [cardDetails, setCardDetails] = useState([{}]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -81,22 +49,21 @@ const WhyChooseUs = () => {
       try {
         const data = await fetchData('whyChooseUs');
         if (data && data.result && data.result.length > 0) {
-          data.result.map((item) => {
-            setCardDetails((prevData) => ({
-              ...prevData,
-              'title': item.title,
-              'icon': item.icon,
-              'description': item.description,
-            }));
-          });
+          setCardDetails(data.result.map((item) => ({
+            'title': item.title,
+            'icon': item.icon,
+            'description': item.description,
+          })
+          ))
         }
-      } catch (error) {
+      }
+      catch (error) {
         console.error('Error fetching and setting data:', error);
       }
     };
 
     fetchDataAndSetState();
-  }, []);
+  });
 
   return (
     <div className="min-h-fit" ref={ref}>
@@ -108,7 +75,7 @@ const WhyChooseUs = () => {
       <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 mx-8 justify-center mt-12'>
         {
           cardDetails.map((item, idx) => (
-            <PromoCard key={idx} index={idx} item={item} isVisible={isVisible} />
+            <PromoCard key={idx} index={idx} item={item} icon={icons[idx % icons.length]} isVisible={isVisible} />
           ))
         }
       </div>
