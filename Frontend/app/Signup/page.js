@@ -60,6 +60,7 @@ const Page = () => {
       router.push('/')
     }
 
+    console.log("order details : ", orderDetails);
     if (orderDetails) {
       await storeOrder(orderDetails);
       setOrderDetails({});
