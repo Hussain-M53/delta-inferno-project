@@ -61,7 +61,7 @@ const Page = () => {
     }
 
     console.log("order details : ", orderDetails);
-    if (orderDetails) {
+    if (orderDetails && orderDetails.length > 0) {
       await storeOrder(orderDetails);
       setOrderDetails({});
     }

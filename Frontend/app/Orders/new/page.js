@@ -30,6 +30,7 @@ const Form = () => {
     'Word Limit': null,  // Word Limit might need a different initial value since it's a number.
     'Deadline': 'Deadline'
   };
+  
   const [formData, setFormData] = useState(initialFormData);
   const [isLoading, setIsLoading] = useState(false);
   const [step, setStep] = useState(1);
@@ -71,6 +72,12 @@ const Form = () => {
 
     fetchFields();
   }, [])
+
+  useEffect(() => {
+    if (areFieldsValid()) {
+      getPrice();
+    }
+  }, [academicLevel, subject, wordLimit, deadline]);
 
   const updateFormData = (name, value) => {
     setFormData((prevData) => ({
@@ -131,7 +138,6 @@ const Form = () => {
     );
   };
 
-
   const validForPayment = () => {
     return (
       academicLevel !== 'Academic Level' &&
@@ -174,33 +180,22 @@ const Form = () => {
   }
 
   const handleAcademicLevelChange = (e) => {
-    if (areFieldsValid()) {
-      getPrice();
-    }
     setAcademicLevel(e.target.value);
     handleDropdownChange("Academic Level", e.target.value);
   }
 
   const handleDeadlineChange = (e) => {
-    if (areFieldsValid()) {
-      getPrice();
-    }
     setDeadline(e.target.value);
     handleDropdownChange("Deadline", e.target.value);
   }
 
   const handleSubjectChange = (e) => {
-    if (areFieldsValid()) {
-      getPrice();
-    }
     setSubject(e.target.value);
     handleDropdownChange("Subject", e.target.value);
   }
 
   const handleWordLimitChange = (e) => {
-    if (areFieldsValid()) {
-      getPrice();
-    }
+    setWordLimit(e.target.value);
     handleDropdownChange("Word Limit", e.target.value);
   }
 
@@ -381,9 +376,7 @@ const Form = () => {
           </div>
 
           <div className='border-b border-gray-100 w-4/5' />
-
-
-          <div className="flex space-x-2 w-4/5">
+          <div className="flex justify-center space-x-2 w-4/5">
             <div onClick={handleBack} className="flex justify-center items-center w-80 rounded-md bg-btn-color px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm transition-transform duration-300 ease-in-out hover:bg-cyan-400">
               Back
             </div>
@@ -462,8 +455,7 @@ const Form = () => {
                 name="Word Limit"
                 value={wordLimit}
                 placeholder="Word Limit"
-                onChange={(e) => setWordLimit(e.target.value)}
-                onBlur={(e) => handleWordLimitChange(e)}
+                onChange={(e) => handleWordLimitChange(e)}
                 className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
               />
             </div>
@@ -519,8 +511,8 @@ const Form = () => {
             </div>
 
             <div className="mt-2 sm:col-span-1 w-full text-white py-1.5">
-              <div className='FLEX items-center'>Final Price - $  {isLoading ? (
-                <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <div className='flex items-center'>Final Price - $  {isLoading ? (
+                <svg className="animate-spin ml-2 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                   <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 2.21.896 4.21 2.344 5.648l2.657-2.357z"></path>
                 </svg>

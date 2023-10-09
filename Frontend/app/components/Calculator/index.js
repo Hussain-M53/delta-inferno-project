@@ -31,33 +31,11 @@ const Calculator = () => {
     );
   };
 
-  const handleAcademicLevelChange = (e) => {
+  useEffect(() => {
     if (areFieldsValid()) {
       getPrice();
     }
-    setAcademicLevel(e.target.value);
-  }
-
-  const handleDeadlineChange = (e) => {
-    if (areFieldsValid()) {
-      console.log("execute")
-      getPrice();
-    }
-    setDeadline(e.target.value);
-  }
-
-  const handleSubjectChange = (e) => {
-    if (areFieldsValid()) {
-      getPrice();
-    }
-    setSubject(e.target.value);
-  }
-
-  const handleWordLimitChange = () => {
-    if (areFieldsValid()) {
-      getPrice();
-    }
-  }
+  }, [academicLevel, subject, wordLimit, deadline]);
 
   const getTypeOfPaperOptions = () => {
     if (typeOfService === 'Type of Service') return [];
@@ -173,7 +151,7 @@ const Calculator = () => {
             <select
               id="AcademicLevel"
               name="AcademicLevel"
-              onChange={(e) => handleAcademicLevelChange(e)}
+              onChange={(e) => setAcademicLevel(e.target.value)}
               className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
             >
               <option disabled selected style={{ display: 'none' }}>Academic Level</option>
@@ -214,7 +192,7 @@ const Calculator = () => {
               id="Subject"
               name="Subject"
               value={subject}
-              onChange={(e) => handleSubjectChange(e)}
+              onChange={(e) => setSubject(e.target.value)}
               className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
             >
               <option disabled selected style={{ display: 'none' }}>Subject</option>
@@ -230,7 +208,6 @@ const Calculator = () => {
               value={wordLimit}
               placeholder="Word Limit"
               onChange={(e) => setWordLimit(e.target.value)}
-              onBlur={() => handleWordLimitChange()}
               className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
             />
           </div>
@@ -239,7 +216,7 @@ const Calculator = () => {
             <select
               id="Deadline"
               name="Deadline"
-              onChange={(e) => handleDeadlineChange(e)}
+              onChange={(e) => setDeadline(e.target.value)}
               className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
             >
               <option disabled selected style={{ display: 'none' }}>Deadline</option>
@@ -252,7 +229,7 @@ const Calculator = () => {
         </div>
         <div className="border-t border-gray-900/10 pt-6 mt-6 flex items-center justify-between gap-x-6">
           <h1 className='font-bold text-2xl flex items-center'>$   {isLoading ? (
-            <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <svg className="animate-spin ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
               <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
               <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 2.21.896 4.21 2.344 5.648l2.657-2.357z"></path>
             </svg>

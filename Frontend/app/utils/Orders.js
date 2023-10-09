@@ -1,17 +1,16 @@
+import { OrderDetailsContext } from "@context/OrderContext";
 import { db } from "./firebase_options";
 
 export const getOrders = async () => {
-    const orders = [];
+    const { setOrderDetails } = useContext(OrderDetailsContext);
 
     const snapshot = await db.collection("orders").get();
     snapshot.forEach(doc => {
-        orders.push({
+        setOrderDetails({
             id: doc.id,
             ...doc.data()
         });
     });
-
-    return orders;
 }
 
 export const storeOrder = async (orderData) => {
