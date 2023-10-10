@@ -6,6 +6,8 @@ import { useContext, useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation';
 import { OrderDetailsContext } from '@context/OrderContext';
 import { storeOrder } from '@utils/Orders';
+import { storage } from './utils/firebase_options'
+import { ref, uploadBytes } from 'firebase/storage'
 
 const Page = () => {
 
@@ -58,9 +60,16 @@ const Page = () => {
     if (user.userName != '') {
       router.push('/')
     }
-
+    console.log('checking if order details exist')
     if (orderDetails && orderDetails.length > 0) {
-      storeOrder(orderDetails);
+      console.log('order details ', orderDetails)
+      const id = storeOrder(orderDetails);
+      if (orderDetails['File'] != null && id) {
+        const doc_ref = ref(storage, `/Files/${id}/${orderDetails['File'].name}`);
+        uploadBytes(doc_ref,orderDetails['File']).then(() => {
+          alert('documents uploaded')
+        })
+      }
       setOrderDetails({});
     }
   }, [])

@@ -20,5 +20,5 @@ export const storeOrder = async (orderData) => {
         .catch((error) => {
             console.error("Error adding document: ", error);
         });
-    // return docRef.id;
+    return docRef.id;
 }

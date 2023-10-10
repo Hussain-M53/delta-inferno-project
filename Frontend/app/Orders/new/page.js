@@ -531,7 +531,7 @@ const Form = () => {
               <div className='text-gray-400 text-sm mb-1'>
                 Assignment Supporting Documents (Please upload all relevant documents including course work ppts)
               </div>
-              <input type="file" name="File" onChange={handleFormChange} className='text-red-600' />
+              <input type="file" name="File" onChange={(e) => updateFormData('File' , e.target.files[0])} className='text-red-600' />
             </div>
 
             <div className='mt-4 flex sm:col-span-2'>
