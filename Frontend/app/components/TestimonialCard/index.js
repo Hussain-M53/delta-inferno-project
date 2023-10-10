@@ -2,13 +2,32 @@
 
 import { fetchData } from '@utils/CMS_Retreival';
 import Image from 'next/image';
-import { useEffect, useState,useRef } from 'react';
+import { useEffect, useState, useRef } from 'react';
 
 
 const Testimonials = () => {
   const [testimonials, setTestimonials] = useState([]);
+  const [header, setHeader] = useState('');
   const [isVisible, setIsVisible] = useState(false);
   const testRef = useRef();
+  const scrollRef = useRef();
+
+  useEffect(() => {
+    const scrollContainer = scrollRef.current;
+    const originalScrollWidth = scrollContainer.scrollWidth;
+    
+    const scrollInterval = setInterval(() => {
+      if (scrollContainer) {
+        if (scrollContainer.scrollLeft >= originalScrollWidth) {
+          scrollContainer.scrollLeft = 0;  // Reset scroll position when the end is reached
+        } else {
+          scrollContainer.scrollLeft += 1;  // Adjust the value to control the speed
+        }
+      }
+    }, 30);  // Adjust the interval to control the speed
+    
+    return () => clearInterval(scrollInterval);  // Clear the interval on component unmount
+  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(entries => {
@@ -46,20 +65,32 @@ const Testimonials = () => {
     fetchDataAndSetState();
   }, []);
 
+  useEffect(() => {
+    const fetchDataAndSetState = async () => {
+      try {
+        const data = await fetchData('headerTestimonial');
+        if (data && data.result && data.result.length > 0) {
+          setHeader(data.result[0].title);
+        }
+      } catch (error) {
+        console.error('Error fetching and setting data:', error);
+      }
+    };
+
+    fetchDataAndSetState();
+  }, []);
+
   return (
     <section className="w-full relative bg-transparent px-4 lg:px-8">
       <h1 className="font-bold text-center text-4xl md:text-5xl">
-        What's our client Says About us.
+        {header}
       </h1>
-      {/* <Image src='/assests/bg-18.png' width={1000}
-        height={100}
-        alt="" className="absolute -z-10  top-32 " /> */}
       <div className="absolute inset-0 -z-10 bg-[radial-gradient(45rem_50rem_at_top,theme(colors.indigo.100),white)] opacity-20" />
       <div className="absolute inset-y-0 right-1/2 -z-10 mr-16 w-[200%] origin-bottom-left skew-x-[-30deg] bg-transparent shadow-xl shadow-indigo-600/10 ring-1 ring-indigo-50 sm:mr-28 lg:mr-0 xl:mr-16 xl:origin-center" />
       <div ref={testRef}
         className={`transition-all transform duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
 
-        <div className="mx-auto flex overflow-x-auto scrollbar-hide whitespace-wrap ">
+        <div ref={scrollRef} className="mx-auto flex overflow-x-auto scrollbar-hide whitespace-wrap ">
           {testimonials.map((testimonial, idx) => (
             <div key={idx} className="flex-shrink-0 w-full md:w-1/2 lg:w-1/3 mt-10 mx-2 px-6 py-4 border-2 border-gray-300 rounded-xl hover:bg-cyan-50">
               <div className="my-8">

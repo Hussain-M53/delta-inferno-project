@@ -12,7 +12,6 @@ const CTA = () => {
       try {
         const data = await fetchData('ctaSection');
         if (data && data.result && data.result.length > 0) {
-          console.log(data)
           setContent((prevData) => ({
             ...prevData,
             'title': data.result[0].title,

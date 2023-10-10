@@ -30,6 +30,7 @@ const WhyChooseUs = () => {
   const [isVisible, setIsVisible] = useState(false);
   const ref = useRef();
   const [cardDetails, setCardDetails] = useState([{}]);
+  const [header, setHeader] = useState({});
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -65,12 +66,30 @@ const WhyChooseUs = () => {
     fetchDataAndSetState();
   });
 
+  useEffect(() => {
+    const fetchDataAndSetState = async () => {
+      try {
+        const data = await fetchData('headerWhyChooseUs');
+        if (data && data.result && data.result.length > 0) {
+          setHeader(({
+            'title': data.result[0].title,
+            'subTitle': data.result[0].subTitle,
+          }));
+        }
+      } catch (error) {
+        console.error('Error fetching and setting data:', error);
+      }
+    };
+
+    fetchDataAndSetState();
+  }, []);
+
   return (
     <div className="min-h-fit" ref={ref}>
       <div className='relative' >
         <Image src='assests/shape_142.svg' width={70} height={70} className='absolute right-2 sm:right-20 md:right-40 lg:right-80 -top-8' />
-        <h1 className="font-bold mb-4 text-center text-4xl">Why Choose Us</h1>
-        <p className="text-center text-2xl">Smashing Stress, Unleashing Success: Welcome to the Assignment Wonderland!</p>
+        <h1 className="font-bold mb-4 text-center text-4xl">{header.title}</h1>
+        <p className="text-center text-2xl">{header.subTitle}</p>
       </div>
       <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 mx-8 justify-center mt-12'>
         {

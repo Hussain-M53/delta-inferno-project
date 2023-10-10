@@ -2,6 +2,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { academicLevelOptions, deadlineOptions } from '@utils/FieldDetails';
 import Link from 'next/link';
+import { fetchData } from '@utils/CMS_Retreival';
 
 
 const Calculator = () => {
@@ -11,7 +12,7 @@ const Calculator = () => {
   const [paperOptions, setPaperOptions] = useState({});
   const [serviceOptions, setServiceOptions] = useState({});
   const [isLoading, setIsLoading] = useState(false);
-
+  const [header, setHeader] = useState({});
   const [calculatedPrice, setCalculatedPrice] = useState(0);
   const [typeOfService, setTypeOfService] = useState('Type of Service');
   const [typeOfPaper, setTypeOfPaper] = useState('Type of Paper');
@@ -30,6 +31,24 @@ const Calculator = () => {
       deadline !== 'Deadline'
     );
   };
+
+  useEffect(() => {
+    const fetchDataAndSetState = async () => {
+      try {
+        const data = await fetchData('calculator');
+        if (data && data.result && data.result.length > 0) {
+          setHeader(({
+            'title': data.result[0].title,
+            'subTitle': data.result[0].subTitle,
+          }));
+        }
+      } catch (error) {
+        console.error('Error fetching and setting data:', error);
+      }
+    };
+
+    fetchDataAndSetState();
+  }, []);
 
   useEffect(() => {
     if (areFieldsValid()) {
@@ -139,9 +158,9 @@ const Calculator = () => {
       ref={calcRef}
       className={`bg-btn-color transition-all transform duration-1000 px-6 sm:px-20 z-10 md:w-1/2 border-2 border-gray-100 rounded-3xl mt-4 max-h-fit py-10 hover:shadow-sm ${isVisible ? 'opacity-100 translate-x-0 scale-100' : 'opacity-0 translate-x-10 scale-95'}`}>
       <div className="border-b border-gray-900/10 pb-6">
-        <h2 className="text-3xl font-bold tracking-tight text-center leading-7 text-gray-900 sm:text-5xl  ">Get a Price Quote</h2>
+        <h2 className="text-3xl font-bold tracking-tight text-center leading-7 text-gray-900 sm:text-5xl  ">{header.title}</h2>
         <p className="text-center mt-1 text-sm leading-6 text-gray-600">
-          We offer transparency, and authentic service
+         {header.subTitle}
         </p>
       </div>
 

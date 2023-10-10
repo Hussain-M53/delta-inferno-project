@@ -236,7 +236,6 @@ const Form = () => {
 
   const makePayment = async () => {
     formData['Fee'] = calculatedPrice;
-    console.log(formData)
     setIsLoading(true);
 
     const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
@@ -254,14 +253,13 @@ const Form = () => {
     })
 
     const { sessionId } = await response.json();
-    console.log('Response from server:', { sessionId });
     setOrderDetails(formData);
     const result = stripe.redirectToCheckout({
       sessionId
     });
 
     if (result.error) {
-      console.log(result.error)
+      console.error(result.error)
     }
     setIsLoading(false);
   }
@@ -307,7 +305,7 @@ const Form = () => {
             </div>
             <div className="mt-2 col-span-1">
               <input
-                type="text"
+                type="number"
                 id="ContactNumber"
                 name="Contact Number"
                 placeholder="Contact Number"

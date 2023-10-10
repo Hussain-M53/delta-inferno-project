@@ -1,11 +1,81 @@
 'use client'
+import imageUrlBuilder from '@sanity/image-url';
+import { formatDate } from "@utils/middlewares";
+import Image from "next/image";
+import { useEffect, useState } from "react"
 
-import { useContext } from 'react';
-import { PostContext } from '@context/PostContext'
+const Page = ({ params }) => {
 
-const Page = () => {
+  const [post, setPost] = useState({});
 
-  const { selectedPost } = useContext(PostContext);
+  useEffect(() => {
+
+    const fetchData = async () => {
+      try {
+        const query = `*[_type == "post" && _id == "${params.slug}"]`;
+        const url = `https://${process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}.api.sanity.io/v1/data/query/${process.env.NEXT_PUBLIC_SANITY_DATASET}?query=${encodeURIComponent(query)}`;
+
+        const response = await fetch(url);
+        if (!response.ok) throw new Error('Network response was not ok');
+
+        const result = await response.json();
+        const reshapedPosts = {
+          id: result.result[0]._id,
+          title: result.result[0].title,
+          date: formatDate(result.result[0].publishedAt),
+          image: result.result[0].mainImage,
+          category: result.result[0].category,
+          body: result.result[0].body.map(block => {
+            if (block._type === 'block') {
+              return block.children.map(child => {
+                let text = child.text;
+                let styleTag = 'p';
+                let className;
+                if (block.style) {
+                  switch (block.style) {
+                    case 'h1': styleTag = 'h1'; className = 'text-3xl font-bold'; break;
+                    case 'h2': styleTag = 'h2'; className = 'text-2xl font-bold'; break;
+                    case 'h3': styleTag = 'h3'; className = 'text-2xl font-bold'; break;
+                    case 'h4': styleTag = 'h4'; className = 'text-2xl font-bold'; break;
+                    case 'blockquote': styleTag = 'blockquote'; break;
+                    default: className = '';
+                  }
+                }
+
+                text = `<${styleTag} class="${className}">${text}</${styleTag}><br />`;
+
+                if (child.marks && child.marks.length > 0) {
+                  child.marks.forEach(mark => {
+                    switch (mark) {
+                      case 'strong': text = `<strong>${text}</strong>`; break;
+                      case 'em': text = `<em>${text}</em>`; break;
+                    }
+                  });
+                }
+
+                return text;
+              }).join('\n')
+            }
+            return '';
+          }).join('\n')
+        }
+        setPost(reshapedPosts);
+
+      } catch (error) {
+        console.error('There has been a problem with your fetch operation:', error);
+      }
+    };
+    fetchData();
+  }, []);
+
+  function urlFor(source) {
+    const builder = imageUrlBuilder({
+      projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
+      dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
+    });
+
+    return builder.image(source).url();
+  }
 
   return (
     <div className="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
@@ -15,13 +85,23 @@ const Page = () => {
           <div className="max-w-3xl mx-auto">
             <div className="flex items-center space-x-5">
               <div className="block pl-2 font-semibold text-xl self-start text-gray-700">
-                <h2 className="leading-relaxed">{selectedPost.title}</h2>
-                <p className="text-sm text-gray-500 font-normal leading-relaxed">{selectedPost.date} in {selectedPost.category}</p>
+                <h2 className="leading-relaxed text-3xl">{post.title}</h2>
+                <p className="text-sm text-gray-500 font-normal leading-relaxed">{post.date} in {post.category}</p>
               </div>
             </div>
+            {post.image &&
+              <div className='my-6 flex justify-center'>
+                <Image
+                  src={urlFor(post.image.asset._ref)}
+                  width={600}
+                  height={250}
+                  alt={post.title}
+                />
+              </div>
+            }
             <div className="divide-y divide-gray-200">
               <div className="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7" >
-                <p dangerouslySetInnerHTML={{ __html: selectedPost.body }}></p>
+                <div dangerouslySetInnerHTML={{ __html: post.body }} />
               </div>
             </div>
           </div>

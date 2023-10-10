@@ -26,7 +26,6 @@ const Card = () => {
     const fetchDataAndSetState = async () => {
       try {
         const data = await fetchData('heroSection');
-        console.log(data)
         if (data && data.result && data.result.length > 0) {
           setContent({
             'title': data.result[0].title,

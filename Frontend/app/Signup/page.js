@@ -54,19 +54,15 @@ const Page = () => {
     }
   }
 
-  useEffect(async () => {
-    console.log(user);
+  useEffect(() => {
     if (user.userName != '') {
       router.push('/')
     }
 
-    console.log("order details : ", orderDetails);
     if (orderDetails && orderDetails.length > 0) {
-      await storeOrder(orderDetails);
+      storeOrder(orderDetails);
       setOrderDetails({});
     }
-
-
   }, [])
 
   const handleChange = (e) => {

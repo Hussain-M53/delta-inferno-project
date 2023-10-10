@@ -1,11 +1,13 @@
 'use client'
 
+import { fetchData } from '@utils/CMS_Retreival';
 import Link from 'next/link'
 import { useState, useRef, useEffect } from 'react'
 
 const OrderDemo = () => {
   const [isVisible, setIsVisible] = useState(false);
   const cardRef = useRef();
+  const [content, setContent] = useState({});
 
   useEffect(() => {
     const observer = new IntersectionObserver(entries => {
@@ -20,6 +22,25 @@ const OrderDemo = () => {
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    const fetchDataAndSetState = async () => {
+      try {
+        const data = await fetchData('orderDemo');
+        if (data && data.result && data.result.length > 0) {
+          setContent((prevData) => ({
+            ...prevData,
+            'title': data.result[0].title,
+            'subTitle': data.result[0].subTitle,
+            'buttonText': data.result[0].buttonText,
+          }));
+        }
+      } catch (error) {
+        console.error('Error fetching and setting data:', error);
+      }
+    };
+
+    fetchDataAndSetState();
+  }, []);
 
   return (
     <div className="mx-auto max-w-7xl sm:px-6 lg:px-8 md:h-[500px]"> {/* <-- Set specific height here */}
@@ -40,19 +61,19 @@ const OrderDemo = () => {
 
         <div ref={cardRef} className={`m-auto max-w-md text-center md:flex-auto md:text-left transform transition-all duration-700 ease-in-out ${isVisible ? 'opacity-100 translate-x-0 scale-100' : 'opacity-0 -translate-x-10 scale-95'}`}>
           <h2 className="text-2xl font-bold tracking-tight text-white sm:text-4xl">
-            Boost your productivity.
+            {content.title?.split(' ').slice(0, 3).join(' ')}
             <br />
-            Start using our services today.
+            {content.title?.split(' ').slice(3).join(' ')}
           </h2>
           <p className="mt-6 text-lg leading-8 text-gray-300">
-            Ac euismod vel sit maecenas id pellentesque eu sed consectetur. Malesuada adipiscing sagittis vel nulla.
+            {content.subTitle}
           </p>
           <div className="mt-10 flex items-center justify-center gap-x-6 md::justify-start">
             <Link
               href="#"
               className="rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
             >
-              Place Order Now
+              {content.buttonText}
             </Link>
             <Link href="#" className="text-sm font-semibold leading-6 text-white">
               Learn more <span aria-hidden="true">→</span>

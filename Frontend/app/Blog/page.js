@@ -1,9 +1,8 @@
 'use client'
 import { ArrowCircleRightIcon } from '@heroicons/react/outline';
 import Link from "next/link";
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState } from 'react';
 import { formatDate } from '../utils/middlewares'
-import { PostContext } from '@context/PostContext'
 
 // const posts = [
 //   {
@@ -51,7 +50,6 @@ import { PostContext } from '@context/PostContext'
 const Page = () => {
 
   const [posts, setPosts] = useState([]);
-  const { setSelectedPost } = useContext(PostContext);
 
   useEffect(() => {
 
@@ -140,13 +138,15 @@ const Page = () => {
                     {post.title}
                   </div>
                 </h3>
-                <p className="mt-5 line-clamp-3 text-sm leading-6 text-gray-600" >{post.body} </p>
+                <div
+                  className="mt-5 text-sm leading-6 text-gray-600 line-clamp-3 "
+                  dangerouslySetInnerHTML={{ __html: post.body }} />
               </div>
               <div className='w-full flex mt-6 justify-between items-center'>
                 <time dateTime={post.datetime} className="text-gray-500 text-xs">
                   {post.date}
                 </time>
-                <Link onClick={() => setSelectedPost(post)} href={`/Blog/${encodeURIComponent(post.id)}`}>
+                <Link href={`/Blog/${encodeURIComponent(post.id)}`} className='hover:text-gray-600'>
                   <ArrowCircleRightIcon height={40} />
                 </Link>
               </div>

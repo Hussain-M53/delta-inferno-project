@@ -7,5 +7,16 @@ import post from './post'
 import service from './service'
 import testimonial from './testimonial'
 import whyChooseUs from './whyChooseUs'
+import orderDemo from './orderDemo'
+import privacyPolicy from './privacyPolicy'
+import calculator from './calculator'
+import cookiePolicy from './cookiePolicy'
+import header_testimonial from './header_testimonial'
+import header_whyChooseUs from './header_WhyChooseUs'
+import plagiarismPolicy from './plagiarismPolicy'
+import refundPolicy from './refundPolicy'
+import terms_Condition from './terms_Condition.js'
+import footer from './footer.js'
 
-export const schemaTypes = [post, blockContent,popUp,faq,service,whyChooseUs,heroSection,testimonial,cta]
+
+export const schemaTypes = [post, blockContent,popUp,faq,service,whyChooseUs,heroSection,testimonial,cta,orderDemo,privacyPolicy,refundPolicy,calculator,plagiarismPolicy,cookiePolicy,header_testimonial,header_whyChooseUs,terms_Condition,footer]

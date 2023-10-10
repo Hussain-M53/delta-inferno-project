@@ -1,16 +1,43 @@
+'use client'
 import Link from 'next/link'
 import {CalendarIcon, FilterIcon} from '@heroicons/react//outline'
+import { fetchData } from "@utils/CMS_Retreival";
+import {useState,useEffect} from 'react';
 
 const Footer = () => {
+
+  const [content, setContent] = useState({})
+
+  useEffect(() => {
+    const fetchDataAndSetState = async () => {
+      try {
+        const data = await fetchData('footer');
+        if (data && data.result && data.result.length > 0) {
+          setContent(({
+            'title': data.result[0].title,
+            'description': data.result[0].description,
+            'subTitle1': data.result[0].subTitle1,
+            'subTitle2': data.result[0].subTitle2,
+
+          }));
+        }
+      } catch (error) {
+        console.error('Error fetching and setting data:', error);
+      }
+    };
+
+    fetchDataAndSetState();
+  }, []);
+
+
   return (
     <div className="mt-10 relative isolate overflow-hidden bg-gray-900 py-16 ">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-2">
           <div className="max-w-xl lg:max-w-lg">
-            <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">Subscribe to our newsletter.</h2>
+            <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">{content.title}</h2>
             <p className="mt-4 text-lg leading-8 text-gray-300">
-              Nostrud amet eu ullamco nisi aute in ad minim nostrud adipisicing velit quis. Duis tempor incididunt
-              dolore.
+             {content.description}
             </p>
             <div className="mt-6 flex max-w-md gap-x-4">
               <label htmlFor="email-address" className="sr-only">
@@ -40,7 +67,7 @@ const Footer = () => {
               </div>
               <dt className="mt-4 font-semibold text-white">Weekly articles</dt>
               <dd className="mt-2 leading-7 text-gray-400">
-                Non laboris consequat cupidatat laborum magna. Eiusmod non irure cupidatat duis commodo amet.
+                {content.subTitle1}
               </dd>
             </div>
             <div className="flex flex-col items-start">
@@ -49,7 +76,7 @@ const Footer = () => {
               </div>
               <dt className="mt-4 font-semibold text-white">No spam</dt>
               <dd className="mt-2 leading-7 text-gray-400">
-                Officia excepteur ullamco ut sint duis proident non adipisicing. Voluptate incididunt anim.
+              {content.subTitle2}
               </dd>
             </div>
           </dl>

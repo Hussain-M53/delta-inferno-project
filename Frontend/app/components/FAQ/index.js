@@ -41,7 +41,7 @@ const FAQ = () => {
                     <div key={faq.id} className={`mb-4 bg-black/5 p-2  ${openId !== faq.id ? 'md:hover:bg-gray-900' : null} rounded-md ring-1 ring-black/10`}>
                         <button
                             onClick={() => toggleItem(faq.id)}
-                            className={`flex justify-between items-center w-full py-3 px-4 text-left font-semibold text-gray-800 transition dark:text-gray-200  ${openId === faq.id ? 'text-indigo-600 md:hover:text-indigo-500' : 'md:dark:hover:text-gray-400 md:hover:text-white '}`}
+                            className={`flex justify-between items-center w-full py-3 px-4 text-left font-semibold text-gray-800 transition  ${openId === faq.id ? 'text-indigo-600 md:hover:text-indigo-500' : 'md:hover:text-white '}`}
                         >
                             {faq.question}
                             <svg
@@ -56,7 +56,7 @@ const FAQ = () => {
                         </button>
                         {openId === faq.id && (
                             <div className="mt-3 p-4 bg-gray-100 dark:bg-gray-800 rounded">
-                                <p className="text-gray-800 dark:text-gray-200">
+                                <p className="text-gray-800 md:hover:text-gray-200">
                                     {faq.answer}
                                 </p>
                             </div>
