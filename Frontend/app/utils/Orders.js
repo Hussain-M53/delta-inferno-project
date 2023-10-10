@@ -14,11 +14,11 @@ export const getOrders = async () => {
 }
 
 export const storeOrder = async (orderData) => {
-    await db.collection("orders").add(orderData).then((docRef) => {
+    return await db.collection("orders").add(orderData).then((docRef) => {
         console.log("Document written with ID: ", docRef.id);
+        return docRef.id
     })
         .catch((error) => {
             console.error("Error adding document: ", error);
         });
-    return docRef.id;
 }

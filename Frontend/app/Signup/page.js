@@ -6,7 +6,7 @@ import { useContext, useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation';
 import { OrderDetailsContext } from '@context/OrderContext';
 import { storeOrder } from '@utils/Orders';
-import { storage } from './utils/firebase_options'
+import { storage } from '../utils/firebase_options'
 import { ref, uploadBytes } from 'firebase/storage'
 
 const Page = () => {
