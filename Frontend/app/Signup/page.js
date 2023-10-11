@@ -64,7 +64,7 @@ const Page = () => {
 
     const storeFormData = async () => {
       console.log('checking if order details exist', orderDetails)
-      if (orderDetails && orderDetails.length > 0) {
+      if (orderDetails) {
         console.log('order details ', orderDetails)
         const id = await storeOrder(orderDetails);
         if (orderDetails['File'] != null && id) {

@@ -237,7 +237,6 @@ const Form = () => {
   const makePayment = async () => {
     formData['Fee'] = calculatedPrice;
     setIsLoading(true);
-
     const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
     const body = {
       'Order_Details': formData

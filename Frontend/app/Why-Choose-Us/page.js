@@ -1,7 +1,7 @@
 import WhyChooseUs from "@components/Why-Choose-Us-Section"
 
 export const metadata = {
-  title: 'Why Choose Us',
+  title: 'Why Choose Us - EAN',
   description: 'Built on Next 13',
 }
 

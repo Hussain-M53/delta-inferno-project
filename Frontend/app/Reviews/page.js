@@ -1,3 +1,4 @@
+import ReviewCard from  '@components/ReviewCard'
 
 export const metadata = {
   title: 'Reviews - EAN',
@@ -6,8 +7,8 @@ export const metadata = {
 
 const Reviews = () => {
   return (
-    <div className='w-3/4 bg-custom-color mt-4' >
-      Reviews
+    <div className='my-4' >
+    <ReviewCard/>
     </div>
   )
 }
