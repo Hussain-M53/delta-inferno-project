@@ -57,21 +57,27 @@ const Page = () => {
   }
 
   useEffect(() => {
+    console.log('user Name : ', user.userName)
     if (user.userName != '') {
       router.push('/')
     }
-    console.log('checking if order details exist')
-    if (orderDetails && orderDetails.length > 0) {
-      console.log('order details ', orderDetails)
-      const id = storeOrder(orderDetails);
-      if (orderDetails['File'] != null && id) {
-        const doc_ref = ref(storage, `/Files/${id}/${orderDetails['File'].name}`);
-        uploadBytes(doc_ref,orderDetails['File']).then(() => {
-          alert('documents uploaded')
-        })
+
+    const storeFormData = async () => {
+      console.log('checking if order details exist', orderDetails)
+      if (orderDetails && orderDetails.length > 0) {
+        console.log('order details ', orderDetails)
+        const id = await storeOrder(orderDetails);
+        if (orderDetails['File'] != null && id) {
+          const doc_ref = ref(storage, `/Files/${id}/${orderDetails['File'].name}`);
+          uploadBytes(doc_ref, orderDetails['File']).then(() => {
+            alert('documents uploaded')
+          })
+        }
+        setOrderDetails({});
       }
-      setOrderDetails({});
     }
+
+    storeFormData();
   }, [])
 
   const handleChange = (e) => {
