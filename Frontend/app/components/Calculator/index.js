@@ -1,12 +1,12 @@
 'use client'
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useContext } from 'react'
 import { academicLevelOptions, deadlineOptions } from '@utils/FieldDetails';
 import Link from 'next/link';
 import { fetchData } from '@utils/CMS_Retreival';
-
+import { OrderDetailsContext } from '@context/OrderContext';
 
 const Calculator = () => {
-
+  const { orderDetails, setOrderDetails } = useContext(OrderDetailsContext);
   const [isVisible, setIsVisible] = useState(false);
   const calcRef = useRef();
   const [paperOptions, setPaperOptions] = useState({});
@@ -14,21 +14,15 @@ const Calculator = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [header, setHeader] = useState({});
   const [calculatedPrice, setCalculatedPrice] = useState(0);
-  const [typeOfService, setTypeOfService] = useState('Type of Service');
-  const [typeOfPaper, setTypeOfPaper] = useState('Type of Paper');
-  const [subject, setSubject] = useState('Subject');
-  const [academicLevel, setAcademicLevel] = useState('Academic Level');
-  const [wordLimit, setWordLimit] = useState(null);
-  const [deadline, setDeadline] = useState('Deadline');
 
   const areFieldsValid = () => {
     return (
-      academicLevel !== 'Academic Level' &&
-      typeOfService !== 'Type of Service' &&
-      typeOfPaper !== 'Type of Paper' &&
-      subject !== 'Subject' &&
-      wordLimit &&
-      deadline !== 'Deadline'
+      orderDetails['Academic Level'] !== 'Academic Level' &&
+      orderDetails['Type of Service'] !== 'Type of Service' &&
+      orderDetails['Type of Paper'] !== 'Type of Paper' &&
+      orderDetails['Subject'] !== 'Subject' &&
+      orderDetails['Word Limit'] &&
+      orderDetails['Deadline'] !== 'Deadline'
     );
   };
 
@@ -54,39 +48,46 @@ const Calculator = () => {
     if (areFieldsValid()) {
       getPrice();
     }
-  }, [academicLevel, subject, wordLimit, deadline]);
+  }, [orderDetails['Academic Level'], orderDetails['Subject'], orderDetails['Word Limit'], orderDetails['Deadline']]);
+
+  const handleFormChange = (e) => {
+    const { name, value } = e.target;
+    setOrderDetails((prevData) => ({
+      ...prevData,
+      [name]: value
+    }));
+  };
 
   const getTypeOfPaperOptions = () => {
-    if (typeOfService === 'Type of Service') return [];
-    return serviceOptions[typeOfService] || [];
+    if (orderDetails['Type of Service'] === 'Type of Service') return [];
+    return serviceOptions[orderDetails['Type of Service']] || [];
   }
 
   const getSubjectOptions = () => {
-    if (typeOfPaper === 'Type of Paper') return [];
-    return paperOptions[typeOfPaper] || [];
+    if (orderDetails['Subject'] === 'Type of Paper') return [];
+    return paperOptions[orderDetails['Subject']] || [];
   }
 
   const handleTypeOfServiceChange = (e) => {
-
-    setTypeOfService(e.target.value);
-    setTypeOfPaper('Type of Paper');
-    setSubject('Subject');
+    updateFormData("Type Of Service", e.target.value);
+    updateFormData('Type of Paper', 'Type of Paper');
+    updateFormData('Subject', 'Subject');
   }
 
   const handleTypeOfPaperChange = (e) => {
-    setTypeOfPaper(e.target.value);
-    setSubject('Subject');
+    updateFormData("Type Of Paper", e.target.value);
+    updateFormData('Subject', 'Subject');
   }
 
   const getPrice = async () => {
     setIsLoading(true);
     const prompt = {
-      "Academic Level": academicLevel,
-      "Type of Service": typeOfService,
-      "Type of Paper": typeOfPaper,
-      "Subject": subject,
-      "Word Limit": wordLimit,
-      "Deadline": deadline,
+      "Academic Level": orderDetails['Academic Level'],
+      "Type of Service": orderDetails['Type of Service'],
+      "Type of Paper": orderDetails['Type of Paper'],
+      "Subject": orderDetails['Subject'],
+      "Word Limit": orderDetails['Word Limit'],
+      "Deadline": orderDetails['Deadline'],
     }
     try {
       const url = new URL('https://delta-inferno-project-pijr.vercel.app/get-quote');
@@ -160,7 +161,7 @@ const Calculator = () => {
       <div className="border-b border-gray-900/10 pb-6">
         <h2 className="text-3xl font-bold tracking-tight text-center leading-7 text-gray-900 sm:text-5xl  ">{header.title}</h2>
         <p className="text-center mt-1 text-sm leading-6 text-gray-600">
-         {header.subTitle}
+          {header.subTitle}
         </p>
       </div>
 
@@ -169,8 +170,9 @@ const Calculator = () => {
           <div className="mt-2 sm:col-span-3">
             <select
               id="AcademicLevel"
-              name="AcademicLevel"
-              onChange={(e) => setAcademicLevel(e.target.value)}
+              name="Academic Level"
+              value={orderDetails['Academic Level']}
+              onChange={handleFormChange}
               className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
             >
               <option disabled selected style={{ display: 'none' }}>Academic Level</option>
@@ -183,8 +185,8 @@ const Calculator = () => {
           <div className="mt-2 sm:col-span-3">
             <select
               id="TypeOfService"
-              name="TypeOfService"
-              value={typeOfService}
+              name="Type Of Service"
+              value={orderDetails['Type Of Service']}
               onChange={(e) => handleTypeOfServiceChange(e)}
               className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
             >
@@ -196,8 +198,8 @@ const Calculator = () => {
           <div className="mt-2 sm:col-span-3">
             <select
               id="TypeOfPaper"
-              name="TypeOfPaper"
-              value={typeOfPaper}
+              name="Type Of Paper"
+              value={orderDetails['Type Of Paper']}
               onChange={(e) => handleTypeOfPaperChange(e)}
               className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
             >
@@ -210,11 +212,11 @@ const Calculator = () => {
             <select
               id="Subject"
               name="Subject"
-              value={subject}
-              onChange={(e) => setSubject(e.target.value)}
+              value={orderDetails['Subject']}
+              onChange={handleFormChange}
               className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
             >
-              <option disabled selected style={{ display: 'none' }}>Subject</option>
+               <option disabled selected style={{ display: 'none' }}>Subject</option>
               {getSubjectOptions().map((subj, idx) => <option key={idx}>{subj}</option>)}
             </select>
           </div>
@@ -223,10 +225,10 @@ const Calculator = () => {
             <input
               type="number"
               id="WordLimit"
-              name="WordLimit"
-              value={wordLimit}
+              name="Word Limit"
               placeholder="Word Limit"
-              onChange={(e) => setWordLimit(e.target.value)}
+              value={orderDetails['Word Limit']}
+              onChange={handleFormChange}
               className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
             />
           </div>
@@ -235,7 +237,8 @@ const Calculator = () => {
             <select
               id="Deadline"
               name="Deadline"
-              onChange={(e) => setDeadline(e.target.value)}
+              value={orderDetails['Deadline']}
+              onChange={handleFormChange}
               className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
             >
               <option disabled selected style={{ display: 'none' }}>Deadline</option>

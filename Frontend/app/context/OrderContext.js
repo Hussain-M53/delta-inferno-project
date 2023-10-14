@@ -7,27 +7,18 @@ const OrderDetailsContext = createContext();
 const OrderDetailsProvider = ({ children }) => {
 
     const [orderDetails, setOrderDetails] = useState({
-        'First Name': '',
-        'Last Name': '',
-        'Date': '',
-        'Contact Number': '',
-        'Personal Email': '',
-        'University Name': '',
-        'University ID': '',
-        'University Email': '',
+        'Full Name': '',
+        'Email': '',
         'Assignment Topic': '',
         'Additional Information': '',
-        'Citation': '',
-        'Spacing': '',
-        'File': null,
-        'Terms And Conditions': '',
-        'Digital Signature': '',
-        'Academic Level': '',
+        'Citation': 'Citation',
+        'Spacing': 'Spacing',
+        'Academic Level': 'Academic Level',
         'Type of Service': '',
-        'Type of Paper': '',
+        'Type of Paper': 'Type of Paper',
         'Subject': 'Subject',
-        'Word Limit': 0,
-        'Deadline': ''
+        'Word Limit': null,
+        'Deadline': 'Deadline'
     })
 
     return (
