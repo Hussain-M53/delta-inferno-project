@@ -135,9 +135,9 @@ const Form = () => {
     updateFormData(name, value);
   };
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
-    makePayment()
+    await makePayment()
   };
 
   const makePayment = async () => {
