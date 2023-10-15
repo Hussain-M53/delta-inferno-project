@@ -120,13 +120,13 @@ const Form = () => {
   }
 
   const handleTypeOfServiceChange = (e) => {
-    updateFormData("Type Of Service", e.target.value);
+    updateFormData("Type of Service", e.target.value);
     updateFormData('Type of Paper', 'Type of Paper');
     updateFormData('Subject', 'Subject');
   }
 
   const handleTypeOfPaperChange = (e) => {
-    updateFormData("Type Of Paper", e.target.value);
+    updateFormData("Type of Paper", e.target.value);
     updateFormData('Subject', 'Subject');
   }
 

@@ -73,13 +73,13 @@ const Calculator = () => {
   }
 
   const handleTypeOfServiceChange = (e) => {
-    updateFormData("Type Of Service", e.target.value);
+    updateFormData("Type of Service", e.target.value);
     updateFormData('Type of Paper', 'Type of Paper');
     updateFormData('Subject', 'Subject');
   }
 
   const handleTypeOfPaperChange = (e) => {
-    updateFormData("Type Of Paper", e.target.value);
+    updateFormData("Type of Paper", e.target.value);
     updateFormData('Subject', 'Subject');
   }
 
@@ -189,8 +189,8 @@ const Calculator = () => {
           <div className="mt-2 sm:col-span-3">
             <select
               id="TypeOfService"
-              name="Type Of Service"
-              value={orderDetails['Type Of Service']}
+              name="Type of Service"
+              value={orderDetails['Type of Service']}
               onChange={(e) => handleTypeOfServiceChange(e)}
               className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
             >
@@ -202,8 +202,8 @@ const Calculator = () => {
           <div className="mt-2 sm:col-span-3">
             <select
               id="TypeOfPaper"
-              name="Type Of Paper"
-              value={orderDetails['Type Of Paper']}
+              name="Type of Paper"
+              value={orderDetails['Type of Paper']}
               onChange={(e) => handleTypeOfPaperChange(e)}
               className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
             >
