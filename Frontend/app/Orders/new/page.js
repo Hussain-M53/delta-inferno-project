@@ -158,7 +158,6 @@ const Form = () => {
     })
 
     const { sessionId } = await response.json();
-    setOrderDetails(formData);
     const result = stripe.redirectToCheckout({
       sessionId
     });
