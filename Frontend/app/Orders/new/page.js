@@ -85,7 +85,7 @@ const Form = () => {
     setIsLoading(false);
 
   }
-  
+
   const areFieldsValid = () => {
     return (
       orderDetails['Academic Level'] !== 'Academic Level' &&
@@ -137,7 +137,7 @@ const Form = () => {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    await makePayment()
+    await makePayment();
   };
 
   const makePayment = async () => {
@@ -345,7 +345,7 @@ const Form = () => {
         <div className="flex space-x-2 w-4/5">
           <button
             type="submit"
-            disabled={validForPayment()}
+            disabled={!validForPayment()}
             className={`w-full flex justify-center items-center rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm transition-transform duration-300 ease-in-out hover:bg-red-400 
         ${validForPayment() ? 'bg-red-600 text-white' : 'bg-gray-400 text-gray-500 pointer-events-none opacity-50'}`}
           >
