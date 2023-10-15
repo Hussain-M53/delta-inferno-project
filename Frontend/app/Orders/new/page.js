@@ -8,6 +8,7 @@ const Form = () => {
 
   const { orderDetails, setOrderDetails } = useContext(OrderDetailsContext);
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingQuote, setIsLoadingQuote] = useState(false);
   const [paperOptions, setPaperOptions] = useState({});
   const [serviceOptions, setServiceOptions] = useState({});
   const [calculatedPrice, setCalculatedPrice] = useState(0);
@@ -54,7 +55,7 @@ const Form = () => {
   };
 
   const getPrice = async () => {
-    setIsLoading(true);
+    setIsLoadingQuote(true);
     const prompt = {
       "Academic Level": orderDetails['Academic Level'],
       "Type of Service": orderDetails['Type of Service'],
@@ -82,7 +83,7 @@ const Form = () => {
     } catch (error) {
       console.error('Fetch Error:', error);
     }
-    setIsLoading(false);
+    setIsLoadingQuote(false);
 
   }
 
@@ -318,7 +319,7 @@ const Form = () => {
           </div>
 
           <div className="mt-2 sm:col-span-1 w-full text-white py-1.5">
-            <div className='flex items-center font-bold text-black text-lg'>Final Price - $  {isLoading ? (
+            <div className='flex items-center font-bold text-black text-lg'>Final Price - $  {isLoadingQuote ? (
               <svg className="animate-spin ml-2 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 2.21.896 4.21 2.344 5.648l2.657-2.357z"></path>
