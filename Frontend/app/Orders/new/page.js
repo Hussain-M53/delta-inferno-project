@@ -85,19 +85,7 @@ const Form = () => {
     setIsLoading(false);
 
   }
-
-  const validForPayment = () => {
-    return (
-      areFieldsValid() &&
-      orderDetails['Full Name'] != '' &&
-      orderDetails['Email'] != '' &&
-      orderDetails['Assignment Topic'] != '' &&
-      orderDetails['Additional Information'] != '' &&
-      orderDetails['Citation'] != '' &&
-      orderDetails['Spacing'] != ''
-    );
-  }
-
+  
   const areFieldsValid = () => {
     return (
       orderDetails['Academic Level'] !== 'Academic Level' &&
@@ -108,6 +96,18 @@ const Form = () => {
       orderDetails['Deadline'] !== 'Deadline'
     );
   };
+  const validForPayment = () => {
+    return (
+      areFieldsValid() &&
+      orderDetails['Full Name'] != '' &&
+      orderDetails['Email'] != '' &&
+      orderDetails['Assignment Topic'] != '' &&
+      orderDetails['Additional Information'] != '' &&
+      orderDetails['Citation'] != 'Citation' &&
+      orderDetails['Spacing'] != 'Spacing'
+    );
+  }
+
 
   const getTypeOfPaperOptions = () => {
     if (orderDetails['Type of Service'] === 'Type of Service') return [];
@@ -141,11 +141,11 @@ const Form = () => {
   };
 
   const makePayment = async () => {
-    formData['Fee'] = calculatedPrice;
+    orderDetails['Fee'] = calculatedPrice;
     setIsLoading(true);
     const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
     const body = {
-      'Order_Details': formData
+      'Order_Details': orderDetails
     }
     const headers = {
       'Content-Type': 'application/json'

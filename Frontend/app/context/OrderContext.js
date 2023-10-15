@@ -18,7 +18,8 @@ const OrderDetailsProvider = ({ children }) => {
         'Type of Paper': 'Type of Paper',
         'Subject': 'Subject',
         'Word Limit': null,
-        'Deadline': 'Deadline'
+        'Deadline': 'Deadline',
+        'Fee' : 0
     })
 
     return (
