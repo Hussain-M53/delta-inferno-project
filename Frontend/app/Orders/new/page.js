@@ -115,8 +115,8 @@ const Form = () => {
   }
 
   const getSubjectOptions = () => {
-    if (orderDetails['Subject'] === 'Type of Paper') return [];
-    return paperOptions[orderDetails['Subject']] || [];
+    if (orderDetails['Type of Paper'] === 'Type of Paper') return [];
+    return paperOptions[orderDetails['Type of Paper']] || [];
   }
 
   const handleTypeOfServiceChange = (e) => {
