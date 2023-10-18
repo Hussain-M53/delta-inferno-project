@@ -10,7 +10,7 @@ const PromoCard = ({ item, index, isVisible, icon }) => {
   return (
     <div className={`flex flex-col items-center hover:bg-cyan-100 hover:shadow-md space-y-2 border-2 rounded-lg border-gray-300 p-6 transition-all delay-${index * 100} duration-500 transform ${isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
       <div className='font-bold text-center'>{item.title}</div>
-      {item.icon ? <Image src={`${element.icon}`} height={40} width={40} /> : <div className="mb-4">{icon}</div>}
+      {item.icon ? <Image src={`${item.icon}`} height={40} width={40} /> : <div className="mb-4">{icon}</div>}
       <div className='text-center text-sm'>{item.description}</div>
     </div>
   );

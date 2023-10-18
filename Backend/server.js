@@ -22,17 +22,15 @@ server.get('/', (req, res) => {
     })
 })
 
-server.use("/create-payment-session", async (req, res) => {
+server.post("/create-payment-session", async (req, res) => {
     const { Order_Details } = req.body;
-    console.log(Order_Details)
-
     const { Fee, ...productData } = Order_Details;
 
     const line_items = [{
         price_data: {
             currency: 'usd',
             product_data: {
-                name: productData['First Name'],
+                name: productData['Full Name'],
                 metadata: productData
             },
             unit_amount: Order_Details.Fee * 100,
@@ -52,7 +50,7 @@ server.use("/create-payment-session", async (req, res) => {
     res.json({ sessionId: session.id });
 });
 
-server.use("/get-quote", async (req, res) => {
+server.get("/get-quote", async (req, res) => {
     try {
         let workbook = new Excel.Workbook();
         const filePath = path.join(__dirname, 'Pricing.xlsx');
@@ -119,7 +117,7 @@ server.use("/get-quote", async (req, res) => {
     }
 });
 
-server.use("/get-fields", async (req, res) => {
+server.get("/get-fields", async (req, res) => {
     try {
         const filePath = path.join(__dirname, 'Pricing.xlsx');
         let workbook = new Excel.Workbook();

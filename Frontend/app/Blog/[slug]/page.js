@@ -1,6 +1,5 @@
 'use client'
-import imageUrlBuilder from '@sanity/image-url';
-import { formatDate } from "@utils/middlewares";
+import { formatDate, urlFor } from "@utils/middlewares";
 import Image from "next/image";
 import { useEffect, useState } from "react"
 
@@ -68,14 +67,7 @@ const Page = ({ params }) => {
     fetchData();
   }, []);
 
-  function urlFor(source) {
-    const builder = imageUrlBuilder({
-      projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
-      dataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
-    });
 
-    return builder.image(source).url();
-  }
 
   return (
     <div className="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
