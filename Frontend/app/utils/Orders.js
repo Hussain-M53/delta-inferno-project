@@ -3,7 +3,6 @@ import { db } from "./firebase_options";
 
 export const getOrders = async () => {
     const { setOrderDetails } = useContext(OrderDetailsContext);
-
     const snapshot = await db.collection("orders").get();
     snapshot.forEach(doc => {
         setOrderDetails({

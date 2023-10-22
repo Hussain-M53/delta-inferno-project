@@ -143,6 +143,8 @@ const Form = () => {
 
   const makePayment = async () => {
     orderDetails['Fee'] = calculatedPrice;
+    localStorage.setItem('OrderDetails', JSON.stringify(orderDetails));
+
     setIsLoading(true);
     const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
     const body = {

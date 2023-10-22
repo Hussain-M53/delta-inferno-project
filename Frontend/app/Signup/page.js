@@ -4,17 +4,13 @@ import { AuthContext } from '../context/AuthContext'
 import { createUser, signInWithGoogle } from '../utils/auth'
 import { useContext, useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation';
-import { OrderDetailsContext } from '@context/OrderContext';
 import { storeOrder } from '@utils/Orders';
-import { storage } from '../utils/firebase_options'
-import { ref, uploadBytes } from 'firebase/storage'
 
 const Page = () => {
 
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const { user, setUser } = useContext(AuthContext);
-  const { orderDetails, setOrderDetails } = useContext(OrderDetailsContext);
 
 
   const [formData, setformData] = useState({
@@ -63,17 +59,10 @@ const Page = () => {
     }
 
     const storeFormData = async () => {
-      console.log('checking if order details exist', orderDetails)
-      if (orderDetails) {
+      const orderDetails = JSON.parse(localStorage.getItem('orderDetails'));
+      if (orderDetails.FullName) {
         console.log('order details ', orderDetails)
         const id = await storeOrder(orderDetails);
-        if (orderDetails['File'] != null && id) {
-          const doc_ref = ref(storage, `/Files/${id}/${orderDetails['File'].name}`);
-          uploadBytes(doc_ref, orderDetails['File']).then(() => {
-            alert('documents uploaded')
-          })
-        }
-        setOrderDetails({});
       }
     }
 
