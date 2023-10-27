@@ -164,7 +164,7 @@ const Calculator = () => {
   return (
     <div className='flex justify-center items-center lg:w-1/2 lg:h-fit sm:mt-2'>
       <div
-        className='p-16 mx-2 sm:bg-btn-color rounded-full'>
+        className='p-2 md:p-16 mx-2 sm:bg-btn-color rounded-full'>
         <form
           ref={calcRef}
           className={`bg-btn-color sm:bg-transparent transition-all transform duration-1000 px-6 z-10  border-2 border-gray-100 rounded-3xl  py-4 hover:shadow-sm ${isVisible ? 'opacity-100 translate-x-0 scale-100' : 'opacity-0 translate-x-10 scale-95'}`}>

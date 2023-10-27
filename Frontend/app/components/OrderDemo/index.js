@@ -1,99 +1,54 @@
 'use client'
 
-import { fetchData } from '@utils/CMS_Retreival';
+import Image from 'next/image'
 import Link from 'next/link'
-import { useState, useRef, useEffect } from 'react'
+import React, { useState } from 'react'
+
+
+const steps = [
+    {
+        'image': '/assests/step1.png',
+        'title': 'Sign up and complete the form',
+        'desc': 'Create an account or simply log in to our online essay writing service. In the order form, state what you need and by when. Include some of your previous work so that the expert can write an essay in your style. Choose whether you want a certain writer to bid on your order or make it visible to all writers on the platform.'
+    }, {
+        'image': '/assests/step3.png',
+        'title': 'Receive the completed work',
+        'desc': 'Track your order on our essay service and wait for its completion. Once your writer is done, you will receive an email notification. Check the writing, see if it fits your requirements and either request free edits or proceed to the final steps. Once you\'re 110% satisfied, end the contract and pay your professional essay writer.Our service values your feedback so speak up.'
+    }
+]
 
 const OrderDemo = () => {
-  const [isVisible, setIsVisible] = useState(false);
-  const cardRef = useRef();
-  const [content, setContent] = useState({});
+    const [selectedStep, setSelectedStep] = useState(1)
+    const [selectedStepData, setSelectedStepdData] = useState({
+        'image': '/assests/step1.png',
+        'title': 'Sign up and complete the form',
+        'desc': 'Create an account or simply log in to our online essay writing service. In the order form, state what you need and by when. Include some of your previous work so that the expert can write an essay in your style. Choose whether you want a certain writer to bid on your order or make it visible to all writers on the platform.'
+    });
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        setIsVisible(entry.isIntersecting);
-      });
-    }, { threshold: 0.5 });
+    return (
+        <div className='py-20 md:px-16 lg:px-28 bg-gray-50 w-full min-h-screen flex flex-col items-center'>
+            <div className='font-bold text-3xl'>Get writing help in 2 steps</div>
+            <div className='mt-12 mb-6 flex gap-x-8 justify-between items-center '>
+                <div onClick={() => { setSelectedStepdData(steps[0]); setSelectedStep(1) }} className={`${selectedStep == 1 && 'bg-gray-600 text-white'} bg-white py-2 px-10 rounded-md font-serif hover:bg-gray-300 hover:text-white`}>Step 1</div>
+                <div onClick={() => { setSelectedStepdData(steps[1]); setSelectedStep(2) }} className={`${selectedStep == 2 && 'bg-gray-600 text-white'} bg-white py-2 px-10 rounded-md font-serif hover:bg-gray-300 hover:text-white`}>Step 2</div>
+            </div>
+            <div className='px-10 md:px-0 flex flex-col items-center md:grid md:grid-cols-2 gap-x-4'>
+                <div>
+                    <Image src={selectedStepData['image']} width={500} height={500} />
+                </div>
+                <div className='mt-10 md:mt-0 flex flex-col items-center md:items-start'>
+                    <div className='text-2xl font-bold'>{selectedStepData['title']}</div>
+                    <div className='mt-4 md:mt-10 text-sm'>{selectedStepData['desc']}</div>
+                    <div className='text-sm md:text-md mt-4 md:mt-10 w-fit py-2 px-6 border-2 border-green-500 text-green-600 rounded-md hover:bg-green-500 hover:text-white'>
+                        <Link href='/Orders/new'>
+                            Place Order Now
+                        </Link>
+                    </div>
+                </div>
 
-    if (cardRef.current) {
-      observer.observe(cardRef.current);
-    }
-    return () => observer.disconnect();
-  }, []);
-
-  useEffect(() => {
-    const fetchDataAndSetState = async () => {
-      try {
-        const data = await fetchData('orderDemo');
-        if (data && data.result && data.result.length > 0) {
-          setContent((prevData) => ({
-            ...prevData,
-            'title': data.result[0].title,
-            'subTitle': data.result[0].subTitle,
-            'buttonText': data.result[0].buttonText,
-          }));
-        }
-      } catch (error) {
-        console.error('Error fetching and setting data:', error);
-      }
-    };
-
-    fetchDataAndSetState();
-  }, []);
-
-  return (
-    <div className="mx-auto max-w-7xl sm:px-6 lg:px-8 md:h-[500px]"> {/* <-- Set specific height here */}
-      <div className="p-10 relative isolate overflow-hidden bg-gray-900 shadow-2xl sm:rounded-3xl md:flex md:gap-x-20 md:px-24 h-full">
-        <svg
-          viewBox="0 0 1024 1024"
-          className="absolute left-1/2 top-1/2 -z-10 h-[64rem] w-[64rem] -translate-y-1/2 [mask-image:radial-gradient(closest-side,white,transparent)] sm:left-full sm:ml-80 lg:left-1/4 lg:ml-0 lg:-translate-x-1/2 lg:translate-y-0"
-          aria-hidden="true"
-        >
-          <circle cx={512} cy={512} r={512} fill="url(#759c1415-0410-454c-8f7c-9a820de03641)" fillOpacity="0.7" />
-          <defs>
-            <radialGradient id="759c1415-0410-454c-8f7c-9a820de03641">
-              <stop stopColor="#3C3A3B" />
-              <stop offset={1} stopColor="#0E78B9" />
-            </radialGradient>
-          </defs>
-        </svg>
-
-        <div ref={cardRef} className={`m-auto max-w-md text-center md:flex-auto md:text-left transform transition-all duration-700 ease-in-out ${isVisible ? 'opacity-100 translate-x-0 scale-100' : 'opacity-0 -translate-x-10 scale-95'}`}>
-          <h2 className="text-2xl font-bold tracking-tight text-white sm:text-4xl">
-            {content.title?.split(' ').slice(0, 3).join(' ')}
-            <br />
-            {content.title?.split(' ').slice(3).join(' ')}
-          </h2>
-          <p className="mt-6 text-lg leading-8 text-gray-300">
-            {content.subTitle}
-          </p>
-          <div className="mt-10 flex items-center justify-center gap-x-6 md::justify-start">
-            <Link
-              href={'Orders/new'}
-              className="rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-            >
-              {content.buttonText}
-            </Link>
-            <Link href="#" className="text-sm font-semibold leading-6 text-white hover:text-red-500">
-              Learn more <span aria-hidden="true">→</span>
-            </Link>
-          </div>
+            </div>
         </div>
-        <div
-          ref={cardRef}
-          className={`mt-6 w-full md:m-auto h-full transform transition-all duration-700 ease-in-out ${isVisible ? 'opacity-100 translate-x-0 scale-100' : 'opacity-0 translate-x-10 scale-95'}`}>
-          <iframe
-            className="object-cover w-full h-full"
-            src="https://www.youtube.com/embed/KJwYBJMSbPI?autoplay=1&mute=1"
-            title="YouTube video player"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          ></iframe>
-        </div>
-      </div>
-    </div>
-  )
+    )
 }
 
 export default OrderDemo

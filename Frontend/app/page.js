@@ -3,18 +3,17 @@ import Hero from './components/HeroBanner'
 import ReviewCard from './components/ReviewCard'
 import FAQ from './components/FAQ'
 import FeaturedCourses from './components/featured'
-import OrderDemo from './components/OrderDemo'
+import VideoCTA from './components/VideoCTA'
 import TestimonialCard from './components/TestimonialCard'
 import WhyChooseUs from './components/Why-Choose-Us-Section'
 import CTA from '@components/CTA'
+import OrderDemo from '@components/OrderDemo'
 
 export default function Home() {
   return (
     <main className="space-y-20 overflow-x-hidden">
-      {/* Hero Section */}
       <div>
         <Hero />
-        {/* Reviews Section*/}
         <div
           className="absolute -z-10 inset-x-0 transform-gpu overflow-hidden blur-3xl sm:top-700"
           aria-hidden="true"
@@ -29,13 +28,9 @@ export default function Home() {
         </div>
         <ReviewCard />
       </div>
-      {/* Why Choose Us section */}
       <WhyChooseUs />
-      {/* Testimonials Section*/}
       <TestimonialCard />
-      {/* Order Placing CTA Section */}
-      <OrderDemo />
-      {/* Our Services Section */}
+      <VideoCTA />
       <div
         className="-z-10 absolute inset-x-0 top-[calc(50%)] transform-gpu overflow-hidden blur-3xl sm:top-[calc(350%)]"
         aria-hidden="true">
@@ -48,9 +43,8 @@ export default function Home() {
         />
       </div>
       <FeaturedCourses />
-      {/* CTA Section */}
+      <OrderDemo/>
       <CTA />
-      {/* FAQ Section */}
       <FAQ />
 
     </main>
