@@ -11,6 +11,11 @@ export default defineType({
             type: 'string',
         }),
         defineField({
+            name: 'discount',
+            title: 'Flat Discount',
+            type: 'number',
+        }),
+        defineField({
             name: 'textColor',
             title: 'Text Color',
             type: 'string',

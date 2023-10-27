@@ -3,7 +3,6 @@ import cta from './cta'
 import faq from './faq'
 import heroSection from './heroSection'
 import popUp from './popUp'
-import post from './post'
 import service from './service'
 import testimonial from './testimonial'
 import whyChooseUs from './whyChooseUs'
@@ -17,6 +16,8 @@ import plagiarismPolicy from './plagiarismPolicy'
 import refundPolicy from './refundPolicy'
 import terms_Condition from './terms_Condition.js'
 import footer from './footer.js'
+import service_post from './service_post'
+import blog_post from './blog_post'
 
 
-export const schemaTypes = [post, blockContent,popUp,faq,service,whyChooseUs,heroSection,testimonial,cta,orderDemo,privacyPolicy,refundPolicy,calculator,plagiarismPolicy,cookiePolicy,header_testimonial,header_whyChooseUs,terms_Condition,footer]
+export const schemaTypes = [service_post, blog_post, blockContent, popUp, faq, service, whyChooseUs, heroSection, testimonial, cta, orderDemo, privacyPolicy, refundPolicy, calculator, plagiarismPolicy, cookiePolicy, header_testimonial, header_whyChooseUs, terms_Condition, footer]

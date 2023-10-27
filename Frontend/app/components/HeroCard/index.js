@@ -45,7 +45,7 @@ const Card = () => {
   return (
     <div
       ref={cardRef}
-      className={`md:w-1/2 z-10 isolate px-4 lg:px-6 transform transition-all duration-700 ease-in-out ${isVisible ? 'opacity-100 translate-x-0 scale-100' : 'opacity-0 -translate-x-10 scale-95'}`}
+      className={`h-fit mt-6 md:mt-2 lg:w-1/2 z-10 isolate px-4 lg:px-6 transform transition-all duration-700 ease-in-out ${isVisible ? 'opacity-100 translate-x-0 scale-100' : 'opacity-0 -translate-x-10 scale-95'}`}
     >
       <style jsx>{`
         .link:hover {
@@ -55,7 +55,7 @@ const Card = () => {
       `}</style>
       <div className="mx-auto max-w-2xl py-10 lg:py-20">
         <div className="text-center">
-          <h1 className=" text-3xl text-center lg:text-left font-bold text tracking-tight text-gray-900 sm:text-5xl">
+          <h1 className="text-3xl md:text-4xl lg:text-5xl text-center lg:text-left font-bold text tracking-tight text-gray-900">
           {content.title?.split(' ').slice(0, 5).join(' ')}
             <span className="text-btn-color"> {content.title?.split(' ').slice(5, 7).join(' ')} </span>
             {content.title?.split(' ').slice(7, 8).join(' ')}

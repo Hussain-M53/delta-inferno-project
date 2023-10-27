@@ -24,10 +24,11 @@ const Page = () => {
     const currentUser = await signInWithEmailAndPass(formData);
     if (currentUser) {
       alert(`User logged in sucessfully: ${currentUser.user.displayName}`)
-      setUser({
+      setUser((prevData) => ({
+        prevData,
         "userName": currentUser.user.displayName || 'Hussain Murtaza',
         "email": currentUser.user.email,
-      });
+      }));
       router.push('/');
     }
     setIsLoading(false);
@@ -38,10 +39,12 @@ const Page = () => {
     const currentUser = await signInWithGoogle();
     if (currentUser) {
       alert(`${currentUser.user.displayName} Logged in using Google sucessfully`)
-      setUser({
-        "userName": currentUser.user.displayName,
-        "email": currentUser.user.email,
-      });
+      setUser(prevData => ({
+        ...prevData,
+        'userName': currentUser.user.displayName,
+        'email': currentUser.user.email,
+      }));
+
       router.push('/');
     }
   }

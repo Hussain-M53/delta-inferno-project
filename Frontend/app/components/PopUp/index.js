@@ -1,11 +1,14 @@
 'use client'
+import { AuthContext } from '@context/AuthContext';
 import { fetchData } from '@utils/CMS_Retreival'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 
 const PopUp = () => {
 
+  const { setUser } = useContext(AuthContext);
   const [popUp, setPopUp] = useState({
     'title': '',
+    'discount': 0,
     'textColor': '',
     'bgColor': ''
   })
@@ -21,6 +24,10 @@ const PopUp = () => {
             'bgColor': data.result[0].bgColor,
             'textColor': data.result[0].textColor,
           }));
+          setUser((prevData) => ({
+            prevData,
+            'discount': data.result[0].discount,
+          }));
         }
       } catch (error) {
         console.error('Error fetching and setting data:', error);
@@ -33,7 +40,7 @@ const PopUp = () => {
   return (
     <div className={`w-full h-fit p-1 ${popUp.bgColor} flex justify-center items-center`}>
       <div className={` text-[#${popUp.textColor}] text-sm font-normal md:text-lg`}>
-        {popUp.title} <strong> - now on sale.</strong>
+        {popUp.title}
       </div>
     </div >
   )

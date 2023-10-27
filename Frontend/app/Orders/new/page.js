@@ -1,6 +1,6 @@
 'use client'
 import { useContext, useEffect, useState } from 'react';
-import { academicLevelOptions, deadlineOptions, citationOptions, spacingOptions } from '@utils/FieldDetails';
+import { academicLevelOptions, deadlineOptions, citationOptions, spacingOptions, wordLimitOptions } from '@utils/FieldDetails';
 import { loadStripe } from '@stripe/stripe-js';
 import { OrderDetailsContext } from '@context/OrderContext';
 
@@ -121,7 +121,7 @@ const Form = () => {
   }
 
   const handleTypeOfServiceChange = (e) => {
-    updateFormData("Type of Service", e.target.value);
+    updateFormData("Type of Service", e);
     updateFormData('Type of Paper', 'Type of Paper');
     updateFormData('Subject', 'Subject');
   }
@@ -216,17 +216,11 @@ const Form = () => {
             </select>
           </div>
 
-          <div className="mt-2 sm:col-span-1">
-            <select
-              id="TypeOfService"
-              name="Type of Service"
-              value={orderDetails['Type of Service']}
-              onChange={(e) => handleTypeOfServiceChange(e)}
-              className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-            >
-              <option selected style={{ display: 'none' }}>Type of Service</option>
-              {Object.keys(serviceOptions).map((service, idx) => <option key={idx}>{service}</option>)}
-            </select>
+
+          <div className="sm:col-span-full sm:col-start-1 flex">
+            <div className={`w-1/3 flex justify-center items-center hover:cursor-pointer text-sm p-1  rounded-l-lg ${orderDetails['Type of Service'] === 'Writing' ? 'text-gray-200 bg-black' : 'bg-gray-200 text-gray-900'}`} onClick={(e) => handleTypeOfServiceChange('Writing')}>Writing</div>
+            <div className={`w-1/3 flex justify-center items-center hover:cursor-pointer text-sm p-1 border border-x-btn-color ${orderDetails['Type of Service'] === 'Editing' ? 'text-gray-200 bg-black' : 'bg-gray-200 text-gray-900'}`} onClick={(e) => handleTypeOfServiceChange('Editing')}>Editing</div>
+            <div className={`w-1/3 text-center hover:cursor-pointer text-sm p-1 rounded-r-lg ${orderDetails['Type of Service'] === 'Proof Reading' ? 'text-gray-200 bg-black' : 'bg-gray-200 text-gray-900'}`} onClick={(e) => handleTypeOfServiceChange('Proof Reading')}>Proof Read</div>
           </div>
 
           <div className="mt-2 sm:col-span-1 ">
@@ -242,6 +236,22 @@ const Form = () => {
             </select>
           </div>
 
+
+          <div className="mt-2 sm:col-span-1">
+            <select
+              id="WordLimit"
+              name="Word Limit"
+              value={orderDetails['Word Limit']}
+              onChange={handleFormChange}
+              className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+            >
+              <option disabled selected style={{ display: 'none' }}>Word Limit</option>
+              {
+                wordLimitOptions.map((option) => <option>{option}</option>)
+              }
+            </select>
+          </div>
+
           <div className="mt-2 sm:col-span-1">
             <select
               id="Subject"
@@ -253,18 +263,6 @@ const Form = () => {
               <option disabled selected style={{ display: 'none' }}>Subject</option>
               {getSubjectOptions().map((subj, idx) => <option key={idx}>{subj}</option>)}
             </select>
-          </div>
-
-          <div className="mt-2 sm:col-span-1 ">
-            <input
-              type="number"
-              id="WordLimit"
-              name="Word Limit"
-              value={orderDetails['Word Limit']}
-              placeholder="Word Limit"
-              onChange={handleFormChange}
-              className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-            />
           </div>
 
           <div className="mt-2 sm:col-span-1">
@@ -290,7 +288,7 @@ const Form = () => {
               placeholder="Assignment Topic"
               value={orderDetails['Assignment Topic']}
               onChange={handleFormChange}
-              className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+              className="pl-2 block w-full rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
             />
           </div>
 

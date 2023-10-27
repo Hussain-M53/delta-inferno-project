@@ -70,12 +70,12 @@ const OrderDemo = () => {
           </p>
           <div className="mt-10 flex items-center justify-center gap-x-6 md::justify-start">
             <Link
-              href="#"
+              href={'Orders/new'}
               className="rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-900 shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
             >
               {content.buttonText}
             </Link>
-            <Link href="#" className="text-sm font-semibold leading-6 text-white">
+            <Link href="#" className="text-sm font-semibold leading-6 text-white hover:text-red-500">
               Learn more <span aria-hidden="true">→</span>
             </Link>
           </div>

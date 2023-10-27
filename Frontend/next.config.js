@@ -16,7 +16,7 @@ const nextConfig = {
   },
 
   images: {
-    domains: ["thumbs.dreamstime.com", "images.unsplash.com"], 
+    domains: ["thumbs.dreamstime.com", "images.unsplash.com",'encrypted-tbn0.gstatic.com'], 
   },
 }
 

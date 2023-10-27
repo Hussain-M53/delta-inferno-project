@@ -3,59 +3,22 @@ import { ArrowCircleRightIcon } from '@heroicons/react/outline';
 import Link from "next/link";
 import { useEffect, useState } from 'react';
 import { formatDate } from '../utils/middlewares'
-
-// const posts = [
-//   {
-//     id: 1,
-//     title: 'Boost your conversion rate',
-//     href: '#',
-//     description:
-//       'Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.',
-//     date: 'Mar 16, 2020',
-//     datetime: '2020-03-16',
-//     category: { title: 'Marketing', href: '#' },
-//   },
-//   {
-//     id: 2,
-//     title: 'Boost your conversion rate',
-//     href: '#',
-//     description:
-//       'Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.',
-//     date: 'Mar 16, 2020',
-//     datetime: '2020-03-16',
-//     category: { title: 'Marketing', href: '#' },
-//   },
-//   {
-//     id: 3,
-//     title: 'Boost your conversion rate',
-//     href: '#',
-//     description:
-//       'Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.',
-//     date: 'Mar 16, 2020',
-//     datetime: '2020-03-16',
-//     category: { title: 'Marketing', href: '#' },
-//   },
-//   {
-//     id: 4,
-//     title: 'Boost your conversion rate',
-//     href: '#',
-//     description:
-//       'Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.',
-//     date: 'Mar 16, 2020',
-//     datetime: '2020-03-16',
-//     category: { title: 'Marketing', href: '#' },
-//   }
-// ]
+import Image from 'next/image';
 
 const Page = () => {
 
   const [posts, setPosts] = useState([]);
+  const [visiblePosts, setVisiblePosts] = useState(3);
+
+  const showMorePosts = () => {
+    setVisiblePosts((prevValue) => prevValue + 3);
+  };
 
   useEffect(() => {
 
     const fetchData = async () => {
       try {
-        const query = '*[_type == "post"]';
+        const query = '*[_type == "blog_post"]';
         const url = `https://${process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}.api.sanity.io/v1/data/query/${process.env.NEXT_PUBLIC_SANITY_DATASET}?query=${encodeURIComponent(query)}`;
 
         const response = await fetch(url);
@@ -115,8 +78,17 @@ const Page = () => {
 
 
   return (
-    <div className="bg-white py-12 sm:py-24">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+    <div className="bg-white mb-10 ">
+
+      <div className='bg-orange-500 w-full h-48 mb-4'>
+        {/* <Image
+          src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQp2MmX0Rm5Bj9eVREqcsU8QUXiZN2pN0g2Pg&usqp=CAU'
+          width={700}
+          height={100}
+          alt='Banner Image'
+        /> */}
+      </div>
+      <div className="mx-auto max-w-7xl p-6 lg:px-8">
         <div className="mx-auto max-w-2xl lg:mx-0">
           <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Blogs For You</h2>
           <p className="mt-2 text-lg leading-8 text-gray-600">
@@ -124,7 +96,7 @@ const Page = () => {
           </p>
         </div>
         <div className="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-8 border-t border-gray-200 pt-10 sm:mt-12 sm:pt-12 lg:mx-0 lg:max-w-none lg:grid-cols-3">
-          {posts.map((post, idx) => (
+          {posts.slice(0, visiblePosts).map((post, idx) => (
             <article key={idx} className="hover:bg-cyan-100 shadow-lg flex max-w-xl flex-col items-start justify-between border rounded-lg border-gray-100 p-8">
               <div className="flex items-center gap-x-4 text-xs">
                 <div className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100">
@@ -154,6 +126,17 @@ const Page = () => {
           ))}
         </div>
       </div>
+
+      {visiblePosts < posts.length && ( // Only show this button if there are more posts to load
+        <div className="flex justify-end mx-16">
+          <button
+            onClick={showMorePosts}
+            className="mt-8 px-4 py-1 text-lg font-medium rounded-md text-white bg-btn-color hover:bg-cyan-400"
+          >
+            Show More
+          </button>
+        </div>
+      )}
     </div >
   )
 }

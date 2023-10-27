@@ -15,15 +15,5 @@ export default defineType({
             title: 'Description',
             type: 'string',
         }),
-        defineField({
-            name: 'subTitle1',
-            title: 'subTitle1',
-            type: 'string',
-        }),
-        defineField({
-            name: 'subTitle2',
-            title: 'subTitle2',
-            type: 'string',
-        }),
     ],
 })

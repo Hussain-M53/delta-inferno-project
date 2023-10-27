@@ -11,7 +11,7 @@ const Page = ({ params }) => {
 
     const fetchData = async () => {
       try {
-        const query = `*[_type == "blog_post" && _id == "${params.slug}"]`;
+        const query = `*[_type == "service_post" && _id == "${params.slug}"]`;
         const url = `https://${process.env.NEXT_PUBLIC_SANITY_PROJECT_ID}.api.sanity.io/v1/data/query/${process.env.NEXT_PUBLIC_SANITY_DATASET}?query=${encodeURIComponent(query)}`;
 
         const response = await fetch(url);
@@ -23,7 +23,6 @@ const Page = ({ params }) => {
           title: result.result[0].title,
           date: formatDate(result.result[0].publishedAt),
           image: result.result[0].mainImage,
-          category: result.result[0].category,
           body: result.result[0].body.map(block => {
             if (block._type === 'block') {
               return block.children.map(child => {
@@ -78,7 +77,7 @@ const Page = ({ params }) => {
             <div className="flex items-center space-x-5">
               <div className="block pl-2 font-semibold text-xl self-start text-gray-700">
                 <h2 className="leading-relaxed text-3xl">{post.title}</h2>
-                <p className="text-sm text-gray-500 font-normal leading-relaxed">{post.date} in {post.category}</p>
+                <p className="text-sm text-gray-500 font-normal leading-relaxed">{post.date}</p>
               </div>
             </div>
             {post.image &&
