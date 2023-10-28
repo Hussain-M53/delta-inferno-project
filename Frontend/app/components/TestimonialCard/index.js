@@ -19,14 +19,14 @@ const Testimonials = () => {
     const scrollInterval = setInterval(() => {
       if (scrollContainer) {
         if (scrollContainer.scrollLeft >= originalScrollWidth) {
-          scrollContainer.scrollLeft = 0;  // Reset scroll position when the end is reached
+          scrollContainer.scrollLeft = 0;  
         } else {
-          scrollContainer.scrollLeft += 1;  // Adjust the value to control the speed
+          scrollContainer.scrollLeft += 1; 
         }
       }
-    }, 30);  // Adjust the interval to control the speed
+    }, 30); 
     
-    return () => clearInterval(scrollInterval);  // Clear the interval on component unmount
+    return () => clearInterval(scrollInterval);  
   }, []);
 
   useEffect(() => {
@@ -95,9 +95,9 @@ const Testimonials = () => {
             <div key={idx} className="flex-shrink-0 w-full md:w-1/2 lg:w-1/3 mt-10 mx-2 px-6 py-4 border-2 border-gray-300 rounded-xl hover:bg-cyan-50">
               <div className="my-8">
                 <div className="mt-4 flex flex-col items-center  space-x-3 text-base">
-                  <div className="font-bold mb-2 text-3xl text-gray-900">{testimonial.title}</div>
+                  <div className="font-bold mb-2 text-2xl text-gray-900 text-center">{testimonial.title}</div>
                   <div className="text-gray-600 text-xl">⭐️⭐️⭐️⭐️</div>
-                  <div className="mt-4 text-center text-md font-medium leading-8 text-gray-500 sm:text-lg sm:leading-9">
+                  <div className="mt-4 text-center text-md font-medium leading-6 text-gray-500 sm:text-lg sm:leading-7">
                     {testimonial.description}
                   </div>
                 </div>

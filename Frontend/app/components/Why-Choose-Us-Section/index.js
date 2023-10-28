@@ -87,7 +87,7 @@ const WhyChooseUs = () => {
   return (
     <div className="min-h-fit" ref={ref}>
       <div className='relative' >
-        <Image src='assests/shape_142.svg' width={70} height={70} className='absolute right-2 sm:right-20 md:right-40 lg:right-80 -top-8' />
+        <Image src='assets/shape_142.svg' width={70} height={70} className='absolute right-2 sm:right-20 md:right-40 lg:right-80 -top-8' />
         <h1 className="font-bold mb-4 text-center text-4xl">{header.title}</h1>
         <p className="text-center text-2xl">{header.subTitle}</p>
       </div>

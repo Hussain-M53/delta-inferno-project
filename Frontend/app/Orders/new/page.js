@@ -5,7 +5,6 @@ import { loadStripe } from '@stripe/stripe-js';
 import { OrderDetailsContext } from '@context/OrderContext';
 
 const Form = () => {
-
   const { orderDetails, setOrderDetails } = useContext(OrderDetailsContext);
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingQuote, setIsLoadingQuote] = useState(false);
@@ -172,196 +171,232 @@ const Form = () => {
   }
 
   return (
-    <form onSubmit={handleFormSubmit} className='mt-10 '>
-      <div className='bg-btn-color w-4/5 sm:w-3/4 mx-auto p-6 sm:p-10 rounded-lg flex flex-col justify-center items-center space-y-10'>
-        <div className='text-center font-bold text-2xl text-white pb-4 border-b border-gray-100'>
-          Order Details and Terms Agreement
-        </div>
-        <div className="w-4/5 grid grid-cols-1 gap-x-6 gap-y-6 sm:grid-cols-2 md:grid-cols-3">
-          <div className="mt-2 col-span-1 ">
-            <input
-              type="text"
-              id="FullName"
-              name="Full Name"
-              value={orderDetails['Full Name']}
-              placeholder="Full Name"
-              onChange={handleFormChange}
-              className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-            />
-          </div>
-
-          <div className="mt-2 col-span-1">
-            <input
-              type="email"
-              id="Email"
-              name="Email"
-              value={orderDetails['Email']}
-              placeholder="Email Address"
-              onChange={handleFormChange}
-              className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-            />
-          </div>
-          <div className="mt-2 col-span-1">
-            <select
-              id="AcademicLevel"
-              name="Academic Level"
-              value={orderDetails['Academic Level']}
-              onChange={handleFormChange}
-              className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-            >
-              <option disabled selected style={{ display: 'none' }}>Academic Level</option>
-              {
-                academicLevelOptions.map((option, idx) => <option key={idx}>{option}</option>)
-              }
-            </select>
-          </div>
-
-
-          <div className="sm:col-span-full sm:col-start-1 flex">
-            <div className={`w-1/3 flex justify-center items-center hover:cursor-pointer text-sm p-1  rounded-l-lg ${orderDetails['Type of Service'] === 'Writing' ? 'text-gray-200 bg-black' : 'bg-gray-200 text-gray-900'}`} onClick={(e) => handleTypeOfServiceChange('Writing')}>Writing</div>
-            <div className={`w-1/3 flex justify-center items-center hover:cursor-pointer text-sm p-1 border border-x-btn-color ${orderDetails['Type of Service'] === 'Editing' ? 'text-gray-200 bg-black' : 'bg-gray-200 text-gray-900'}`} onClick={(e) => handleTypeOfServiceChange('Editing')}>Editing</div>
-            <div className={`w-1/3 text-center hover:cursor-pointer text-sm p-1 rounded-r-lg ${orderDetails['Type of Service'] === 'Proof Reading' ? 'text-gray-200 bg-black' : 'bg-gray-200 text-gray-900'}`} onClick={(e) => handleTypeOfServiceChange('Proof Reading')}>Proof Read</div>
-          </div>
-
-          <div className="mt-2 sm:col-span-1 ">
-            <select
-              id="TypeOfPaper"
-              name="Type of Paper"
-              value={orderDetails['Type of Paper']}
-              onChange={(e) => handleTypeOfPaperChange(e)}
-              className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-            >
-              <option disabled selected style={{ display: 'none' }}>Type of Paper</option>
-              {getTypeOfPaperOptions().map((paper, idx) => <option key={idx}>{paper}</option>)}
-            </select>
-          </div>
-
-
-          <div className="mt-2 sm:col-span-1">
-            <select
-              id="WordLimit"
-              name="Word Limit"
-              value={orderDetails['Word Limit']}
-              onChange={handleFormChange}
-              className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-            >
-              <option disabled selected style={{ display: 'none' }}>Word Limit</option>
-              {
-                wordLimitOptions.map((option) => <option>{option}</option>)
-              }
-            </select>
-          </div>
-
-          <div className="mt-2 sm:col-span-1">
-            <select
-              id="Subject"
-              name="Subject"
-              value={orderDetails['Subject']}
-              onChange={handleFormChange}
-              className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-            >
-              <option disabled selected style={{ display: 'none' }}>Subject</option>
-              {getSubjectOptions().map((subj, idx) => <option key={idx}>{subj}</option>)}
-            </select>
-          </div>
-
-          <div className="mt-2 sm:col-span-1">
-            <select
-              id="Deadline"
-              name="Deadline"
-              value={orderDetails['Deadline']}
-              onChange={handleFormChange}
-              className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-            >
-              <option disabled selected style={{ display: 'none' }}>Deadline</option>
-              {
-                deadlineOptions.map((option, idx) => <option key={idx}>{option}</option>)
-              }
-            </select>
-          </div>
-
-          <div className="mt-2 col-span-1">
-            <input
-              type="text"
-              id="AssignmentTopic"
-              name="Assignment Topic"
-              placeholder="Assignment Topic"
-              value={orderDetails['Assignment Topic']}
-              onChange={handleFormChange}
-              className="pl-2 block w-full rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-            />
-          </div>
-
-          <div className="mt-2 sm:col-span-1">
-            <select
-              id="Citation"
-              name="Citation"
-              value={orderDetails['Citation']}
-              onChange={handleFormChange}
-              className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-            >
-              <option disabled selected style={{ display: 'none' }}>Citation</option>
-              {citationOptions.map((option, idx) => <option key={idx}>{option}</option>)}
-            </select>
-          </div>
-
-          <div className="mt-2 sm:col-span-1">
-            <select
-              id="Spacing"
-              name="Spacing"
-              value={orderDetails['Spacing']}
-              onChange={handleFormChange}
-              className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-            >
-              <option disabled selected style={{ display: 'none' }}>Spacing</option>
-              {spacingOptions.map((option, idx) => <option key={idx}>{option}</option>)}
-            </select>
-          </div>
-
-          <div className="mt-2 sm:col-span-1 w-full text-white py-1.5">
-            <div className='flex items-center font-bold text-black text-lg'>Final Price - $  {isLoadingQuote ? (
-              <svg className="animate-spin ml-2 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 2.21.896 4.21 2.344 5.648l2.657-2.357z"></path>
-              </svg>
-            )
-              : calculatedPrice
-            }
+    <div className='my-10 w-full flex justify-center gap-x-6'>
+      <div className='w-4/5 md:w-3/5'>
+        <form onSubmit={handleFormSubmit} >
+          <div className='bg-btn-color mx-auto p-4 md:p-10 rounded-lg flex flex-col justify-center items-center space-y-6'>
+            <div className='text-center font-bold text-2xl text-white pb-4 border-b border-gray-100'>
+              Order Details and Terms Agreement
             </div>
-          </div>
+            <div className="w-full grid grid-cols-1 gap-x-2 gap-y-4 sm:grid-cols-2 md:grid-cols-3">
+              <div className="col-span-1 ">
+                <input
+                  type="text"
+                  id="FullName"
+                  name="Full Name"
+                  value={orderDetails['Full Name']}
+                  placeholder="Full Name"
+                  onChange={handleFormChange}
+                  className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                />
+              </div>
 
-          <div className='mt-4 sm:col-span-2'>
-            <div className='text-white text-sm mb-1'>
-              Please provide any additional details about your assignment
+              <div className="col-span-1">
+                <input
+                  type="email"
+                  id="Email"
+                  name="Email"
+                  value={orderDetails['Email']}
+                  placeholder="Email Address"
+                  onChange={handleFormChange}
+                  className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                />
+              </div>
+
+              <div className="sm:col-span-1">
+                <select
+                  id="WordLimit"
+                  name="Word Limit"
+                  value={orderDetails['Word Limit']}
+                  onChange={handleFormChange}
+                  className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                >
+                  <option disabled selected style={{ display: 'none' }}>Word Limit</option>
+                  {
+                    wordLimitOptions.map((option) => <option>{option}</option>)
+                  }
+                </select>
+              </div>
+
+              <div className="sm:col-span-1">
+                <select
+                  id="Deadline"
+                  name="Deadline"
+                  value={orderDetails['Deadline']}
+                  onChange={handleFormChange}
+                  className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                >
+                  <option disabled selected style={{ display: 'none' }}>Deadline</option>
+                  {
+                    deadlineOptions.map((option, idx) => <option key={idx}>{option}</option>)
+                  }
+                </select>
+              </div>
+
+              <div className="col-span-1">
+                <input
+                  type="text"
+                  id="AssignmentTopic"
+                  name="Assignment Topic"
+                  placeholder="Assignment Topic"
+                  value={orderDetails['Assignment Topic']}
+                  onChange={handleFormChange}
+                  className="pl-2 block w-full rounded-md border-0 py-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                />
+              </div>
+
+              <div className="col-span-1">
+                <select
+                  id="AcademicLevel"
+                  name="Academic Level"
+                  value={orderDetails['Academic Level']}
+                  onChange={handleFormChange}
+                  className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                >
+                  <option disabled selected style={{ display: 'none' }}>Academic Level</option>
+                  {
+                    academicLevelOptions.map((option, idx) => <option key={idx}>{option}</option>)
+                  }
+                </select>
+              </div>
+
+              <div className="sm:col-span-full sm:col-start-1 flex">
+                <div className={`w-1/3 flex justify-center items-center hover:cursor-pointer text-sm p-1  rounded-l-lg ${orderDetails['Type of Service'] === 'Writing' ? 'text-gray-200 bg-black' : 'bg-gray-200 text-gray-900'}`} onClick={(e) => handleTypeOfServiceChange('Writing')}>Writing</div>
+                <div className={`w-1/3 flex justify-center items-center hover:cursor-pointer text-sm p-1 border border-x-btn-color ${orderDetails['Type of Service'] === 'Editing' ? 'text-gray-200 bg-black' : 'bg-gray-200 text-gray-900'}`} onClick={(e) => handleTypeOfServiceChange('Editing')}>Editing</div>
+                <div className={`w-1/3 text-center hover:cursor-pointer text-sm p-1 rounded-r-lg ${orderDetails['Type of Service'] === 'Proof Reading' ? 'text-gray-200 bg-black' : 'bg-gray-200 text-gray-900'}`} onClick={(e) => handleTypeOfServiceChange('Proof Reading')}>Proof Read</div>
+              </div>
+
+              <div className="sm:col-span-1 ">
+                <select
+                  id="TypeOfPaper"
+                  name="Type of Paper"
+                  value={orderDetails['Type of Paper']}
+                  onChange={(e) => handleTypeOfPaperChange(e)}
+                  className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                >
+                  <option disabled selected style={{ display: 'none' }}>Type of Paper</option>
+                  {getTypeOfPaperOptions().map((paper, idx) => <option key={idx}>{paper}</option>)}
+                </select>
+              </div>
+
+              <div className="sm:col-span-1">
+                <select
+                  id="Subject"
+                  name="Subject"
+                  value={orderDetails['Subject']}
+                  onChange={handleFormChange}
+                  className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                >
+                  <option disabled selected style={{ display: 'none' }}>Subject</option>
+                  {getSubjectOptions().map((subj, idx) => <option key={idx}>{subj}</option>)}
+                </select>
+              </div>
+
+              <div className="sm:col-span-1">
+                <select
+                  id="Citation"
+                  name="Citation"
+                  value={orderDetails['Citation']}
+                  onChange={handleFormChange}
+                  className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                >
+                  <option disabled selected style={{ display: 'none' }}>Citation</option>
+                  {citationOptions.map((option, idx) => <option key={idx}>{option}</option>)}
+                </select>
+              </div>
+
+              <div className="sm:col-span-1">
+                <select
+                  id="Spacing"
+                  name="Spacing"
+                  value={orderDetails['Spacing']}
+                  onChange={handleFormChange}
+                  className="pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                >
+                  <option disabled selected style={{ display: 'none' }}>Spacing</option>
+                  {spacingOptions.map((option, idx) => <option key={idx}>{option}</option>)}
+                </select>
+              </div>
+
+              <div className='col-span-full col-start-1'>
+                <div className='text-white text-sm mb-1'>
+                  Please provide any additional details about your assignment
+                </div>
+                <textarea name="Additional Information" className='w-full p-2' value={orderDetails['Additional Information']} onChange={handleFormChange}></textarea>
+              </div>
+
+              <div className='col-span-full sm:hidden font-bold text-2xl border-t pt-2 px-6 border-white flex justify-between text-white'>
+                <div>
+                  Final Price
+                </div>
+                <div>$ {isLoadingQuote ? (
+                  <svg className="animate-spin ml-2 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 2.21.896 4.21 2.344 5.648l2.657-2.357z"></path>
+                  </svg>
+                )
+                  : calculatedPrice
+                }</div>
+              </div>
             </div>
-            <textarea name="Additional Information" className='w-full p-2' value={orderDetails['Additional Information']} onChange={handleFormChange}></textarea>
-          </div>
 
-        </div>
+            <div className='border-b border-gray-100 w-full' />
 
-        <div className='border-b border-gray-100 w-4/5' />
-
-        <div className="flex space-x-2 w-4/5">
-          <button
-            type="submit"
-            disabled={!validForPayment()}
-            className={`w-full flex justify-center items-center rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm transition-transform duration-300 ease-in-out hover:bg-red-400 
+            <div className="flex space-x-2 w-full">
+              <button
+                type="submit"
+                disabled={!validForPayment()}
+                className={`w-full flex justify-center items-center rounded-md px-3.5 py-2.5 text-sm font-semibold shadow-sm transition-transform duration-300 ease-in-out hover:bg-red-400 
         ${validForPayment() ? 'bg-red-600 text-white' : 'bg-gray-400 text-gray-500 pointer-events-none opacity-50'}`}
-          >
-            {isLoading ? (
-              <span className="flex items-center">
-                <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 2.21.896 4.21 2.344 5.648l2.657-2.357z"></path>
-                </svg>
-                Processing...
-              </span>
-            )
-              : 'Proceed to Payment'}
-          </button>
+              >
+                {isLoading ? (
+                  <span className="flex items-center">
+                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 2.21.896 4.21 2.344 5.648l2.657-2.357z"></path>
+                    </svg>
+                    Processing...
+                  </span>
+                )
+                  : 'Proceed to Payment'}
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div className='hidden sm:block w-2/5 md:w-1/3 min-h-fit bg-gray-900 px-4 py-8 rounded-lg'>
+        <div className='text-center font-bold text-lg md:text-2xl border-b-2 pb-2 mb-4 border-white text-white'>Order Summary</div>
+
+        <div className='text-xs md:text-sm lg:text-md'>
+          {orderDetails['Full Name'] != '' && <div className='my-1 text-white p-1 border-b border-gray-300 flex justify-between'><div>Full Name : </div><div>{orderDetails['Full Name']}</div></div>}
+          {orderDetails['Email'] != '' && <div className='my-1 text-white p-1 border-b border-gray-300 flex justify-between'><div>Email : </div><div>{orderDetails['Email']}</div></div>}
+          {orderDetails['Assignment Topic'] != '' && <div className='my-1 text-white p-1 border-b border-gray-300 flex justify-between'><div>Assignment Topic : </div><div>{orderDetails['Assignment Topic']}</div></div>}
+          {orderDetails['Academic Level'] != 'Academic Level' && <div className='my-1 text-white p-1 border-b border-gray-300 flex justify-between'><div>Academic Level : </div><div>{orderDetails['Academic Level']}</div></div>}
+          {orderDetails['Type of Service'] != '' && <div className='my-1 text-white p-1 border-b border-gray-300 flex justify-between'><div>Type of Service : </div><div>{orderDetails['Type of Service']}</div></div>}
+          {orderDetails['Type of Paper'] != 'Type of Paper' && <div className='my-1 text-white p-1 border-b border-gray-300 flex justify-between'><div>Type of Paper : </div><div>{orderDetails['Type of Paper']}</div></div>}
+          {orderDetails['Subject'] != 'Subject' && <div className='my-1 text-white p-1 border-b border-gray-300 flex justify-between'><div>Subject : </div><div>{orderDetails['Subject']}</div></div>}
+          {orderDetails['Word Limit'] != null && <div className='my-1 text-white p-1 border-b border-gray-300 flex justify-between'><div>Word Limit : </div><div>{orderDetails['Word Limit']}</div></div>}
+          {orderDetails['Deadline'] != 'Deadline' && <div className='my-1 text-white p-1 border-b border-gray-300 flex justify-between'><div>Deadline : </div><div>{orderDetails['Deadline']}</div></div>}
+          {orderDetails['Citation'] != 'Citation' && <div className='my-1 text-white p-1 border-b border-gray-300 flex justify-between'><div>Citation : </div><div>{orderDetails['Citation']}</div></div>}
+          {orderDetails['Spacing'] != 'Spacing' && <div className='my-1 text-white p-1 border-b border-gray-300 flex justify-between'><div>Spacing : </div><div>{orderDetails['Spacing']}</div></div>}
+        </div>
+
+        <div className='font-bold text-lg md:text-2xl border-t-2 mt-6 pt-2 border-white flex justify-between text-white'>
+          <div>
+            Final Price
+          </div>
+          <div>$ {isLoadingQuote ? (
+            <svg className="animate-spin ml-2 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 2.21.896 4.21 2.344 5.648l2.657-2.357z"></path>
+            </svg>
+          )
+            : calculatedPrice
+          }</div>
         </div>
       </div>
-    </form>
+    </div>
   );
 };
 

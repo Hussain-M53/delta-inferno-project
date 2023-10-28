@@ -4,7 +4,7 @@ const Thankyou = () => {
     return (
         <div className='relative h-fit flex flex-col items-center py-8 gap-y-4'>
             <div className='absolute w-full top-10 right-0 left-0'>
-                <Image src='/assests/Shapes.svg'  width={1200} height={200}/>
+                <Image src='/assets/Shapes.svg'  width={1200} height={200}/>
             </div>
             <div className='font-bold text-3xl'>
                 Congratutions!!! Your Order is Placed
@@ -22,7 +22,7 @@ const Thankyou = () => {
                 Let us know your birthday and receive something special on your birthday
             </div>
             <div className=''>
-                <Image src='/assests/illustration.svg' alt='' width={450} height={450}/>
+                <Image src='/assets/illustration.svg' alt='' width={450} height={450}/>
             </div>
         </div>
     );
