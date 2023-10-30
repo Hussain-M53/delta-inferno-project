@@ -264,7 +264,7 @@ const Calculator = () => {
                     <span className='text-sm text-white p-2 bg-green-500 rounded-md'>
                       {user.discount}% off
                     </span>
-                    <span className='line-through font-bold text-xl'> ${calculatedPrice}</span>
+                    <span className='line-through font-bold text-xl'> ${calculatedPrice.toFixed(1)}</span>
                   </div>
                 }
                 <div className='font-bold text-2xl flex items-center'>🔥 ${isLoading ? (
@@ -274,8 +274,8 @@ const Calculator = () => {
                   </svg>
                 )
                   : user.discount >= 0 ?
-                    (1 - (user.discount / 100)) * calculatedPrice
-                    : calculatedPrice
+                    ((1 - (user.discount / 100)) * calculatedPrice).toFixed(1)
+                    : calculatedPrice.toFixed(1)
                 }
                 </div>
               </div>

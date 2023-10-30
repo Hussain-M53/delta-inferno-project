@@ -1,23 +1,28 @@
-import { OrderDetailsContext } from "@context/OrderContext";
+import { AuthContext } from "@context/AuthContext";
 import { db } from "./firebase_options";
+import { collection, addDoc, getDocs } from "firebase/firestore";
 
 export const getOrders = async () => {
-    const { setOrderDetails } = useContext(OrderDetailsContext);
-    const snapshot = await db.collection("orders").get();
-    snapshot.forEach(doc => {
-        setOrderDetails({
-            id: doc.id,
-            ...doc.data()
-        });
+    const orders = []
+    const { user } = useContext(AuthContext);
+    const querySnapshot = await getDocs(collection(db, "users", user.userId));
+    querySnapshot.forEach((doc) => {
+        orders.push(doc.data())
+        console.log(`${doc.id} => ${doc.data()}`);
     });
+    return orders;
 }
 
 export const storeOrder = async (orderData) => {
-    return await db.collection("orders").add(orderData).then((docRef) => {
+    const { user } = useContext(AuthContext);
+
+    try {
+        const docRef = await addDoc(collection(db, "users", user.userId), orderData);
         console.log("Document written with ID: ", docRef.id);
         return docRef.id
-    })
-        .catch((error) => {
-            console.error("Error adding document: ", error);
-        });
+    } catch (e) {
+        console.error("Error adding document: ", e);
+        return null;
+    }
+
 }

@@ -26,13 +26,12 @@ const Page = () => {
 
     const currentUser = await createUser(formData);
     if (currentUser) {
-      alert(`User created sucessfully: ${currentUser}`)
       setUser(prevData => ({
         ...prevData,
-        'userName': currentUser.user.displayName,
-        'email': currentUser.user.email,
+        'userId'  : currentUser.uid,
+        'userName': currentUser.displayName,
+        'email': currentUser.email,
       }));
-
 
       router.push('/');
     }
@@ -43,33 +42,21 @@ const Page = () => {
     e.preventDefault();
     const currentUser = await signInWithGoogle();
     if (currentUser) {
-      alert(`${currentUser.displayName} Logged in using Google sucessfully`)
       setUser(prevData => ({
         ...prevData,
-        'userName': currentUser.user.displayName,
-        'email': currentUser.user.email,
+        'userId'  : currentUser.uid,
+        'userName': currentUser.displayName,
+        'email': currentUser.email,
       }));
 
       router.push('/');
-
     }
   }
 
   useEffect(() => {
-    console.log('user Name : ', user.userName," , discount : ",user.discount)
     if (user.userName != '') {
       router.push('/')
     }
-
-    const storeFormData = async () => {
-      const orderDetails = JSON.parse(localStorage.getItem('orderDetails'));
-      if (orderDetails['Full Name'] != '') {
-        console.log('order details ', orderDetails)
-        const id = await storeOrder(orderDetails);
-      }
-    }
-
-    storeFormData();
   }, [])
 
   const handleChange = (e) => {

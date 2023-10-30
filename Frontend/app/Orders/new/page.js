@@ -3,9 +3,11 @@ import { useContext, useEffect, useState } from 'react';
 import { academicLevelOptions, deadlineOptions, citationOptions, spacingOptions, wordLimitOptions } from '@utils/FieldDetails';
 import { loadStripe } from '@stripe/stripe-js';
 import { OrderDetailsContext } from '@context/OrderContext';
+import { AuthContext } from '@context/AuthContext';
 
 const Form = () => {
   const { orderDetails, setOrderDetails } = useContext(OrderDetailsContext);
+  const { user } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingQuote, setIsLoadingQuote] = useState(false);
   const [paperOptions, setPaperOptions] = useState({});
@@ -141,7 +143,10 @@ const Form = () => {
   };
 
   const makePayment = async () => {
-    orderDetails['Fee'] = calculatedPrice;
+    if (user.discount > 0) {
+      setCalculatedPrice(((1 - (user.discount / 100)) * calculatedPrice).toFixed(1));
+    }
+    orderDetails['Fee'] = ((1 - (user.discount / 100)) * calculatedPrice).toFixed(1);
     localStorage.setItem('OrderDetails', JSON.stringify(orderDetails));
 
     setIsLoading(true);
@@ -325,19 +330,33 @@ const Form = () => {
                 <textarea name="Additional Information" className='w-full p-2' value={orderDetails['Additional Information']} onChange={handleFormChange}></textarea>
               </div>
 
-              <div className='col-span-full sm:hidden font-bold text-2xl border-t pt-2 px-6 border-white flex justify-between text-white'>
+              <div className={`col-span-full sm:hidden  flex ${user.discount >= 0 ? 'flex-col' : 'justify-between items-center'} font-bold text-2xl border-t pt-6 px-2 border-white text-white`}>
                 <div>
                   Final Price
                 </div>
-                <div>$ {isLoadingQuote ? (
-                  <svg className="animate-spin ml-2 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 2.21.896 4.21 2.344 5.648l2.657-2.357z"></path>
-                  </svg>
-                )
-                  : calculatedPrice
-                }</div>
+                <div className={`flex justify-between items-center ${user.discount >= 0 && 'mb-2'}`}>
+                  {user.discount >= 0 &&
+                    <div className='flex items-center gap-x-1'>
+                      <span className='text-sm text-white p-2 bg-green-500 rounded-md'>
+                        {user.discount}% off
+                      </span>
+                      <span className='line-through font-bold text-xl'> ${calculatedPrice.toFixed(1)}</span>
+                    </div>
+                  }
+                  <div className='font-bold text-2xl flex items-center'>🔥 ${isLoadingQuote ? (
+                    <svg className="animate-spin ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 2.21.896 4.21 2.344 5.648l2.657-2.357z"></path>
+                    </svg>
+                  )
+                    : user.discount >= 0 ?
+                      ((1 - (user.discount / 100)) * calculatedPrice).toFixed(1)
+                      : calculatedPrice.toFixed(1)
+                  }
+                  </div>
+                </div>
               </div>
+
             </div>
 
             <div className='border-b border-gray-100 w-full' />
@@ -382,19 +401,33 @@ const Form = () => {
           {orderDetails['Spacing'] != 'Spacing' && <div className='my-1 text-white p-1 border-b border-gray-300 flex justify-between'><div>Spacing : </div><div>{orderDetails['Spacing']}</div></div>}
         </div>
 
-        <div className='font-bold text-lg md:text-2xl border-t-2 mt-6 pt-2 border-white flex justify-between text-white'>
+        <div className={`${user.discount >= 0 ? 'flex-col' : 'justify-between items-center'} font-bold text-lg md:text-2xl border-y-2 mt-6 pt-4 border-white text-white`}>
           <div>
             Final Price
           </div>
-          <div>$ {isLoadingQuote ? (
-            <svg className="animate-spin ml-2 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 2.21.896 4.21 2.344 5.648l2.657-2.357z"></path>
-            </svg>
-          )
-            : calculatedPrice
-          }</div>
+          <div className={`flex justify-between items-center ${user.discount >= 0 && 'mb-2'}`}>
+            {user.discount >= 0 &&
+              <div className='flex items-center gap-x-1'>
+                <span className='text-sm text-white p-2 bg-green-500 rounded-md'>
+                  {user.discount}% off
+                </span>
+                <span className='line-through font-bold text-xl'> ${calculatedPrice.toFixed(1)}</span>
+              </div>
+            }
+            <div className='font-bold text-2xl flex items-center'>🔥 ${isLoadingQuote ? (
+              <svg className="animate-spin ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 2.21.896 4.21 2.344 5.648l2.657-2.357z"></path>
+              </svg>
+            )
+              : user.discount >= 0 ?
+                ((1 - (user.discount / 100)) * calculatedPrice).toFixed(1)
+                : calculatedPrice.toFixed(1)
+            }
+            </div>
+          </div>
         </div>
+
       </div>
     </div>
   );

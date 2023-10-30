@@ -25,13 +25,14 @@ const NavBar = () => {
   useEffect(() => {
     checkUserAuthentication().then(currentUser => {
       if (currentUser) {
-        setUser({
-          "userName": currentUser.displayName,
-          "email": currentUser.email,
-        });
+        setUser(prevData => ({
+          ...prevData,
+          'userId': currentUser.uid,
+          'userName': currentUser.displayName,
+          'email': currentUser.email,
+        }));
       }
     });
-
   }, [user.userName])
 
   useEffect(() => {

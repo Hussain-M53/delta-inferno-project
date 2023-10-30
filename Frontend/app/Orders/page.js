@@ -4,22 +4,34 @@ import Link from 'next/link';
 import { AuthContext } from '../context/AuthContext'
 import { useEffect, useContext } from 'react';
 import { useRouter } from 'next/navigation';
-
+import OrderCard from './OrderCard.js';
+import { getOrders } from '@utils/Orders';
 
 const Page = () => {
 
   const { user } = useContext(AuthContext);
   const router = useRouter();
+  const [orders, setOrders] = useState([]);
 
   useEffect(() => {
     if (user.userName == '') {
       router.push('/Login');
     }
+
+    const fetchOrders = async () => {
+      const orders = await getOrders(user.userId);
+      if (orders.length > 0) {
+        console.log(orders);
+        setOrders(orders);
+      }
+    }
+    fetchOrders();
+
   }, [])
 
   return (
-    <div className='mt-10 w-4/5 mx-auto'>
-      <div className='flex '>
+    <div className='my-10 w-4/5 mx-auto'>
+      <div className='flex'>
         <div className='text-center font-bold text-3xl mb-6 grow'>
           Your Orders
         </div>
@@ -30,14 +42,10 @@ const Page = () => {
         </Link>
       </div>
       <div className='border-b-2 border-gray-300' />
-      <div className='p-4 mt-6 w-full border border-gray-100 shadow-md rounded-lg'>
-        <div className=''>
-          Order Details:
-        </div>
-        <div>
-          Assignment Topic
-        </div>
-      </div>
+      <OrderCard id={'W-234224'} topic={'Economic linearity'} deadline={'3-5 days'} />
+      <OrderCard id={'PR-13855'} topic={'Economic linearity'} deadline={'3-5 days'} />
+      <OrderCard id={'E-87463'} topic={'Economic linearity'} deadline={'3-5 days'} />
+
     </div>
   )
 }

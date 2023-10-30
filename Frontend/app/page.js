@@ -30,7 +30,8 @@ export default function Home() {
       </div>
       <WhyChooseUs />
       <TestimonialCard />
-      <VideoCTA />
+      <OrderDemo />
+      {/* <VideoCTA /> */}
       <div
         className="-z-10 absolute inset-x-0 top-[calc(50%)] transform-gpu overflow-hidden blur-3xl sm:top-[calc(350%)]"
         aria-hidden="true">
@@ -43,7 +44,6 @@ export default function Home() {
         />
       </div>
       <FeaturedCourses />
-      <OrderDemo/>
       <CTA />
       <FAQ />
 

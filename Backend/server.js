@@ -43,7 +43,7 @@ server.post("/create-payment-session", async (req, res) => {
         payment_method_types: ['card'],
         line_items: line_items,
         mode: 'payment',
-        success_url: 'https://www.expertassignmentnation.com/Signup',
+        success_url: 'https://www.expertassignmentnation.com/Thankyou',
         cancel_url: 'https://www.expertassignmentnation.com/Orders/new',
     });
 
