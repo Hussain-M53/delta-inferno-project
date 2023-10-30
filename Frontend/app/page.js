@@ -3,7 +3,6 @@ import Hero from './components/HeroBanner'
 import ReviewCard from './components/ReviewCard'
 import FAQ from './components/FAQ'
 import FeaturedCourses from './components/featured'
-import VideoCTA from './components/VideoCTA'
 import TestimonialCard from './components/TestimonialCard'
 import WhyChooseUs from './components/Why-Choose-Us-Section'
 import CTA from '@components/CTA'
@@ -31,7 +30,6 @@ export default function Home() {
       <WhyChooseUs />
       <TestimonialCard />
       <OrderDemo />
-      {/* <VideoCTA /> */}
       <div
         className="-z-10 absolute inset-x-0 top-[calc(50%)] transform-gpu overflow-hidden blur-3xl sm:top-[calc(350%)]"
         aria-hidden="true">
