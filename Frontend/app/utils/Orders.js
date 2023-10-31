@@ -15,7 +15,7 @@ export const getOrders = async () => {
 
 export const storeOrder = async (orderData) => {
     const { user } = useContext(AuthContext);
-
+    console.log(user);
     try {
         const docRef = await addDoc(collection(db, "users", user.userId), orderData);
         console.log("Document written with ID: ", docRef.id);

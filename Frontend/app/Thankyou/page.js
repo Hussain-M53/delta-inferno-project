@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect } from 'react';
 import { checkUserAuthentication } from "@utils/auth";
+import { storeOrder } from '@utils/Orders';
 
 const Thankyou = () => {
 
@@ -11,9 +12,9 @@ const Thankyou = () => {
         const storeFormData = async () => {
             checkUserAuthentication().then(async currentUser => {
                 if (currentUser) {
-                    const orderDetails = JSON.parse(localStorage.getItem('orderDetails'));
+                    const orderDetails = JSON.parse(localStorage.getItem('OrderDetails'));
+                    console.log('order details ', orderDetails)
                     if (orderDetails['Full Name'] != '') {
-                        console.log('order details ', orderDetails)
                         const id = await storeOrder(orderDetails);
                     }
                 }
