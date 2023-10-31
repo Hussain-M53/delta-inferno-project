@@ -1,6 +1,7 @@
 import { AuthContext } from "@context/AuthContext";
 import { db } from "./firebase_options";
 import { collection, addDoc, getDocs } from "firebase/firestore";
+import { useContext } from "react";
 
 export const getOrders = async () => {
     const orders = []
