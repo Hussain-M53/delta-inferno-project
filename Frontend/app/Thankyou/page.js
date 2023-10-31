@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect } from 'react';
+import { checkUserAuthentication } from "@utils/auth";
 
 const Thankyou = () => {
 
