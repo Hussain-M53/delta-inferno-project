@@ -52,7 +52,7 @@ const NavBar = () => {
 
   return (
     <div className={`z-50 w-full flex h-20 justify-between items-center px-6 ${bgColor} ${textColor} lg:sticky lg:top-0`}>
-      <Link onClick={() => console.log(user.userName)} href={'/'} className="ml-4 sm:ml-10" >
+      <Link href={'/'} className="ml-4 sm:ml-10" >
         <Image
           src={`/assets/${scrolled ? 'logo.png' : 'secondary_logo.svg'}`}
           alt="Logo"

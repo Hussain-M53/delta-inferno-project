@@ -7,16 +7,16 @@ import { useEffect } from 'react';
 const Thankyou = () => {
 
     useEffect(() => {
-        if (user.userName != '') {
-            router.push('/')
-        }
-
         const storeFormData = async () => {
-            const orderDetails = JSON.parse(localStorage.getItem('orderDetails'));
-            if (orderDetails['Full Name'] != '') {
-                console.log('order details ', orderDetails)
-                const id = await storeOrder(orderDetails);
-            }
+            checkUserAuthentication().then(async currentUser => {
+                if (currentUser) {
+                    const orderDetails = JSON.parse(localStorage.getItem('orderDetails'));
+                    if (orderDetails['Full Name'] != '') {
+                        console.log('order details ', orderDetails)
+                        const id = await storeOrder(orderDetails);
+                    }
+                }
+            })
         }
 
         storeFormData();

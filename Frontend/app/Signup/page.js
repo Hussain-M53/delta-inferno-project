@@ -54,7 +54,8 @@ const Page = () => {
   }
 
   useEffect(() => {
-    if (user.userName != '') {
+    if (user.userName != null) {
+      console.log('user exist')
       router.push('/')
     }
   }, [])
