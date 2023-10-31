@@ -13,6 +13,17 @@ export const getOrders = async () => {
     return orders;
 }
 
+export const getOrder = async (order_id) => {
+    const order = []
+    const { user } = useContext(AuthContext);
+    const querySnapshot = await getDocs(collection(db, "users", user.userId,order_id));
+    querySnapshot.forEach((doc) => {
+        order.push(doc.data())
+        console.log(`${doc.id} => ${doc.data()}`);
+    });
+    return order;
+}
+
 export const storeOrder = async (orderData) => {
     const { user } = useContext(AuthContext);
     console.log(user);

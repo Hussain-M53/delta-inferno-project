@@ -16,11 +16,11 @@ const Thankyou = () => {
                     console.log('order details ', orderDetails)
                     if (orderDetails['Full Name'] != '') {
                         const id = await storeOrder(orderDetails);
+                        console.log(id);
                     }
                 }
             })
         }
-
         storeFormData();
     }, [])
 

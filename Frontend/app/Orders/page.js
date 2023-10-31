@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { AuthContext } from '../context/AuthContext'
-import { useEffect, useContext,useState } from 'react';
+import { useEffect, useContext, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import OrderCard from './OrderCard.js';
 import { getOrders } from '@utils/Orders';
@@ -19,14 +19,13 @@ const Page = () => {
     }
 
     const fetchOrders = async () => {
-      const orders = await getOrders(user.userId);
-      if (orders.length > 0) {
-        console.log(orders);
-        setOrders(orders);
+      const ord = await getOrders();
+      if (ord.length > 0) {
+        console.log(ord);
+        setOrders(ord);
       }
     }
     fetchOrders();
-
   }, [])
 
   return (
@@ -42,6 +41,9 @@ const Page = () => {
         </Link>
       </div>
       <div className='border-b-2 border-gray-300' />
+      {orders.map((order) => (
+        <OrderCard id={order.id} topic={order.data['Assignment Topic']} deadline={order.data['Deadline']} />
+      ))}
       <OrderCard id={'W-234224'} topic={'Economic linearity'} deadline={'3-5 days'} />
       <OrderCard id={'PR-13855'} topic={'Economic linearity'} deadline={'3-5 days'} />
       <OrderCard id={'E-87463'} topic={'Economic linearity'} deadline={'3-5 days'} />
