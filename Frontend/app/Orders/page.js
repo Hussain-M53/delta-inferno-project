@@ -12,11 +12,6 @@ const Page = () => {
   const { user } = useContext(AuthContext);
   const router = useRouter();
   const [orders, setOrders] = useState([
-    { 'id': 'W-234224', 'data': { 'Assignment Topic': 'Economic linearity', 'Deadline': '3-5 days' } },
-    { 'id': 'W-234224', 'data': { 'Assignment Topic': 'Economic linearity', 'Deadline': '3-5 days' } },
-    { 'id': 'W-234224', 'data': { 'Assignment Topic': 'Economic linearity', 'Deadline': '3-5 days' } },
-    { 'id': 'W-234224', 'data': { 'Assignment Topic': 'Economic linearity', 'Deadline': '3-5 days' } },
-
   ]);
   
   useEffect(() => {
@@ -27,14 +22,13 @@ const Page = () => {
           } else {
               const ord = await getOrders(user.userId);
               if (ord.length > 0) {
-                  console.log(ord);
                   setOrders(ord);
               }
           }
       };
   
       fetchOrders();
-  }, [user, router, setOrders]);
+  }, []);
 
   
   return (
