@@ -25,20 +25,21 @@ const OrderDetails = ({ params }) => {
     const router = useRouter();
 
     useEffect(() => {
-        if (user.userName == '') {
-            console.log('user exist')
-            router.push('/Login')
-        }
-
-        const fetchOrders = async () => {
-            const ord = await getOrder();
-            if (ord.length > 0) {
-                console.log(ord);
-                setOrder(ord.data);
+        const fetchOrder = async () => {
+            if (!user.userName) {
+                console.log('User is not authenticated or does not have a username');
+                router.push('/Login');
+            } else {
+                const ord = await getOrder(user.userId, params);
+                if (ord) {
+                    console.log(ord);
+                    setOrder(ord.data);
+                }
             }
-        }
-        fetchOrders();
-    }, [])
+        };
+
+        fetchOrder();
+    }, []);
 
     return (
         <div className='py-10 h-fit bg-gray-100 flex flex-col items-center'>

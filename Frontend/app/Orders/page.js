@@ -18,23 +18,25 @@ const Page = () => {
     { 'id': 'W-234224', 'data': { 'Assignment Topic': 'Economic linearity', 'Deadline': '3-5 days' } },
 
   ]);
-
+  
   useEffect(() => {
-    if (user.userName == '') {
-      console.log('user exist')
-      router.push('/Login')
-    }
+      const fetchOrders = async () => {
+          if (!user.userId || user.userName === '') {
+              console.log('User is not authenticated or does not have a username');
+              router.push('/Login');
+          } else {
+              const ord = await getOrders(user.userId);
+              if (ord.length > 0) {
+                  console.log(ord);
+                  setOrders(ord);
+              }
+          }
+      };
+  
+      fetchOrders();
+  }, [user, router, setOrders]);
 
-    const fetchOrders = async () => {
-      const ord = await getOrders(user.userId);
-      if (ord.length > 0) {
-        console.log(ord);
-        setOrders(ord);
-      }
-    }
-    fetchOrders();
-  }, [])
-
+  
   return (
     <div className='my-10 w-4/5 mx-auto'>
       <div className='flex'>
