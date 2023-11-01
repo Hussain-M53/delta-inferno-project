@@ -4,8 +4,11 @@ import { academicLevelOptions, deadlineOptions, citationOptions, spacingOptions,
 import { loadStripe } from '@stripe/stripe-js';
 import { OrderDetailsContext } from '@context/OrderContext';
 import { AuthContext } from '@context/AuthContext';
+import { useRouter } from 'next/navigation';
+
 
 const Form = () => {
+  const router = useRouter();
   const { orderDetails, setOrderDetails } = useContext(OrderDetailsContext);
   const { user } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
@@ -150,28 +153,30 @@ const Form = () => {
     localStorage.setItem('OrderDetails', JSON.stringify(orderDetails));
 
     setIsLoading(true);
-    const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
-    const body = {
-      'Order_Details': orderDetails
-    }
-    const headers = {
-      'Content-Type': 'application/json'
-    }
+    // const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
+    // const body = {
+    //   'Order_Details': orderDetails
+    // }
+    // const headers = {
+    //   'Content-Type': 'application/json'
+    // }
 
-    const response = await fetch('https://delta-inferno-project-pijr.vercel.app/create-payment-session', {
-      method: 'POST',
-      headers: headers,
-      body: JSON.stringify(body)
-    })
+    // const response = await fetch('https://delta-inferno-project-pijr.vercel.app/create-payment-session', {
+    //   method: 'POST',
+    //   headers: headers,
+    //   body: JSON.stringify(body)
+    // })
 
-    const { sessionId } = await response.json();
-    const result = stripe.redirectToCheckout({
-      sessionId
-    });
+    // const { sessionId } = await response.json();
+    // const result = stripe.redirectToCheckout({
+    //   sessionId
+    // });
 
-    if (result.error) {
-      console.error(result.error)
-    }
+    // if (result.error) {
+    //   console.error(result.error)
+    // }
+
+    router.push('/Thankyou')
     setIsLoading(false);
   }
 

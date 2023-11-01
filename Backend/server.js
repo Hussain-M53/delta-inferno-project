@@ -97,7 +97,6 @@ server.get("/get-quote", async (req, res) => {
                             console.log('Value is undefined or null for columnName:', columnName);
                         }
                     }
-
                 }
             }
         });

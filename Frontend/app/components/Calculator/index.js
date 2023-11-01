@@ -177,11 +177,11 @@ const Calculator = () => {
 
           <div className=" border-b border-white pb-3">
             <div className="mt-4 grid grid-cols-1 gap-x-2 gap-y-2 sm:grid-cols-6">
-
               <div className="sm:col-span-full sm:col-start-1 flex">
-                <div className={`w-1/3 flex justify-center items-center hover:cursor-pointer text-sm p-1  rounded-l-lg ${orderDetails['Type of Service'] === 'Writing' ? 'text-gray-200 bg-black' : 'bg-gray-200 text-gray-900'}`} onClick={(e) => handleTypeOfServiceChange('Writing')}>Writing</div>
-                <div className={`w-1/3 flex justify-center items-center hover:cursor-pointer text-sm p-1 border border-x-btn-color ${orderDetails['Type of Service'] === 'Editing' ? 'text-gray-200 bg-black' : 'bg-gray-200 text-gray-900'}`} onClick={(e) => handleTypeOfServiceChange('Editing')}>Editing</div>
-                <div className={`w-1/3 text-center hover:cursor-pointer text-sm p-1 rounded-r-lg ${orderDetails['Type of Service'] === 'Proof Reading' ? 'text-gray-200 bg-black' : 'bg-gray-200 text-gray-900'}`} onClick={(e) => handleTypeOfServiceChange('Proof Reading')}>Proof Read</div>
+                {/* {Object.keys(serviceOptions.map((option, key) => (<div className={`${key == 0 ? 'rounded-l-lg' : key ==  ? '' : ''}w-1/3 flex justify-center items-center hover:cursor-pointer text-sm p-1 rounded-l-lg ${orderDetails['Type of Service'] === option ? 'text-gray-200 bg-black' : 'bg-gray-200 text-gray-900'}`} onClick={() => handleTypeOfServiceChange(option)}>{option}</div>)))} */}
+                <div className={`w-1/3 flex justify-center items-center hover:cursor-pointer text-sm p-1  rounded-l-lg ${orderDetails['Type of Service'] === 'Writing' ? 'text-gray-200 bg-black' : 'bg-gray-200 text-gray-900'}`} onClick={() => handleTypeOfServiceChange('Writing')}>Writing</div>
+                <div className={`w-1/3 flex justify-center items-center hover:cursor-pointer text-sm p-1 border border-x-btn-color ${orderDetails['Type of Service'] === 'Editing' ? 'text-gray-200 bg-black' : 'bg-gray-200 text-gray-900'}`} onClick={() => handleTypeOfServiceChange('Editing')}>Editing</div>
+                <div className={`w-1/3 text-center hover:cursor-pointer text-sm p-1 rounded-r-lg ${orderDetails['Type of Service'] === 'Proof Reading' ? 'text-gray-200 bg-black' : 'bg-gray-200 text-gray-900'}`} onClick={() => handleTypeOfServiceChange('Proof Reading')}>Proof Read</div>
               </div>
 
               <div className="sm:col-span-3">

@@ -11,15 +11,22 @@ const Page = () => {
 
   const { user } = useContext(AuthContext);
   const router = useRouter();
-  const [orders, setOrders] = useState([]);
+  const [orders, setOrders] = useState([
+    { 'id': 'W-234224', 'data': { 'Assignment Topic': 'Economic linearity', 'Deadline': '3-5 days' } },
+    { 'id': 'W-234224', 'data': { 'Assignment Topic': 'Economic linearity', 'Deadline': '3-5 days' } },
+    { 'id': 'W-234224', 'data': { 'Assignment Topic': 'Economic linearity', 'Deadline': '3-5 days' } },
+    { 'id': 'W-234224', 'data': { 'Assignment Topic': 'Economic linearity', 'Deadline': '3-5 days' } },
+
+  ]);
 
   useEffect(() => {
     if (user.userName == '') {
-      router.push('/Login');
+      console.log('user exist')
+      router.push('/Login')
     }
 
     const fetchOrders = async () => {
-      const ord = await getOrders();
+      const ord = await getOrders(user.userId);
       if (ord.length > 0) {
         console.log(ord);
         setOrders(ord);
@@ -31,23 +38,19 @@ const Page = () => {
   return (
     <div className='my-10 w-4/5 mx-auto'>
       <div className='flex'>
-        <div className='text-center font-bold text-3xl mb-6 grow'>
+        <div className='text-center font-bold text-2xl sm:text-3xl mb-6 grow'>
           Your Orders
         </div>
         <Link href={'/Orders/new'}>
-          <div className="flex w-30 h-10 justify-center items-center rounded-md bg-btn-color px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm transition-transform duration-300 ease-in-out hover:bg-cyan-400">
+          <div className=" sm:text-base flex justify-center items-center rounded-md bg-btn-color px-2 py-2 sm:px-3.5 sm:py-2.5 text-sm font-semibold text-white shadow-sm transition-transform duration-300 ease-in-out hover:bg-cyan-400">
             Place New Order
           </div>
         </Link>
       </div>
-      <div className='border-b-2 border-gray-300' />
+      <div className='border-b-2 border-gray-200' />
       {orders.map((order) => (
         <OrderCard id={order.id} topic={order.data['Assignment Topic']} deadline={order.data['Deadline']} />
       ))}
-      <OrderCard id={'W-234224'} topic={'Economic linearity'} deadline={'3-5 days'} />
-      <OrderCard id={'PR-13855'} topic={'Economic linearity'} deadline={'3-5 days'} />
-      <OrderCard id={'E-87463'} topic={'Economic linearity'} deadline={'3-5 days'} />
-
     </div>
   )
 }

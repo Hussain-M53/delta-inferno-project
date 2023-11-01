@@ -15,7 +15,7 @@ const Thankyou = () => {
                     const orderDetails = JSON.parse(localStorage.getItem('OrderDetails'));
                     console.log('order details ', orderDetails)
                     if (orderDetails['Full Name'] != '') {
-                        const id = await storeOrder(orderDetails);
+                        const id = await storeOrder(currentUser.uid,orderDetails);
                         console.log(id);
                     }
                 }
