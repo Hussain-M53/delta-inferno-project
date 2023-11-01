@@ -12,7 +12,8 @@ export const getOrders = async (userId) => {
 }
 
 export const getOrder = async (userId, order_id) => {
-    const orderDoc = await getDoc(collection(db, "users", userId, "orders", order_id));
+    const orderRef = doc(db, "users", userId, "orders", order_id);
+    const orderDoc = await getDoc(orderRef);
 
     if (orderDoc.exists()) {
         console.log('order doc',orderDoc)
