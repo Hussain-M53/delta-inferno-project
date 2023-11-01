@@ -30,7 +30,7 @@ const OrderDetails = ({ params }) => {
                 console.log('User is not authenticated or does not have a username');
                 router.push('/Login');
             } else {
-                const ord = await getOrder(user.userId, params);
+                const ord = await getOrder(user.userId, params.slug);
                 if (ord) {
                     console.log(ord);
                     setOrder(ord.data);
