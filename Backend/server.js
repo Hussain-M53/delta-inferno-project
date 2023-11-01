@@ -8,10 +8,10 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 server.use(express.urlencoded({ extended: true }))
 
-app.use(cors({
-    origin: ['https://www.expertassignmentnation.com', 'http://localhost:3000'],
+server.use(cors({
+    origin: ['https://www.expertassignmentnation.com'],
     credentials: true,
-}));
+}))
 
 server.use(express.json())
 
