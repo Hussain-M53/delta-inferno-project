@@ -147,9 +147,9 @@ const Form = () => {
 
   const makePayment = async () => {
     if (user.discount > 0) {
-      setCalculatedPrice(((1 - (user.discount / 100)) * calculatedPrice).toFixed(1));
+      setCalculatedPrice(((1 - (user.discount / 100)) * calculatedPrice));
     }
-    orderDetails['Fee'] = ((1 - (user.discount / 100)) * calculatedPrice).toFixed(1);
+    orderDetails['Fee'] = ((1 - (user.discount / 100)) * calculatedPrice);
     localStorage.setItem('OrderDetails', JSON.stringify(orderDetails));
 
     setIsLoading(true);
