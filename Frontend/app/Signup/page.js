@@ -12,7 +12,6 @@ const Page = () => {
   const [isLoadingGoogle, setIsLoadingGoogle] = useState(false);
   const { user, setUser } = useContext(AuthContext);
 
-
   const [formData, setformData] = useState({
     'userName': '',
     'email': '',

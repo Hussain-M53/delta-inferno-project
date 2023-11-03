@@ -59,6 +59,7 @@ const Calculator = () => {
   };
 
   const updateFormData = (name, value) => {
+    setIsLoading(true);
     setOrderDetails((prevData) => ({
       ...prevData,
       [name]: value
@@ -87,7 +88,6 @@ const Calculator = () => {
   }
 
   const getPrice = async () => {
-    setIsLoading(true);
     const prompt = {
       "Academic Level": orderDetails['Academic Level'],
       "Type of Service": orderDetails['Type of Service'],

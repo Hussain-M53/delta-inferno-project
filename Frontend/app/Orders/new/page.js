@@ -382,7 +382,7 @@ const Form = () => {
                     Processing...
                   </span>
                 )
-                  : 'Proceed to Payment'}
+                  : 'Place Order Now'}
               </button>
             </div>
           </div>
