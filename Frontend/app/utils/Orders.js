@@ -16,7 +16,6 @@ export const getOrder = async (userId, order_id) => {
     const orderDoc = await getDoc(orderRef);
 
     if (orderDoc.exists()) {
-        console.log('order doc',orderDoc)
         const orderData = { id: orderDoc.id, data: orderDoc.data() };
         console.log(`${orderDoc.id} => ${JSON.stringify(orderDoc.data())}`);
         return orderData;
