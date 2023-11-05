@@ -129,7 +129,7 @@ const Calculator = () => {
 
   return (
     <form
-      className='sticky bg-btn-color px-6 z-10 border-2 border-gray-100 rounded-3xl py-4 hover:shadow-sm'>
+      className='h-fit bg-btn-color px-6 z-10 border-2 border-gray-100 rounded-3xl py-4 hover:shadow-sm'>
       <div className=" border-b border-white pb-3">
         <div className="mt-4 grid grid-cols-1 gap-x-2 gap-y-2 sm:grid-cols-6">
 

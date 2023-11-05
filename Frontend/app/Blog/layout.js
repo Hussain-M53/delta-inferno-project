@@ -8,11 +8,11 @@ export const metadata = {
 export default function BlogLayout({ children }) {
 
     return (
-        <div className='relative'>
-            <div className='absolute right-0 top-2'>
+        <div className='flex justify-center gap-x-4 mx-2'>
+            {children}
+            <div className = 'hidden sm:block'>
                 <FloatingCalculator />
             </div>
-            {children}
         </div>
     )
 }

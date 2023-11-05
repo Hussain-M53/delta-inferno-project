@@ -23,6 +23,7 @@ const Page = ({ params }) => {
           title: result.result[0].title,
           date: formatDate(result.result[0].publishedAt),
           image: result.result[0].mainImage,
+          category: result.result[0].category,
           body: result.result[0].body.map(block => {
             if (block._type === 'block') {
               return block.children.map(child => {
@@ -44,18 +45,26 @@ const Page = ({ params }) => {
 
                 if (child.marks && child.marks.length > 0) {
                   child.marks.forEach(mark => {
-                    switch (mark) {
-                      case 'strong': text = `<strong>${text}</strong>`; break;
-                      case 'em': text = `<em>${text}</em>`; break;
+                    if (mark === 'strong') {
+                      text = `<strong>${text}</strong>`;
+                    } else if (mark === 'em') {
+                      text = `<em>${text}</em>`;
+                    } else {
+                      // Handle annotations (like links)
+                      const annotation = post.markDefs.find(def => def._key === mark);
+                      if (annotation && annotation._type === 'link') {
+                        text = `<a href="${annotation.href}" class="text-blue-500 hover:underline">${text}</a>`;
+                      }
                     }
                   });
                 }
 
+
                 return text;
-              }).join('\n')
+              }).join('')
             }
             return '';
-          }).join('\n')
+          }).join('')
         }
         setPost(reshapedPosts);
 
@@ -69,10 +78,10 @@ const Page = ({ params }) => {
 
 
   return (
-    <div className="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
+    <div className="min-h-screen  py-6 flex flex-col justify-center sm:py-12">
       <div className="relative py-3 sm:w-7xl sm:mx-auto">
         <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-light-blue-500 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl"></div>
-        <div className="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
+        <div className="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-16">
           <div className="max-w-3xl mx-auto">
             <div className="flex items-center space-x-5">
               <div className="block pl-2 font-semibold text-xl self-start text-gray-700">
@@ -81,11 +90,11 @@ const Page = ({ params }) => {
               </div>
             </div>
             {post.image &&
-              <div className='my-6 flex justify-center'>
+              <div className='my-6 h-30 w-auto flex justify-center'>
                 <Image
                   src={urlFor(post.image.asset._ref)}
                   width={600}
-                  height={250}
+                  height={600}
                   alt={post.title}
                 />
               </div>
