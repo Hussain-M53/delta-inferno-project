@@ -8,9 +8,9 @@ export const metadata = {
 export default function BlogLayout({ children }) {
 
     return (
-        <div className='flex justify-center gap-x-4 mx-2'>
+        <div className='flex justify-center gap-x-2 mx-2'>
             {children}
-            <div className = 'hidden sm:block'>
+            <div className = 'hidden sm:block sm:w-1/3'>
                 <FloatingCalculator />
             </div>
         </div>
