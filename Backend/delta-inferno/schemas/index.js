@@ -18,6 +18,8 @@ import terms_Condition from './terms_Condition.js'
 import footer from './footer.js'
 import service_post from './service_post'
 import blog_post from './blog_post'
+import resource from './resource'
 
 
-export const schemaTypes = [service_post, blog_post, blockContent, popUp, faq, service, whyChooseUs, heroSection, testimonial, cta, OrderDemo, privacyPolicy, refundPolicy, calculator, plagiarismPolicy, cookiePolicy, header_testimonial, header_whyChooseUs, terms_Condition, footer]
+
+export const schemaTypes = [resource, service_post, blog_post, blockContent, popUp, faq, service, whyChooseUs, heroSection, testimonial, cta, OrderDemo, privacyPolicy, refundPolicy, calculator, plagiarismPolicy, cookiePolicy, header_testimonial, header_whyChooseUs, terms_Condition, footer]

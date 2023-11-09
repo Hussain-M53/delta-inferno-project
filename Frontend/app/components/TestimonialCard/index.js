@@ -3,7 +3,7 @@
 import { fetchData } from '@utils/CMS_Retreival';
 import Image from 'next/image';
 import { useEffect, useState, useRef } from 'react';
-
+import { urlFor } from "@utils/middlewares";
 
 const Testimonials = () => {
   const [testimonials, setTestimonials] = useState([]);
@@ -15,18 +15,18 @@ const Testimonials = () => {
   useEffect(() => {
     const scrollContainer = scrollRef.current;
     const originalScrollWidth = scrollContainer.scrollWidth;
-    
+
     const scrollInterval = setInterval(() => {
       if (scrollContainer) {
         if (scrollContainer.scrollLeft >= originalScrollWidth) {
-          scrollContainer.scrollLeft = 0;  
+          scrollContainer.scrollLeft = 0;
         } else {
-          scrollContainer.scrollLeft += 1; 
+          scrollContainer.scrollLeft += 1;
         }
       }
-    }, 30); 
-    
-    return () => clearInterval(scrollInterval);  
+    }, 30);
+
+    return () => clearInterval(scrollInterval);
   }, []);
 
   useEffect(() => {
@@ -82,7 +82,7 @@ const Testimonials = () => {
 
   return (
     <section className="w-full relative bg-transparent px-4 lg:px-8">
-      <h1 className="font-bold text-center text-4xl md:text-5xl">
+      <h1 className="font-bold text-center text-4xl">
         {header}
       </h1>
       <div className="absolute inset-0 -z-10 bg-[radial-gradient(45rem_50rem_at_top,theme(colors.indigo.100),white)] opacity-20" />
@@ -106,7 +106,7 @@ const Testimonials = () => {
                 <div className="text-sm leading-6 font-semibold text-gray-900">
                   <p>  {testimonial.name}, <span className="text-gray-400"> {testimonial.country}</span></p>
                 </div>
-                <Image src={`${testimonial.icon ? testimonial.icon : "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"}`}
+                <Image src={testimonial.icon ? urlFor(testimonial.icon?.asset._ref) : "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"}
                   width={10}
                   height={10}
                   alt="" className="h-10 w-10 rounded-full bg-gray-50" />

@@ -26,10 +26,18 @@ export const getOrder = async (userId, order_id) => {
 }
 
 export const storeOrder = async (userId, orderData) => {
+
     try {
-        const orderRef = await addDoc(collection(db, "users", userId, "orders"), orderData);
+        if (userId != "") {
+            const orderRef = await addDoc(collection(db, "users", userId, "orders"), orderData);
+            console.log("Document written with ID: ", orderRef.id);
+        }
+
+        const orderRef = await addDoc(collection(db, "orders"), orderData);
         console.log("Document written with ID: ", orderRef.id);
         return orderRef.id;
+
+
     } catch (e) {
         console.error("Error adding document: ", e);
         return null;

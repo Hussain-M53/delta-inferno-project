@@ -1,6 +1,6 @@
 'use client'
 import { useContext, useEffect, useState } from 'react';
-import { academicLevelOptions, deadlineOptions, citationOptions, spacingOptions, wordLimitOptions } from '@utils/FieldDetails';
+import { academicLevelOptions, deadlineOptions, wordLimitOptions, country_codes } from '@utils/FieldDetails';
 import { loadStripe } from '@stripe/stripe-js';
 import { OrderDetailsContext } from '@context/OrderContext';
 import { AuthContext } from '@context/AuthContext';
@@ -107,12 +107,13 @@ const Form = () => {
       orderDetails['Full Name'] != '' &&
       orderDetails['Email'] != '' &&
       orderDetails['Assignment Topic'] != '' &&
-      orderDetails['Additional Information'] != '' &&
-      orderDetails['Citation'] != 'Citation' &&
-      orderDetails['Spacing'] != 'Spacing'
+      orderDetails['Country Code'] != '' &&
+      orderDetails['Contact Number'] != ''
+      // orderDetails['Additional Information'] != '' 
+      // orderDetails['Citation'] != 'Citation' &&
+      // orderDetails['Spacing'] != 'Spacing'
     );
   }
-
 
   const getTypeOfPaperOptions = () => {
     if (orderDetails['Type of Service'] === 'Type of Service') return [];
@@ -189,7 +190,7 @@ const Form = () => {
               Order Details and Terms Agreement
             </div>
             <div className="w-full grid grid-cols-1 gap-x-2 gap-y-4 sm:grid-cols-2 md:grid-cols-3">
-              <div className="col-span-1 ">
+              <div className="col-span-1">
                 <input
                   type="text"
                   id="FullName"
@@ -213,7 +214,33 @@ const Form = () => {
                 />
               </div>
 
-              <div className="sm:col-span-1">
+              <div className="col-span-1 flex">
+                <select
+                  id="CountryCode"
+                  name="Country Code"
+                  value={orderDetails['Country Code']}
+                  onChange={handleFormChange}
+                  className="pl-2 w-16 block rounded-l-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                >
+                  <option disabled selected style={{ display: 'none' }}>Code</option>
+                  {
+                    country_codes.map((option) => <option>{option.name}, {option.code}</option>)
+                  }
+                </select>
+                <input
+                  type="number"
+                  id="ContactNumber"
+                  name="Contact Number"
+                  value={orderDetails['Contact Number']}
+                  placeholder="Contact Number"
+                  onChange={handleFormChange}
+                  min={0}
+                  onBlur={(e) => e.target.value = Math.abs(e.target.value)}
+                  className="pl-2 block w-full rounded-r-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                />
+              </div>
+
+              <div className="col-span-1">
                 <select
                   id="WordLimit"
                   name="Word Limit"
@@ -228,7 +255,7 @@ const Form = () => {
                 </select>
               </div>
 
-              <div className="sm:col-span-1">
+              <div className="col-span-1">
                 <select
                   id="Deadline"
                   name="Deadline"
@@ -255,6 +282,12 @@ const Form = () => {
                 />
               </div>
 
+              <div className="col-span-full col-start-1 flex">
+                <div className={`w-1/3 flex justify-center items-center hover:cursor-pointer text-sm p-1  rounded-l-lg ${orderDetails['Type of Service'] === 'Writing' ? 'text-gray-200 bg-black' : 'bg-gray-200 text-gray-900'}`} onClick={(e) => handleTypeOfServiceChange('Writing')}>Writing</div>
+                <div className={`w-1/3 flex justify-center items-center hover:cursor-pointer text-sm p-1 border border-x-btn-color ${orderDetails['Type of Service'] === 'Editing' ? 'text-gray-200 bg-black' : 'bg-gray-200 text-gray-900'}`} onClick={(e) => handleTypeOfServiceChange('Editing')}>Editing</div>
+                <div className={`w-1/3 text-center hover:cursor-pointer text-sm p-1 rounded-r-lg ${orderDetails['Type of Service'] === 'Proof Reading' ? 'text-gray-200 bg-black' : 'bg-gray-200 text-gray-900'}`} onClick={(e) => handleTypeOfServiceChange('Proof Reading')}>Proof Read</div>
+              </div>
+
               <div className="col-span-1">
                 <select
                   id="AcademicLevel"
@@ -270,13 +303,7 @@ const Form = () => {
                 </select>
               </div>
 
-              <div className="sm:col-span-full sm:col-start-1 flex">
-                <div className={`w-1/3 flex justify-center items-center hover:cursor-pointer text-sm p-1  rounded-l-lg ${orderDetails['Type of Service'] === 'Writing' ? 'text-gray-200 bg-black' : 'bg-gray-200 text-gray-900'}`} onClick={(e) => handleTypeOfServiceChange('Writing')}>Writing</div>
-                <div className={`w-1/3 flex justify-center items-center hover:cursor-pointer text-sm p-1 border border-x-btn-color ${orderDetails['Type of Service'] === 'Editing' ? 'text-gray-200 bg-black' : 'bg-gray-200 text-gray-900'}`} onClick={(e) => handleTypeOfServiceChange('Editing')}>Editing</div>
-                <div className={`w-1/3 text-center hover:cursor-pointer text-sm p-1 rounded-r-lg ${orderDetails['Type of Service'] === 'Proof Reading' ? 'text-gray-200 bg-black' : 'bg-gray-200 text-gray-900'}`} onClick={(e) => handleTypeOfServiceChange('Proof Reading')}>Proof Read</div>
-              </div>
-
-              <div className="sm:col-span-1 ">
+              <div className="col-span-1 ">
                 <select
                   id="TypeOfPaper"
                   name="Type of Paper"
@@ -289,7 +316,7 @@ const Form = () => {
                 </select>
               </div>
 
-              <div className="sm:col-span-1">
+              <div className="col-span-1">
                 <select
                   id="Subject"
                   name="Subject"
@@ -302,7 +329,7 @@ const Form = () => {
                 </select>
               </div>
 
-              <div className="sm:col-span-1">
+              {/* <div className="sm:col-span-1">
                 <select
                   id="Citation"
                   name="Citation"
@@ -313,9 +340,9 @@ const Form = () => {
                   <option disabled selected style={{ display: 'none' }}>Citation</option>
                   {citationOptions.map((option, idx) => <option key={idx}>{option}</option>)}
                 </select>
-              </div>
+              </div> */}
 
-              <div className="sm:col-span-1">
+              {/* <div className="sm:col-span-1">
                 <select
                   id="Spacing"
                   name="Spacing"
@@ -326,14 +353,14 @@ const Form = () => {
                   <option disabled selected style={{ display: 'none' }}>Spacing</option>
                   {spacingOptions.map((option, idx) => <option key={idx}>{option}</option>)}
                 </select>
-              </div>
-
+              </div> */}
+              {/* 
               <div className='col-span-full col-start-1'>
                 <div className='text-white text-sm mb-1'>
                   Please provide any additional details about your assignment
                 </div>
                 <textarea name="Additional Information" className='w-full p-2' value={orderDetails['Additional Information']} onChange={handleFormChange}></textarea>
-              </div>
+              </div> */}
 
               <div className={`col-span-full sm:hidden  flex ${user.discount >= 0 ? 'flex-col' : 'justify-between items-center'} font-bold text-2xl border-t pt-6 px-2 border-white text-white`}>
                 <div>

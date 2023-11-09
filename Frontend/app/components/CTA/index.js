@@ -3,6 +3,7 @@ import { fetchData } from '@utils/CMS_Retreival'
 import Image from 'next/image'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
+import { urlFor } from "@utils/middlewares";
 
 const CTA = () => {
   const [content, setContent] = useState({})
@@ -30,7 +31,9 @@ const CTA = () => {
   return (
     <div className='grid grid-cols-2 bg-gray-900 w-9/10 h-60 md:h-72 rounded-xl mx-auto'>
       <div className='col-span-1 p-8 mx-auto'>
-        <Image src='assets/ils_06.svg' width={400} height={400} />
+        <Image src={content.image ? urlFor(content.image?.asset._ref) : "assets/ils_06.svg"}
+          width={400} height={400}
+          alt="" />
       </div>
       <div className='text-white col-span-1 p-8 flex flex-col justify-center space-y-8 items-start'>
         <div className='font-bold text-xl sm:text-2xl md:text-4xl'>

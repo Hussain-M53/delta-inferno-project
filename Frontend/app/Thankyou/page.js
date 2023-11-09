@@ -10,15 +10,19 @@ const Thankyou = () => {
 
     useEffect(() => {
         const storeFormData = async () => {
-            checkUserAuthentication().then(async currentUser => {
-                if (currentUser) {
-                    const orderDetails = JSON.parse(localStorage.getItem('OrderDetails'));
-                    console.log('order details ', orderDetails)
-                    if (orderDetails['Full Name'] != '') {
+            const orderDetails = JSON.parse(localStorage.getItem('OrderDetails'));
+
+            if (orderDetails['Full Name'] != '') {
+                checkUserAuthentication().then(async currentUser => {
+                    if (currentUser) {
                         await storeOrder(currentUser.uid, orderDetails);
+
+                    } else {
+                        await storeOrder("", orderDetails);
                     }
-                }
-            })
+                })
+            }
+
         }
         storeFormData();
     }, [])

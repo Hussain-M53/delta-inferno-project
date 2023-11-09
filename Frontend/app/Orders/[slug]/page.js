@@ -77,18 +77,6 @@ const OrderDetails = ({ params }) => {
                     <div className='font-bold'>Deadline</div>
                     <div>{order['Deadline']}</div>
                 </div>
-                <div className='flex justify-between px-4 py-3 bg-gray-200 rounded-md mb-1'>
-                    <div className='font-bold'>Spacing</div>
-                    <div>{order['Spacing']}</div>
-                </div>
-                <div className='flex justify-between px-4 py-3 bg-gray-200 rounded-md mb-1'>
-                    <div className='font-bold'>Citation</div>
-                    <div>{order['Citation']}</div>
-                </div>
-                <div className='flex justify-between px-4 py-3 bg-gray-200 rounded-md mb-1'>
-                    <div className='font-bold'>Instructions</div>
-                    <div>{order['Additional Information']}</div>
-                </div>
                 <div className='flex justify-between px-4 py-3 font-bold text-xl bg-gray-200 rounded-md'>
                     <div>Total Amount</div>
                     <div>$ {order['Fee']}</div>

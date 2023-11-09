@@ -1,5 +1,4 @@
 
-
 export const fetchData = async (module) => {
     try {
         const query = `*[_type == "${module}"]`;

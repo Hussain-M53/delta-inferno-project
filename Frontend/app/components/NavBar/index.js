@@ -17,7 +17,7 @@ const NavBar = () => {
     { href: '/', label: 'Home' },
     { href: '/About-Us', label: 'About Us' },
     { href: '/Services', label: 'Services' },
-    { href: '/Why-Choose-Us', label: 'Why Choose Us', md: true },
+    { href: '/Resources', label: 'Resources', md: true },
     user.userName ? { href: '/Orders', label: 'Orders', md: true } : null,
     { href: '/Blog', label: 'Blog' },
   ].filter(Boolean);
