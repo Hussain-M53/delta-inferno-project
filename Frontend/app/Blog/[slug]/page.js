@@ -8,7 +8,6 @@ const Page = ({ params }) => {
   const [post, setPost] = useState({});
 
   useEffect(() => {
-
     const fetchData = async () => {
       try {
         const query = `*[_type == "blog_post" && _id == "${params.slug}"]`;
@@ -18,50 +17,45 @@ const Page = ({ params }) => {
         if (!response.ok) throw new Error('Network response was not ok');
 
         const result = await response.json();
+        const postData = result.result[0];
         const reshapedPosts = {
-          id: result.result[0]._id,
-          title: result.result[0].title,
-          date: formatDate(result.result[0].publishedAt),
-          image: result.result[0].mainImage,
-          category: result.result[0].category,
-          body: result.result[0].body.map(block => {
+          id: postData._id,
+          title: postData.title,
+          date: formatDate(postData.publishedAt),
+          image: postData.mainImage,
+          category: postData.category,
+          body: postData.body.map(block => {
             if (block._type === 'block') {
-              return block.children.map(child => {
+              const blockContent = block.children.map(child => {
                 let text = child.text;
-                let styleTag = 'p';
-                let className;
-                if (block.style) {
-                  switch (block.style) {
-                    case 'h1': styleTag = 'h1'; className = 'text-3xl font-bold'; break;
-                    case 'h2': styleTag = 'h2'; className = 'text-2xl font-bold'; break;
-                    case 'h3': styleTag = 'h3'; className = 'text-2xl font-bold'; break;
-                    case 'h4': styleTag = 'h4'; className = 'text-2xl font-bold'; break;
-                    case 'blockquote': styleTag = 'blockquote'; break;
-                    default: className = '';
-                  }
-                }
-
-                text = `<${styleTag} class="${className}">${text}</${styleTag}><br />`;
-
                 if (child.marks && child.marks.length > 0) {
                   child.marks.forEach(mark => {
-                    if (mark === 'strong') {
+                    const annotation = block.markDefs.find(def => def._key === mark);
+                    if (annotation && annotation._type === 'link') {
+                      const target = annotation.blank ? ' target="_blank" rel="noopener noreferrer"' : '';
+                      text = `<a href="${annotation.href}" class="text-blue-500 hover:underline"${target}>${text}</a>`;
+                    } else if (mark === 'strong') {
                       text = `<strong>${text}</strong>`;
                     } else if (mark === 'em') {
                       text = `<em>${text}</em>`;
-                    } else {
-                      // Handle annotations (like links)
-                      const annotation = post.markDefs.find(def => def._key === mark);
-                      if (annotation && annotation._type === 'link') {
-                        text = `<a href="${annotation.href}" class="text-blue-500 hover:underline">${text}</a>`;
-                      }
                     }
                   });
                 }
-
-
                 return text;
-              }).join(' ')
+              }).join('');
+
+              let styleTag = 'p';
+              let className = '';
+              switch (block.style) {
+                case 'h1': styleTag = 'h1'; className = 'text-3xl font-bold'; break;
+                case 'h2': styleTag = 'h2'; className = 'text-2xl font-bold'; break;
+                case 'h3': styleTag = 'h3'; className = 'text-2xl font-bold'; break;
+                case 'h4': styleTag = 'h4'; className = 'text-2xl font-bold'; break;
+                case 'blockquote': styleTag = 'blockquote'; break;
+                // No default case needed as className is initialized as an empty string
+              }
+
+              return `<${styleTag} class="${className}">${blockContent}</${styleTag}><br/>`;
             }
             return '';
           }).join(' ')
@@ -73,7 +67,8 @@ const Page = ({ params }) => {
       }
     };
     fetchData();
-  }, []);
+  }, [params.slug]);
+
 
 
 
@@ -96,6 +91,7 @@ const Page = ({ params }) => {
                   width={600}
                   height={250}
                   alt={post.title}
+                  priority={true}
                 />
               </div>
             }
