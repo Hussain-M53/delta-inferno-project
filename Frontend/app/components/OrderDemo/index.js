@@ -73,9 +73,9 @@ const OrderDemo = () => {
                     </div>
                 }
                 <div ref={cardRef} className={`w-full md:m-auto h-full transform transition-all duration-700 ease-in-out ${isVisible ? 'opacity-100 translate-x-0 scale-100' : 'opacity-0 translate-x-10 scale-95'} mt-10 md:mt-0 flex flex-col items-center justify-center md:items-start `}>
-                    <div className='text-white text-2xl font-bold'>{steps[selectedStep]?.title}</div>
+                    <div className='mx-auto text-center text-white text-2xl font-bold'>{steps[selectedStep]?.title}</div>
                     <div className='text-center sm:text-start text-white mt-4 md:mt-8 text-sm'>{steps[selectedStep]?.description}</div>
-                    <div className='mx-auto text-sm md:text-md mt-4 md:mt-8 w-fit py-2 px-6 border-2 hover:border-orange-500 hover:text-orange-500 hover:bg-transparent rounded-md bg-orange-500 text-white'>
+                    <div className='animate-updown mx-auto text-sm md:text-md mt-4 md:mt-8 w-fit py-2 px-6 border-2 hover:border-orange-500 hover:text-orange-500 hover:bg-transparent rounded-md bg-orange-500 text-white'>
                         <Link href='/Orders/new'>
                             Place Order Now
                         </Link>

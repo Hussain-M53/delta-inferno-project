@@ -9,10 +9,18 @@ const Page = () => {
 
   const [posts, setPosts] = useState([]);
   const [visiblePosts, setVisiblePosts] = useState(3);
+  const [searchQuery, setSearchQuery] = useState('');
 
   const showMorePosts = () => {
     setVisiblePosts((prevValue) => prevValue + 3);
   };
+  const handleSearch = (e) => {
+    setSearchQuery(e.target.value.toLowerCase());
+  };
+
+  const filteredPosts = posts.filter(post =>
+    post.category.toLowerCase().includes(searchQuery)
+  );
 
   useEffect(() => {
 
@@ -75,8 +83,6 @@ const Page = () => {
     fetchData();
   }, []);
 
-
-
   return (
     <div className="bg-white mb-10 ">
 
@@ -94,10 +100,22 @@ const Page = () => {
           <p className="mt-2 text-lg leading-8 text-gray-600">
             Learn how to grow your business with our expert advice in brand awareness.
           </p>
+          <div className = 'mt-4 flex items-center'>
+            <input
+              type="text"
+              placeholder="Search by category..."
+              value={searchQuery}
+              onChange={handleSearch}
+              className="w-2/3 rounded-l-md    p-2"
+            />
+            <div className = 'px-4 py-2 rounded-r-md bg-gray-900 text-white'>
+              Search
+            </div>
+          </div>
         </div>
         <div className="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-8 border-t border-gray-200 pt-10 sm:mt-12 sm:pt-12 lg:mx-0 lg:max-w-none lg:grid-cols-3">
-          {posts.slice(0, visiblePosts).map((post, idx) => (
-            <article key={idx} className="hover:bg-cyan-100 shadow-lg flex max-w-xl flex-col items-start justify-between border rounded-lg border-gray-100 p-8">
+          {filteredPosts.slice(0, visiblePosts).map((post, idx) => (
+            <article key={idx} style={{ backgroundImage: `url(${post.imageUrl})` }} className="hover:bg-cyan-100 shadow-lg flex max-w-xl flex-col items-start justify-between border rounded-lg p-8">
               <div className="flex items-center gap-x-4 text-xs">
                 <div className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100">
                   {post.category}

@@ -45,7 +45,7 @@ const Card = () => {
   return (
     <div
       ref={cardRef}
-      className={`ml-10 h-fit mt-6 md:mt-2 lg:w-1/2 z-10 isolate px-4 lg:px-6 transform transition-all duration-700 ease-in-out ${isVisible ? 'opacity-100 translate-x-0 scale-100' : 'opacity-0 -translate-x-10 scale-95'}`}
+      className={`sm:ml-10 h-fit mt-6 md:mt-2 lg:w-1/2 z-10 isolate px-4 lg:px-6 transform transition-all duration-700 ease-in-out ${isVisible ? 'opacity-100 translate-x-0 scale-100' : 'opacity-0 -translate-x-10 scale-95'}`}
     >
       <style jsx>{`
         .link:hover {
@@ -65,7 +65,7 @@ const Card = () => {
             {content.subTitle}
           </p>
           <div className="mt-10 flex items-center justify-center gap-x-6">
-            <Link href={'Orders/new'} className="link rounded-md bg-btn-color px-2.5 py-1.5 sm:px-3.5 sm:py-2.5 text-sm font-semibold text-white shadow-sm transition-transform duration-300 ease-in-out hover:bg-orange-500">
+            <Link href={'Orders/new'} className="link rounded-md bg-btn-color px-2.5 py-1.5 sm:px-3.5 sm:py-2.5 text-sm font-semibold text-white shadow-sm transition-transform duration-300 ease-in-out hover:bg-orange-500 animate-updown">
              {content.buttonText}
             </Link>
             <Link href="/Signup" className="hover:text-red-600 link text-sm font-semibold leading-6 text-gray-900 transition-transform duration-300 ease-in-out">

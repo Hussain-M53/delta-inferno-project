@@ -43,3 +43,33 @@ export const storeOrder = async (userId, orderData) => {
         return null;
     }
 }
+
+export const storeDOB = async (dob) => {
+
+    try {
+        const orderRef = await addDoc(collection(db, "DateOfBirth"), {dob});
+        console.log("Document written with ID: ", orderRef.id);
+    } catch (e) {
+        console.error("Error adding document: ", e);
+    }
+}
+export const storeSubscriptions = async (email) => {
+    console.log(email)
+    try {
+        const orderRef = await addDoc(collection(db, "NewsLetterSubscription"), {email});
+        console.log("Document written with ID: ", orderRef.id);
+    } catch (e) {
+        console.error("Error adding document: ", e);
+        return null;
+    }
+}
+
+export const storeResourceUsers = async (user) => {
+    try {
+        const orderRef = await addDoc(collection(db, "DownloaderDetails"), user);
+        console.log("Document written with ID: ", orderRef.id);
+    } catch (e) {
+        console.error("Error adding document: ", e);
+        return null;
+    }
+}

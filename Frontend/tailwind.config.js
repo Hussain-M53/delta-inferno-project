@@ -9,7 +9,7 @@ module.exports = {
       screens: {
         'scrollbar-hide': { 'raw': '::-webkit-scrollbar' },
       },
-      
+
       backgroundColor: {
         'bg-color': '#FFFFFF',
         'nav-color': '#000000',
@@ -31,6 +31,9 @@ module.exports = {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+      },
+      animation: {
+        updown: 'updown 1s ease-in-out infinite',
       },
     },
   },

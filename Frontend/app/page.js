@@ -7,6 +7,7 @@ import TestimonialCard from './components/TestimonialCard'
 import WhyChooseUs from './components/Why-Choose-Us-Section'
 import CTA from '@components/CTA'
 import OrderDemo from '@components/OrderDemo'
+import '../styles/globals.css'
 
 export default function Home() {
   return (

@@ -1,10 +1,14 @@
-
 'use client';
 import { useState, useEffect } from 'react';
 import { fetchData } from '@utils/CMS_Retreival';
+import {storeResourceUsers} from '@utils/Orders';
 
 const Page = () => {
     const [documents, setDocuments] = useState([]);
+    const [showModal, setShowModal] = useState(false);
+    const [currentDownload, setCurrentDownload] = useState({ url: '', fileName: '' });
+    const [name, setName] = useState('');
+    const [number, setNumber] = useState('');
 
     useEffect(() => {
         const fetchDataAndSetState = async () => {
@@ -15,8 +19,7 @@ const Page = () => {
                         'title': item.title,
                         'description': item.description,
                         'file': item.file.asset._ref,
-                    }))
-                    )
+                    })));
                 }
             } catch (error) {
                 console.error('Error fetching and setting data:', error);
@@ -50,7 +53,24 @@ const Page = () => {
         } catch (error) {
             console.error('Error in downloading file:', error);
         }
-    }
+    };
+
+    const initiateDownload = async () => {
+        await storeResourceInfo(name, number);
+        const { url, fileName } = currentDownload;
+        downloadFile(url, fileName);
+    };
+
+    const handleDownloadClick = (url, fileName) => {
+        setShowModal(true);
+        setCurrentDownload({ url, fileName });
+    };
+
+    const handleSubmit = async () => {
+        setShowModal(false);
+        await storeResourceUsers({name,number})
+        initiateDownload();
+    };
 
     return (
         <div className="mx-auto max-w-7xl p-6 lg:px-8">
@@ -75,13 +95,39 @@ const Page = () => {
                             </div>
                         </div>
                         <button className='mt-5 w-full text-center py-2 px-6 border-2 hover:border-orange-500 hover:text-orange-500 hover:bg-transparent rounded-md bg-orange-500 text-white'
-                            onClick={() => downloadFile(buildUrl(document.file), document.title)}>
+                            onClick={() => handleDownloadClick(buildUrl(document.file), document.title)}>
                             Download File
                         </button>
-
                     </article>
                 ))}
             </div>
+            {showModal && (
+                <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full">
+                    <div className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+                        <h3 className="text-lg font-semibold">Enter Your Details</h3>
+                        <input
+                            type="text"
+                            placeholder="Name"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            className="mt-2 w-full rounded-md border p-2"
+                        />
+                        <input
+                            type="text"
+                            placeholder="Phone Number"
+                            value={number}
+                            onChange={(e) => setNumber(e.target.value)}
+                            className="mt-2 w-full rounded-md border p-2"
+                        />
+                        <button 
+                            className="mt-4 w-full py-2 bg-blue-500 text-white rounded-md"
+                            onClick={handleSubmit}
+                        >
+                            OK
+                        </button>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

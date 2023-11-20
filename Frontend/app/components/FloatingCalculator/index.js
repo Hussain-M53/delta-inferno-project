@@ -9,7 +9,7 @@ import { AuthContext } from '@context/AuthContext';
 const Calculator = () => {
   const { orderDetails, setOrderDetails } = useContext(OrderDetailsContext);
   const { user } = useContext(AuthContext);
-
+  const [header, setHeader] = useState({});
   const [paperOptions, setPaperOptions] = useState({});
   const [serviceOptions, setServiceOptions] = useState({});
   const [isLoading, setIsLoading] = useState(false);
@@ -26,6 +26,23 @@ const Calculator = () => {
     );
   };
 
+  useEffect(() => {
+    const fetchDataAndSetState = async () => {
+      try {
+        const data = await fetchData('calculator');
+        if (data && data.result && data.result.length > 0) {
+          setHeader(({
+            'title': data.result[0].title,
+            'subTitle': data.result[0].subTitle,
+          }));
+        }
+      } catch (error) {
+        console.error('Error fetching and setting data:', error);
+      }
+    };
+
+    fetchDataAndSetState();
+  }, []);
 
   useEffect(() => {
     if (areFieldsValid()) {
@@ -133,6 +150,13 @@ const Calculator = () => {
       <div className=" border-b border-white pb-3">
         <div className="mt-4 grid grid-cols-1 gap-x-2 gap-y-2 sm:grid-cols-6">
 
+          <div className="sm:col-span-full border-b border-white pb-2">
+            <h2 className="text-xl font-bold tracking-tight text-center leading-7 text-gray-900 sm:text-3xl  ">{header.title}</h2>
+            <p className="text-center mt-1 text-sm leading-6 text-gray-600">
+              {header.subTitle}
+            </p>
+          </div>
+
           <div className="sm:col-span-full sm:col-start-1 flex">
             <div className={`w-1/3 flex justify-center items-center hover:cursor-pointer text-sm p-1  rounded-l-lg ${orderDetails['Type of Service'] === 'Writing' ? 'text-gray-200 bg-black' : 'bg-gray-200 text-gray-900'}`} onClick={(e) => handleTypeOfServiceChange('Writing')}>Writing</div>
             <div className={`w-1/3 flex justify-center items-center hover:cursor-pointer text-sm p-1 border border-x-btn-color ${orderDetails['Type of Service'] === 'Editing' ? 'text-gray-200 bg-black' : 'bg-gray-200 text-gray-900'}`} onClick={(e) => handleTypeOfServiceChange('Editing')}>Editing</div>
@@ -236,7 +260,7 @@ const Calculator = () => {
           </div>
           <Link
             href={'/Orders/new'}
-            className='text-center rounded-md px-2 py-2 text-sm font-semibold text-white shadow-sm hover:bg-orange-500 focus:outline-none focus:ring-2 focus:ring-offset-2 bg-gray-900'>
+            className='animate-updown text-center rounded-md px-2 py-2 text-sm font-semibold text-white shadow-sm hover:bg-orange-500 focus:outline-none focus:ring-2 focus:ring-offset-2 bg-gray-900'>
             Place Order
           </Link>
         </div>

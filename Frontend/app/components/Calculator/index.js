@@ -281,7 +281,7 @@ const Calculator = () => {
               </div>
               <Link
                 href={'/Orders/new'}
-                className='text-center rounded-md px-2 py-2 text-sm font-semibold text-white shadow-sm hover:bg-orange-500 focus:outline-none focus:ring-2 focus:ring-offset-2 bg-gray-900'>
+                className='animate-updown text-center rounded-md px-2 py-2 text-sm font-semibold text-white shadow-sm hover:bg-orange-500 focus:outline-none focus:ring-2 focus:ring-offset-2 bg-gray-900'>
                 Place Order
               </Link>
             </div>

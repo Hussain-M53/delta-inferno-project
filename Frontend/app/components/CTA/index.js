@@ -40,7 +40,7 @@ const CTA = () => {
           {content.title}
         </div>
         <Link href={'/Orders/new'}>
-          <div className="flex w-30 h-10 justify-center items-center rounded-md bg-orange-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm transition-transform duration-300 ease-in-out hover:bg-btn-color">
+          <div className="animate-updown flex w-30 h-10 justify-center items-center rounded-md bg-orange-500 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm transition-transform duration-300 ease-in-out hover:bg-btn-color">
             {content.buttonText}
           </div>
         </Link>

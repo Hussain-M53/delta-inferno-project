@@ -106,7 +106,7 @@ const Form = () => {
       areFieldsValid() &&
       orderDetails['Full Name'] != '' &&
       orderDetails['Email'] != '' &&
-      orderDetails['Assignment Topic'] != '' &&
+      // orderDetails['Assignment Topic'] != '' &&
       orderDetails['Country Code'] != '' &&
       orderDetails['Contact Number'] != ''
       // orderDetails['Additional Information'] != '' 

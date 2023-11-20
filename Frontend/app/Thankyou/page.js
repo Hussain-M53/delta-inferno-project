@@ -2,11 +2,13 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useEffect } from 'react';
+import { useEffect ,useState} from 'react';
 import { checkUserAuthentication } from "@utils/auth";
-import { storeOrder } from '@utils/Orders';
+import { storeOrder, storeDOB } from '@utils/Orders';
 
 const Thankyou = () => {
+
+    const [dob, setDob] = useState('');
 
     useEffect(() => {
         const storeFormData = async () => {
@@ -27,6 +29,10 @@ const Thankyou = () => {
         storeFormData();
     }, [])
 
+    const submitDob = async () => {
+        await storeDOB(dob);
+    }
+
     return (
         <div className='relative h-fit flex flex-col items-center justify-center py-8 gap-y-4'>
             <div className='-z-10 absolute w-full top-20 left-2 md:left-24 right-0'>
@@ -39,8 +45,8 @@ const Thankyou = () => {
                 Plase check your Whatsapp for a Payment link!!
             </div>
             <div className='flex w-full justify-center'>
-                <input id="date" name="date" type="date" className="w-64 sm:w-72 pl-2 block rounded-l-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
-                <div className='text-white bg-orange-500 hover:bg-orange-300 py-2 px-4 sm:py-2 sm:px-6 rounded-r-full'>
+                <input id="date" name="date" type="date" value={dob} onChange={(e) => setDob(e.target.value)} className="w-64 sm:w-72 pl-2 block rounded-l-full border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" />
+                <div onClick={(e) => submitDob(e)} className='cursor-pointer text-white bg-orange-500 hover:bg-orange-300 py-2 px-4 sm:py-2 sm:px-6 rounded-r-full'>
                     DOB
                 </div>
             </div>
