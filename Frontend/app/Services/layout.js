@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import FloatingCalculator from '../components/FloatingCalculator'
 import { fetchData } from '@utils/CMS_Retreival';
 import { urlFor } from '@utils/middlewares';
+import Image from 'next/image';
 
 // export const metadata = {
 //     title: 'Services . Expert Assignment Nation',
