@@ -6,10 +6,10 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { urlFor } from '@utils/middlewares';
 
-export const metadata = {
-    title: 'Blog . Expert Assignment Nation',
-    description: 'Your Expert Content Writer',
-}
+// export const metadata = {
+//     title: 'Blog . Expert Assignment Nation',
+//     description: 'Your Expert Content Writer',
+// }
 
 export default function BlogLayout({ children }) {
     const [headerData, setHeaderData] = useState({});

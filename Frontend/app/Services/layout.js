@@ -4,10 +4,10 @@ import { useEffect, useState } from 'react';
 import FloatingCalculator from '../components/FloatingCalculator'
 import { fetchData } from '@utils/CMS_Retreival';
 
-export const metadata = {
-    title: 'Services . Expert Assignment Nation',
-    description: 'Your Expert Content Writer',
-}
+// export const metadata = {
+//     title: 'Services . Expert Assignment Nation',
+//     description: 'Your Expert Content Writer',
+// }
 
 export default function Service_Layout({ children }) {
     const [headerData, setHeaderData] = useState({});
