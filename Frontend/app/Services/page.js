@@ -2,7 +2,9 @@
 import { ArrowCircleRightIcon } from '@heroicons/react/outline';
 import Link from "next/link";
 import { useEffect, useState } from 'react';
-import { formatDate } from '../utils/middlewares'
+import { formatDate, urlFor } from '../utils/middlewares'
+import { fetchData } from '@utils/CMS_Retreival';
+import Image from 'next/image';
 
 const Page = () => {
 
@@ -15,7 +17,7 @@ const Page = () => {
   };
 
   const filteredPosts = posts.filter(post =>
-    post.category.toLowerCase().includes(searchQuery)
+    post.title.toLowerCase().includes(searchQuery)
   );
 
   const showMorePosts = () => {
@@ -37,6 +39,7 @@ const Page = () => {
           return {
             id: post._id,
             title: post.title,
+            image: post.mainImage,
             date: formatDate(post.publishedAt),
             category: post.category,
             body: post.body.map(block => {
@@ -87,15 +90,7 @@ const Page = () => {
 
   return (
     <div className="bg-white mb-10">
-      <div className='bg-orange-500 w-full h-48 mb-4'>
-        {/* <Image
-          src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQp2MmX0Rm5Bj9eVREqcsU8QUXiZN2pN0g2Pg&usqp=CAU'
-          width={700}
-          height={100}
-          alt='Banner Image'
-        /> */}
-      </div>
-
+    
       <div className="mx-auto max-w-7xl p-6 lg:px-8">
         <div className="mx-auto max-w-2xl lg:mx-0">
           <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Services For You</h2>
@@ -116,8 +111,14 @@ const Page = () => {
           </div>
         </div>
         <div className="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-8 border-t border-gray-200 pt-10 sm:mt-12 sm:pt-12 lg:mx-0 lg:max-w-none lg:grid-cols-3">
-          {posts.slice(0, visiblePosts).map((post, idx) => (
-            <article key={idx} className="hover:bg-cyan-100 shadow-lg flex max-w-xl flex-col items-start justify-between border rounded-lg border-gray-100 p-8">
+          {filteredPosts.slice(0, visiblePosts).map((post, idx) => (
+            <article key={idx}
+              style={post.image && {
+                backgroundImage: `url(${urlFor(post.image.asset._ref)})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+              }}
+              className="hover:bg-cyan-100 shadow-lg flex max-w-xl flex-col items-start justify-between border rounded-lg border-gray-100 p-8">
               <div className="group relative">
                 <h3 className="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
                   <div >

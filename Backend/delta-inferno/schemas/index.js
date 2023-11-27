@@ -19,7 +19,9 @@ import footer from './footer.js'
 import service_post from './service_post'
 import blog_post from './blog_post'
 import resource from './resource'
+import blog_images from './blog_images'
+import service_images from './service_images'
 
 
 
-export const schemaTypes = [resource, service_post, blog_post, blockContent, popUp, faq, service, whyChooseUs, heroSection, testimonial, cta, OrderDemo, privacyPolicy, refundPolicy, calculator, plagiarismPolicy, cookiePolicy, header_testimonial, header_whyChooseUs, terms_Condition, footer]
+export const schemaTypes = [blog_images,service_images,resource, service_post, blog_post, blockContent, popUp, faq, service, whyChooseUs, heroSection, testimonial, cta, OrderDemo, privacyPolicy, refundPolicy, calculator, plagiarismPolicy, cookiePolicy, header_testimonial, header_whyChooseUs, terms_Condition, footer]

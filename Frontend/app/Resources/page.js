@@ -1,7 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { fetchData } from '@utils/CMS_Retreival';
-import {storeResourceUsers} from '@utils/Orders';
+import { storeResourceUsers } from '@utils/Orders';
 
 const Page = () => {
     const [documents, setDocuments] = useState([]);
@@ -47,6 +47,7 @@ const Page = () => {
                 aTag.click();
                 aTag.remove();
                 URL.revokeObjectURL(downloadUrl);
+                console.log("downloaded")
             } else {
                 throw new Error('Response not OK');
             }
@@ -56,7 +57,7 @@ const Page = () => {
     };
 
     const initiateDownload = async () => {
-        await storeResourceInfo(name, number);
+        await storeResourceUsers({ name, number });
         const { url, fileName } = currentDownload;
         downloadFile(url, fileName);
     };
@@ -68,8 +69,9 @@ const Page = () => {
 
     const handleSubmit = async () => {
         setShowModal(false);
-        await storeResourceUsers({name,number})
-        initiateDownload();
+        if (name && number) {
+            initiateDownload();
+        }
     };
 
     return (
@@ -119,7 +121,7 @@ const Page = () => {
                             onChange={(e) => setNumber(e.target.value)}
                             className="mt-2 w-full rounded-md border p-2"
                         />
-                        <button 
+                        <button
                             className="mt-4 w-full py-2 bg-blue-500 text-white rounded-md"
                             onClick={handleSubmit}
                         >

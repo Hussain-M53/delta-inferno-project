@@ -20,6 +20,7 @@ export default function RootLayout({ children }) {
 
   return (
     <html lang="en" className={roboto.className}>
+      <link rel="icon" href="/favicon.ico" sizes="64x64" />
       <body >
         <AuthProvider>
           <OrderDetailsProvider>
