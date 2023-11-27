@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import FloatingCalculator from '../components/FloatingCalculator'
 import { fetchData } from '@utils/CMS_Retreival';
+import { urlFor } from '@utils/middlewares';
 
 // export const metadata = {
 //     title: 'Services . Expert Assignment Nation',

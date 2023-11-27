@@ -3,8 +3,6 @@ import { ArrowCircleRightIcon } from '@heroicons/react/outline';
 import Link from "next/link";
 import { useEffect, useState } from 'react';
 import { formatDate, urlFor } from '../utils/middlewares'
-import { fetchData } from '@utils/CMS_Retreival';
-import Image from 'next/image';
 
 const Page = () => {
 
